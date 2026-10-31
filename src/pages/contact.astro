@@ -1,12 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
 import { business } from '../config/business';
 ---
 <BaseLayout title="Contact">
   <section class="page-intro">
-    <p class="eyebrow">Demo · Placeholder</p>
-    <h1>Contact</h1>
-    <p>Sample contact information only. These details do not reach a real cleaning business.</p>
+    <SectionHeading level="h1" eyebrow="Demo · Placeholder" title="Contact" description="Sample contact information only. These details do not reach a real cleaning business." />
   </section>
   <div class="card-grid">
     <section class="panel"><h2>Sample contact details</h2><p>Phone: {business.phone.display}</p><p>Email: {business.email}</p></section>

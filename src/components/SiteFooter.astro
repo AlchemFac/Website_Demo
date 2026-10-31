@@ -1,10 +1,23 @@
 ---
 import { business } from '../config/business';
+import { navigation } from '../config/navigation';
 ---
 <footer class="site-footer">
-  <div class="container">
-    <p>{business.name} · Fictional demonstration business</p>
-    <p>Sample service areas: {business.serviceAreas.join(', ')}.</p>
-    <p>This template does not offer real services or accept bookings.</p>
+  <div class="container footer-grid">
+    <div>
+      <a class="brand" href="/">{business.name}</a>
+      <p>{business.branding.tagline}</p>
+      {business.isDemo && <p class="footer-note">Fictional demonstration business. Sample details only; this template does not offer real services or accept bookings.</p>}
+    </div>
+    <nav aria-label="Footer navigation">
+      <h2 class="footer-heading">Explore</h2>
+      <ul class="footer-links">{navigation.map(({ label, href }) => <li><a href={href}>{label}</a></li>)}</ul>
+    </nav>
+    <div>
+      <h2 class="footer-heading">{business.isDemo ? 'Sample business information' : 'Business information'}</h2>
+      <p>{business.isDemo ? business.phone.display : <a href={business.phone.href}>{business.phone.display}</a>}<br />{business.isDemo ? business.email : <a href={`mailto:${business.email}`}>{business.email}</a>}</p>
+      <p>Service areas: {business.serviceAreas.join(', ')}</p>
+      <dl class="business-hours">{business.hours.map(({ days, hours }) => <div><dt>{days}</dt><dd>{hours}</dd></div>)}</dl>
+    </div>
   </div>
 </footer>

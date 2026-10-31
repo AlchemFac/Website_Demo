@@ -3,10 +3,11 @@ import { business } from '../config/business';
 import { navigation } from '../config/navigation';
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
-<header class="site-header">
+<header class="site-header" data-site-header>
   <div class="container header-inner">
-    <a class="brand" href="/">{business.name}</a>
-    <nav aria-label="Main navigation">
+    <a class="brand" href="/">{business.name}<span class="brand-tagline">{business.branding.tagline}</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" hidden>Menu</button>
+    <nav id="main-navigation" aria-label="Main navigation">
       <ul class="nav-list">
         {navigation.map(({ label, href }) => (
           <li><a href={href} aria-current={currentPath === (href.replace(/\/$/, '') || '/') ? 'page' : undefined}>{label}</a></li>
@@ -15,3 +16,40 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     </nav>
   </div>
 </header>
+<script>
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+  const toggle = header?.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav = header?.querySelector<HTMLElement>('nav');
+  if (header && toggle && nav) {
+    // Match the documented --breakpoint-nav token. CSS variables cannot be used in media queries.
+    const desktop = window.matchMedia('(min-width: 64rem)');
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.textContent = open ? 'Close menu' : 'Menu';
+      nav.hidden = !desktop.matches && !open;
+    };
+    const syncViewport = () => {
+      if (desktop.matches && document.activeElement === toggle) {
+        nav.hidden = false;
+        nav.querySelector<HTMLAnchorElement>('a')?.focus();
+      } else if (!desktop.matches && nav.contains(document.activeElement)) {
+        toggle.hidden = false;
+        toggle.focus();
+      }
+      toggle.hidden = desktop.matches;
+      setOpen(false);
+    };
+    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+    header.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !desktop.matches && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    nav.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a') && !desktop.matches) setOpen(false);
+    });
+    desktop.addEventListener('change', syncViewport);
+    syncViewport();
+  }
+</script>

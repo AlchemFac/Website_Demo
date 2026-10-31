@@ -1,11 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
 ---
 <BaseLayout title="Gallery">
   <section class="page-intro">
-    <p class="eyebrow">Demo · Placeholder</p>
-    <h1>Gallery</h1>
-    <p>A place for original, permission-approved photos in a future stage.</p>
+    <SectionHeading level="h1" eyebrow="Demo · Placeholder" title="Gallery" description="A place for original, permission-approved photos in a future stage." />
   </section>
   <div class="card-grid">
     {[1, 2, 3].map((number) => <div class="gallery-placeholder">Photo placeholder {number} · No image yet</div>)}

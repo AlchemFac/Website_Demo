@@ -1,13 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import SectionHeading from '../components/SectionHeading.astro';
 import { business } from '../config/business';
 ---
 <BaseLayout title="Home">
   <section class="page-intro">
-    <p class="eyebrow">Small business template · Demo</p>
-    <h1>{business.branding.tagline}</h1>
-    <p>A starting point for {business.name}, a fictional home cleaning business.</p>
-    <a class="button" href="/services/">Explore sample services</a>
+    <SectionHeading level="h1" eyebrow="Small business template · Demo" title={business.branding.tagline} description={`A starting point for ${business.name}, a fictional home cleaning business.`} />
+    <Button href="/services/">Explore sample services</Button>
   </section>
   <section class="panel" aria-labelledby="next-stage">
     <h2 id="next-stage">Room to make it your own</h2>

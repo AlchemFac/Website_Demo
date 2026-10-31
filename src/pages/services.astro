@@ -1,11 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
 ---
 <BaseLayout title="Services">
   <section class="page-intro">
-    <p class="eyebrow">Demo · Placeholder</p>
-    <h1>Services</h1>
-    <p>Use this page to describe the business’s services, scope, and scheduling details.</p>
+    <SectionHeading level="h1" eyebrow="Demo · Placeholder" title="Services" description="Use this page to describe the business’s services, scope, and scheduling details." />
   </section>
   <div class="card-grid">
     {['Routine cleaning', 'Deep cleaning', 'Move-in / move-out cleaning'].map((title) => (

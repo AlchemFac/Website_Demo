@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+type Shared = { variant?: 'primary' | 'secondary'; class?: string };
+type Props = Shared & (
+  | (HTMLAttributes<'a'> & { href: string })
+  | (HTMLAttributes<'button'> & { href?: never })
+);
+const { variant = 'primary', class: className, ...attributes } = Astro.props;
+---
+{ 'href' in attributes && attributes.href
+  ? <a {...attributes} class:list={['button', `button--${variant}`, className]}><slot /></a>
+  : <button type="button" {...attributes} class:list={['button', `button--${variant}`, className]}><slot /></button>
+}

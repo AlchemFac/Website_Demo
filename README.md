@@ -67,3 +67,14 @@ Cloudflare Pages and Netlify both support this static output without an adapter:
 Connect the GitHub repository in the chosen hosting service and configure those settings. No deployment has been created by this starter. Add a production `site` URL to `astro.config.mjs` when a real domain is chosen.
 
 Use Git to review changes and commit the source and lockfile; keep `node_modules/` and `dist/` untracked. Future cloud tasks should use the existing isolated checkout rather than creating an additional Git worktree unless explicitly requested.
+
+## Shared design system
+
+`src/styles/global.css` defines color, typography, spacing, border, radius, and layout tokens. Brand colors still come from `src/config/business.ts`. Use `.container` (or `.container.container--narrow`) for content width, `.section` for vertical spacing, `.card`/`.panel` for surfaces, and `.card-grid` for responsive collections.
+
+- `Button.astro`: use `<Button href="/contact/">Contact</Button>` for navigation or `<Button type="submit">Submit</Button>` for actions; `variant="secondary"` provides an outlined style. Native attributes are forwarded.
+- `SectionHeading.astro`: accepts `title`, optional `eyebrow`, `description`, `id`, and `level` (`h1`, `h2`, or `h3`; default `h2`). Use one `h1` per page.
+- `SiteHeader.astro`: configuration-driven links and brand, current-page indication, and a mobile disclosure button with `aria-expanded`, Escape handling, and focus return. Navigation remains visible without JavaScript.
+- `SiteFooter.astro`: configuration-driven business details, hours, areas, and navigation. Demo contact details remain plain text.
+
+Breakpoint reference tokens are `--breakpoint-content: 40rem` and `--breakpoint-nav: 64rem`. Native CSS cannot use custom properties in media conditions: update the documented literal CSS queries and the header’s `matchMedia` query together when changing breakpoints.

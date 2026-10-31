@@ -12,6 +12,6 @@ export const business = {
   ],
   branding: {
     tagline: 'A fresh start for your space.',
-    colors: { primary: '#245c4b', background: '#f7f8f4', text: '#20332b', accent: '#dcebe2' },
+    colors: { primary: '#466653', background: '#fafbf8', text: '#292e2b', accent: '#e7eee6' },
   },
 } as const;

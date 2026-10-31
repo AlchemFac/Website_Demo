@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business } from '../config/business';
+---
+<BaseLayout title="Home">
+  <section class="page-intro">
+    <p class="eyebrow">Small business template · Demo</p>
+    <h1>{business.branding.tagline}</h1>
+    <p>A starting point for {business.name}, a fictional home cleaning business.</p>
+    <a class="button" href="/services/">Explore sample services</a>
+  </section>
+  <section class="panel" aria-labelledby="next-stage">
+    <h2 id="next-stage">Room to make it your own</h2>
+    <p>This starter includes shared navigation, business settings, and placeholder pages. Service details, original photography, and final content will come in the next development stage.</p>
+  </section>
+</BaseLayout>

@@ -1,0 +1,26 @@
+---
+import { business } from '../config/business';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/global.css';
+interface Props { title: string; description?: string; }
+const { title, description = business.description } = Astro.props;
+const { colors } = business.branding;
+---
+<!doctype html>
+<html lang="en" style={`--color-primary: ${colors.primary}; --color-background: ${colors.background}; --color-text: ${colors.text}; --color-accent: ${colors.accent};`}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title} | {business.name} — Demo</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    {business.isDemo && <div class="demo-banner">Demo only · Fictional business and sample information</div>}
+    <SiteHeader />
+    <main id="main-content" class="container" tabindex="-1"><slot /></main>
+    <SiteFooter />
+  </body>
+</html>

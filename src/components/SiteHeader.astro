@@ -1,0 +1,17 @@
+---
+import { business } from '../config/business';
+import { navigation } from '../config/navigation';
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/">{business.name}</a>
+    <nav aria-label="Main navigation">
+      <ul class="nav-list">
+        {navigation.map(({ label, href }) => (
+          <li><a href={href} aria-current={currentPath === (href.replace(/\/$/, '') || '/') ? 'page' : undefined}>{label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>

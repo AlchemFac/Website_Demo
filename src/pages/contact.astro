@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business } from '../config/business';
+---
+<BaseLayout title="Contact">
+  <section class="page-intro">
+    <p class="eyebrow">Demo · Placeholder</p>
+    <h1>Contact</h1>
+    <p>Sample contact information only. These details do not reach a real cleaning business.</p>
+  </section>
+  <div class="card-grid">
+    <section class="panel"><h2>Sample contact details</h2><p>Phone: {business.phone.display}</p><p>Email: {business.email}</p></section>
+    <section class="panel"><h2>Sample business hours</h2><dl>{business.hours.map(({ days, hours }) => <div><dt>{days}</dt><dd>{hours}</dd></div>)}</dl></section>
+    <section class="panel"><h2>Sample service areas</h2><ul>{business.serviceAreas.map((area) => <li>{area}</li>)}</ul></section>
+  </div>
+</BaseLayout>

@@ -6,8 +6,9 @@ type Props = Shared & (
   | (HTMLAttributes<'button'> & { href?: never })
 );
 const { variant = 'primary', class: className, ...attributes } = Astro.props;
+const buttonType = attributes.type === 'submit' || attributes.type === 'reset' ? attributes.type : 'button';
 ---
 { 'href' in attributes && attributes.href
   ? <a {...attributes} class:list={['button', `button--${variant}`, className]}><slot /></a>
-  : <button type="button" {...attributes} class:list={['button', `button--${variant}`, className]}><slot /></button>
+  : <button type={buttonType} {...attributes} class:list={['button', `button--${variant}`, className]}><slot /></button>
 }

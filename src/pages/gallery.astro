@@ -1,12 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import GalleryCard from '../components/GalleryCard.astro';
+import PageCTA from '../components/PageCTA.astro';
+import { galleryImages } from '../config/gallery';
 ---
-<BaseLayout title="Gallery">
-  <section class="page-intro">
-    <SectionHeading level="h1" eyebrow="Demo · Placeholder" title="Gallery" description="A place for original, permission-approved photos in a future stage." />
-  </section>
-  <div class="card-grid">
-    {[1, 2, 3].map((number) => <div class="gallery-placeholder">Photo placeholder {number} · No image yet</div>)}
-  </div>
+<BaseLayout title="Gallery" description="Browse clearly labeled AI-generated demonstration interiors for North Texas Home Cleaning. These images do not depict customer homes or completed work.">
+  <section class="page-intro" aria-labelledby="gallery-title"><SectionHeading level="h1" id="gallery-title" eyebrow="A little inspiration for your space" title="Picture a fresh start." description="A few calm interiors to inspire the everyday. These original AI-generated images show imagined spaces, not customer homes, before-and-after results, or completed cleaning jobs." /></section>
+  <div class="photo-grid">{galleryImages.map((image, index) => <GalleryCard {...image} eager={index === 0} />)}</div>
+  <section class="gallery-note" aria-labelledby="imagery-title"><h2 id="imagery-title">Demonstration imagery, clearly labeled.</h2><p>North Texas Home Cleaning is fictional. This gallery illustrates a visual style only; it does not document the quality or results of any cleaning service.</p></section>
+  <PageCTA id="gallery-cta" title="What does your home need?" description="Explore the sample contact details and browser-only demo inquiry form." />
 </BaseLayout>
+<style>
+  .photo-grid { display: grid; gap: var(--space-5); }
+  .gallery-note { margin-top: var(--space-7); padding: var(--space-6); background: var(--color-accent); border-radius: var(--radius); }
+  .gallery-note h2 { margin-top: 0; font-size: 1.25rem; }
+  .gallery-note p { margin-bottom: 0; color: var(--color-muted); }
+  @media (min-width: 40rem) { .photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 64rem) { .photo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+</style>

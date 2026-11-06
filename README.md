@@ -38,8 +38,8 @@ src/
     index.astro           Home placeholder
     services.astro        Sample service categories
     about.astro           Business-story placeholder
-    gallery.astro         Photo placeholders (no invented work images)
-    contact.astro         Sample contact details and hours; no submission form
+    gallery.astro         Responsive AI-generated demonstration photo gallery
+    contact.astro         Sample contacts and browser-only validation form
   styles/
     global.css            CSS variables, typography, shared layout, responsive rules
 public/                   Future static assets copied unchanged to the build
@@ -78,3 +78,15 @@ Use Git to review changes and commit the source and lockfile; keep `node_modules
 - `SiteFooter.astro`: configuration-driven business details, hours, areas, and navigation. Demo contact details remain plain text.
 
 Breakpoint reference tokens are `--breakpoint-content: 40rem` and `--breakpoint-nav: 64rem`. Native CSS cannot use custom properties in media conditions: update the documented literal CSS queries and the header’s `matchMedia` query together when changing breakpoints.
+
+## Gallery and contact demo
+
+Gallery images are original AI-generated demonstration interiors, never customer
+work. Image descriptions live in `src/config/gallery.ts`; provenance and replacement
+guidance are in `src/assets/gallery/README.md`. Astro creates responsive WebP images.
+
+The Contact form validates locally without sending or saving entries. Business
+details come from `src/config/business.ts`; service choices come from
+`src/config/serviceContent.ts`. See [Contact integration notes](docs/contact-integration.md)
+for the integration marker, validation behavior, and work required before accepting
+real submissions. No backend or submission service is included.

@@ -3,7 +3,7 @@
 A five-page small-business website built with Astro, TypeScript, and plain CSS.
 **North Texas Home Cleaning is fictional.** Contact information, service scopes,
 hours, and areas are examples. Gallery images are labeled AI-generated interiors,
-not customer work. The Contact form validates locally and never sends or saves entries.
+not customer work. The Contact form defaults to a browser-only demo. Optional Formspree and Turnstile configuration enables test inquiries; inbox delivery must be verified manually.
 
 ## Open and run locally
 
@@ -17,7 +17,7 @@ npm run dev
 
 Open the local URL Astro prints, normally `http://localhost:4321/`. Stop the server
 with **Ctrl+C**. For a container preview, use `npm run dev -- --host 0.0.0.0`.
-No database, backend, API keys, or environment variables are needed.
+The default demo needs no database, backend, keys, or environment variables. Optional public form identifiers are documented in [Contact setup](docs/contact-integration.md).
 
 To update an existing local checkout after a pull request is merged:
 
@@ -38,7 +38,7 @@ checkout; switching branches changes the files VS Code displays automatically.
 | `/services/` | Detailed example cleaning scopes, inclusions, and exclusions           |
 | `/about/`    | Fictional introduction, intended philosophy, and example areas         |
 | `/gallery/`  | Responsive, optimized, clearly labeled demo imagery                    |
-| `/contact/`  | Sample business details and browser-only form validation               |
+| `/contact/`  | Sample business details and configurable test-inquiry form             |
 
 ```text
 .github/workflows/checks.yml   Automated pull-request and main-branch checks
@@ -74,7 +74,7 @@ tsconfig.json                Strict Astro/TypeScript configuration
 | `npm run check`        | Check Astro and TypeScript types                             |
 | `npm run build`        | Build static output in `dist/`                               |
 | `npm run preview`      | Serve the existing production build locally                  |
-| `npm test`             | Run browser tests against the existing production build      |
+| `npm test`             | Build an isolated offline demo and run browser tests         |
 | `npm run verify`       | Check formatting, check types, build, then run browser tests |
 
 For browser tests, install Chromium once after `npm ci`:
@@ -86,7 +86,7 @@ npm run verify
 
 Tests cover navigation and horizontal overflow at mobile, tablet, and desktop widths,
 gallery loading, form validation, error focus, demo non-delivery, and the
-JavaScript-disabled fallback. They use port **4322**. If you deliberately use a
+JavaScript-disabled fallback. They use port **4322**; the isolated mocked submission suite uses **4323**. If you deliberately use a
 system Chromium instead of Playwright's download, set
 `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to its full path. Cloud environments with
 unwritable telemetry directories can set `ASTRO_TELEMETRY_DISABLED=1`.
@@ -97,6 +97,8 @@ To enforce them before merging, configure the **Format, types, build, and browse
 tests** status check in a GitHub branch ruleset. This repository includes the workflow;
 repository settings must be configured separately.
 
+The separate `npm run test:submission` suite builds with non-credential fixtures and intercepts provider traffic. It never tests real email delivery or overwrites `dist/`. See [Contact setup and manual test checklist](docs/contact-integration.md) before enabling live submissions.
+
 ## Working with Git
 
 Start changes from an up-to-date `main`, create a descriptive branch such as
@@ -105,7 +107,7 @@ After its checks pass, review and merge it, then delete the finished branch.
 Deleting a fully merged branch removes its label, not the work retained in `main`.
 Never delete a branch with unmerged work just to tidy the list.
 
-Keep `node_modules/`, `dist/`, `.astro/`, Playwright results, and local `.env` files
+Keep `node_modules/`, `dist/`, `.astro/`, `.site-test-dist/`, `.submission-test-dist/`, Playwright results, and local `.env` files
 out of Git. Commit source code and `package-lock.json`. GitHub can automatically
 delete merged head branches through the repository's pull-request settings.
 
@@ -114,7 +116,7 @@ delete merged head branches through the repository's pull-request settings.
 - [Customization guide](docs/customization.md): edit branding, copy, service scopes,
   images, and design consistently.
 - [Contact integration notes](docs/contact-integration.md): current demo behavior and
-  steps required before accepting real inquiries.
+  Formspree/Turnstile account setup, public environment variables, and mandatory manual email-delivery checks.
 - [Gallery image provenance](src/assets/gallery/README.md) and
   [homepage illustration license](public/images/LICENSE.md).
 
@@ -124,5 +126,5 @@ review demo labels and metadata together. No real service credentials or testimo
 are represented.
 
 For static hosting, use Node 24, build command `npm run build`, and output directory
-`dist`. No hosting integration or deployment is configured here. Set Astro's `site`
+`dist`. No hosting deployment is configured here. Set Astro's `site`
 URL when a real domain is chosen. Preview the production build before publishing.

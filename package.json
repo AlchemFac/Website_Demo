@@ -11,9 +11,10 @@
     "check": "astro check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "playwright test",
+    "test": "node scripts/build-test.mjs demo && playwright test",
     "test:ui": "playwright test --ui",
-    "verify": "npm run format:check && npm run check && npm run build && npm test"
+    "verify": "npm run format:check && npm run check && npm run build && npm test && npm run test:submission",
+    "test:submission": "node scripts/build-test.mjs submission && playwright test --config playwright.submission.config.ts"
   },
   "dependencies": {
     "astro": "7.4.4"

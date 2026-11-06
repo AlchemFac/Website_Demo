@@ -1,23 +1,26 @@
 ---
 import Button from './Button.astro';
+import { contactForm } from '../config/contactForm';
 import { services } from '../config/serviceContent';
 ---
 
 <section class="panel" aria-labelledby="form-title">
   <h2 id="form-title">Tell us about your home</h2>
   <p id="form-notice">
-    Demo form only. This form checks your entries in your browser. It does not
-    send or save them, request a quote, or book a cleaning. Please use sample
-    details.
+    {contactForm.configured
+      ? 'This is a fictional business. This form sends a test inquiry through Formspree to the site owner; it does not book a cleaning. Please use sample details. Your entries are shared with Formspree, and Cloudflare provides spam protection.'
+      : 'Demo form only. This form checks your entries in your browser. It does not send or save them, request a quote, or book a cleaning. Please use sample details.'}
   </p>
   <noscript>
     <p class="notice">
-      JavaScript is required to try this demonstration form. Sending messages is
-      not available.
+      JavaScript is required to use this form. Nothing can be submitted while
+      JavaScript is disabled.
     </p>
   </noscript>
   <form
     data-contact-form
+    data-endpoint={contactForm.endpoint}
+    data-site-key={contactForm.siteKey}
     aria-labelledby="form-title"
     aria-describedby="form-notice required-note"
   >
@@ -113,101 +116,58 @@ import { services } from '../config/serviceContent';
           <p id="message-error" class="field-error" hidden></p>
         </div>
       </div>
-      <Button type="submit">Check demo form</Button>
+      <div hidden aria-hidden="true">
+        <label for="contact-gotcha">Leave this field empty</label>
+        <input
+          id="contact-gotcha"
+          type="text"
+          name="_gotcha"
+          tabindex="-1"
+          autocomplete="off"
+        />
+      </div>
+      {contactForm.configured && (
+        <section class="spam-protection" aria-labelledby="spam-title">
+          <h3 id="spam-title">Spam protection</h3>
+          <div
+            data-turnstile
+            tabindex="-1"
+            aria-describedby="captcha-error"
+          ></div>
+          <p id="captcha-error" data-captcha-error role="status" class="hint">
+            Loading spam protection…
+          </p>
+          <Button type="button" variant="secondary" data-captcha-retry hidden>
+            Retry spam protection
+          </Button>
+        </section>
+      )}
+      <Button type="submit">
+        {contactForm.configured ? 'Send test inquiry' : 'Check demo form'}
+      </Button>
     </fieldset>
-    <p
-      class="form-status"
-      data-form-status
-      role="status"
-      aria-live="polite"
-      aria-atomic="true"
-    ></p>
   </form>
+  <p
+    class="submission-error"
+    data-submission-error
+    role="alert"
+    tabindex="-1"
+    hidden
+  ></p>
+  <p
+    class="form-status"
+    data-form-status
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+    tabindex="-1"
+  ></p>
+  <Button type="button" variant="secondary" data-new-inquiry hidden>
+    Start a new inquiry
+  </Button>
 </section>
 <script>
-  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
-  if (form) {
-    const controls = Array.from(
-      form.querySelectorAll<
-        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-      >('input, textarea, select'),
-    );
-    const summary = form.querySelector<HTMLElement>('[data-error-summary]')!;
-    const status = form.querySelector<HTMLElement>('[data-form-status]')!;
-    const touched = new Set<string>();
-    let attempted = false;
-    const getError = (field: (typeof controls)[number]) => {
-      const value = field.value.trim();
-      if (field.required && !value) {
-        const messages: Record<string, string> = {
-          name: 'Enter your name.',
-          email: 'Enter your email address.',
-          service: 'Choose a service or “Not sure yet”.',
-          message: 'Enter a message about your cleaning needs.',
-        };
-        return messages[field.name];
-      }
-      if (field.name === 'email' && field.validity.typeMismatch)
-        return 'Enter a valid email address, such as name@example.com.';
-      if (
-        field.name === 'phone' &&
-        value &&
-        (!/^[+\d\s().-]+$/.test(value) ||
-          value.replace(/\D/g, '').length < 7 ||
-          value.replace(/\D/g, '').length > 15)
-      )
-        return 'Enter 7–15 digits using only +, spaces, parentheses, dots, or hyphens, or leave phone blank.';
-      if (field.validity.tooLong)
-        return 'Shorten this entry to the stated maximum length.';
-      return '';
-    };
-    const validate = (field: (typeof controls)[number]) => {
-      const error = getError(field);
-      const output = form.querySelector<HTMLElement>(`#${field.name}-error`)!;
-      output.textContent = error;
-      output.hidden = !error;
-      field.setAttribute('aria-invalid', String(Boolean(error)));
-      return !error;
-    };
-    const updateSummary = () => {
-      const count = controls.filter((field) => getError(field)).length;
-      summary.hidden = !count;
-      summary.textContent = count
-        ? `Please check ${count} ${count === 1 ? 'field' : 'fields'} below. Nothing has been sent.`
-        : '';
-    };
-    controls.forEach((field) => {
-      field.addEventListener('blur', () => {
-        touched.add(field.name);
-        validate(field);
-      });
-      for (const event of ['input', 'change'])
-        field.addEventListener(event, () => {
-          status.textContent = '';
-          if (attempted || touched.has(field.name)) validate(field);
-          if (attempted) updateSummary();
-        });
-    });
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      attempted = true;
-      status.textContent = '';
-      const results = controls.map((field) => validate(field));
-      updateSummary();
-      const invalidIndex = results.indexOf(false);
-      if (invalidIndex !== -1) {
-        controls[invalidIndex].focus();
-        return;
-      }
-      // FUTURE INTEGRATION: connect an approved submission service here.
-      // Keep preventDefault until real submission, failure, and success handling exist.
-      // Never display a sent/booking confirmation based on validation alone.
-      status.textContent =
-        'Demo check complete. Your entries pass validation, but nothing has been sent or saved. A submission service must be connected before inquiries can be delivered.';
-    });
-    form.noValidate = true;
-    form.querySelector<HTMLFieldSetElement>('fieldset')!.disabled = false;
-  }
+  import '../scripts/contact-form';
 </script>
 <style>
   h2 {
@@ -270,6 +230,7 @@ import { services } from '../config/serviceContent';
     font-size: var(--text-small);
   }
   .error-summary,
+  .submission-error,
   .notice {
     padding: var(--space-4);
     border: 1px solid #9b2929;
@@ -284,6 +245,12 @@ import { services } from '../config/serviceContent';
     padding: var(--space-4);
     background: var(--color-accent);
     border-radius: var(--radius-small);
+  }
+  .spam-protection {
+    margin-bottom: var(--space-5);
+  }
+  .spam-protection h3 {
+    font-size: 1rem;
   }
   .sr-only {
     position: absolute;

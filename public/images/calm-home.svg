@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="920" viewBox="0 0 840 920">
+<title>A calm, sunlit living room</title>
+<desc>Original demonstration illustration, dedicated to the public domain under CC0 1.0.</desc>
+<defs><linearGradient id="wall" x2="1" y2="1"><stop stop-color="#f3eadc"/><stop offset="1" stop-color="#dfd2bc"/></linearGradient><linearGradient id="sofa" x2="0" y2="1"><stop stop-color="#faf5e9"/><stop offset="1" stop-color="#ded4c1"/></linearGradient></defs>
+<path fill="url(#wall)" d="M0 0h840v920H0z"/>
+<path fill="#c5af8f" d="M0 680h840v240H0z"/>
+<path fill="#e7d8be" d="m0 920 840-190v190Z"/>
+<path fill="#fff8e8" opacity=".5" d="m440 160 200 20 200 600-600-60Z"/>
+<rect x="465" y="70" width="305" height="445" rx="2" fill="#c1ad8b"/>
+<rect x="478" y="82" width="280" height="420" fill="#e6eee5"/>
+<path fill="#c4d2ba" d="M478 340q65-90 135-15t145-40v217H478Z"/>
+<path stroke="#faf7ed" stroke-width="13" d="M618 82v420M478 285h280"/>
+<path fill="#fffaf0" opacity=".8" d="M441 40h47v520h-66q24-265 19-520m305 0h45q-8 270 29 520h-65Z"/>
+<rect x="105" y="155" width="185" height="250" fill="#8e785b"/>
+<rect x="115" y="165" width="165" height="230" fill="#f6efe0"/>
+<path fill="#a9b497" d="M140 340V235a57 57 0 0 1 114 0v105Z"/>
+<circle cx="198" cy="242" r="29" fill="#e5c69a"/>
+<ellipse cx="407" cy="790" rx="335" ry="90" fill="#eee5d3"/>
+<path fill="#ac9478" d="M143 687h23v85h-23zm475 0h23v85h-23z"/>
+<rect x="138" y="475" width="510" height="209" rx="48" fill="#d8cebb"/>
+<rect x="155" y="489" width="234" height="148" rx="25" fill="url(#sofa)"/>
+<rect x="395" y="489" width="235" height="148" rx="25" fill="url(#sofa)"/>
+<rect x="124" y="620" width="536" height="105" rx="27" fill="url(#sofa)"/>
+<rect x="100" y="558" width="66" height="164" rx="28" fill="#e9e0ce"/>
+<rect x="622" y="558" width="66" height="164" rx="28" fill="#e9e0ce"/>
+<rect x="188" y="522" width="100" height="105" rx="17" transform="rotate(-12 238 574)" fill="#778b70"/>
+<rect x="501" y="526" width="95" height="99" rx="15" transform="rotate(10 548 575)" fill="#c5a179"/>
+<path fill="#927859" d="m340 782-12 90h15l23-90m153 0 19 90h15l-8-90"/>
+<ellipse cx="437" cy="783" rx="133" ry="41" fill="#b2946e"/>
+<ellipse cx="437" cy="774" rx="133" ry="39" fill="#d2b58b"/>
+<rect x="381" y="755" width="75" height="9" rx="2" fill="#f6efdf"/>
+<rect x="388" y="746" width="75" height="9" rx="2" fill="#7a8c73"/>
+<path fill="#e9e4d5" d="M483 707h33l-5 42h-23Z"/>
+<path stroke="#667e5e" stroke-width="4" fill="none" d="M500 709v-56m0 35-22-24m22 13 20-30"/>
+<g fill="#788e69"><ellipse cx="477" cy="661" rx="9" ry="17" transform="rotate(-45 477 661)"/><ellipse cx="520" cy="647" rx="9" ry="17" transform="rotate(30 520 647)"/></g>
+<path stroke="#647652" stroke-width="7" fill="none" d="M746 682V470m0 121-43-67m43 25 40-72m-40 45-23-65"/>
+<g fill="#728561"><ellipse cx="700" cy="509" rx="21" ry="48" transform="rotate(-32 700 509)"/><ellipse cx="786" cy="471" rx="21" ry="48" transform="rotate(29 786 471)"/><ellipse cx="724" cy="450" rx="19" ry="46" transform="rotate(-17 724 450)"/><ellipse cx="750" cy="427" rx="19" ry="44"/></g>
+<path fill="#b1815f" d="M705 654h82l-12 100h-58Z"/>
+<path stroke="#d1ab88" stroke-width="4" d="M713 678h66m-63 18h61m-59 18h57"/>
+</svg>

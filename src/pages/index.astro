@@ -1,16 +1,120 @@
 ---
+import ArrowIcon from '../components/ArrowIcon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import ProcessStep from '../components/ProcessStep.astro';
 import { business } from '../config/business';
+const services = [
+  { number: '01', title: 'Standard Cleaning', description: 'A fresh reset for the rooms you live in every day. Keep everyday dust and mess from taking over your week.', details: 'Sample scope: floors, accessible surfaces, kitchens & bathrooms.' },
+  { number: '02', title: 'Deep Cleaning', description: 'Give the details a little extra attention. A more thorough refresh for spaces that need more than the usual tidy-up.', details: 'Sample scope: standard tasks plus baseboards, fixtures & buildup.' },
+  { number: '03', title: 'Move-In/Move-Out Cleaning', description: 'Make room for your next chapter. Plan a cleaning for an empty home before you settle in or hand over the keys.', details: 'Sample scope: empty rooms, cabinets & accessible interior surfaces.' },
+];
+const benefits = [
+  { title: 'More time for your life', description: 'Spend less of your weekend catching up on chores and more of it doing what matters to you.' },
+  { title: 'A space that feels settled', description: 'A clean kitchen, refreshed bathroom, and dusted living spaces can make everyday routines feel easier.' },
+  { title: 'A plan for your priorities', description: 'Discuss the rooms and tasks that need attention so the proposed cleaning fits your home.' },
+];
 ---
-<BaseLayout title="Home">
-  <section class="page-intro">
-    <SectionHeading level="h1" eyebrow="Small business template · Demo" title={business.branding.tagline} description={`A starting point for ${business.name}, a fictional home cleaning business.`} />
-    <Button href="/services/">Explore sample services</Button>
-  </section>
-  <section class="panel" aria-labelledby="next-stage">
-    <h2 id="next-stage">Room to make it your own</h2>
-    <p>This starter includes shared navigation, business settings, and placeholder pages. Service details, original photography, and final content will come in the next development stage.</p>
-  </section>
+<BaseLayout title="Home" description="Explore sample home cleaning services in Dallas, Plano, and Frisco. North Texas Home Cleaning is a fictional demonstration business.">
+  <div class="home">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">A little less on your to-do list</p>
+        <h1 id="hero-title">A cleaner home.<br /><em>A little more life.</em></h1>
+        <p class="hero-description">Make space for slow mornings and weekends well spent. Explore thoughtful home cleaning for everyday living in the Dallas–Fort Worth area.</p>
+        <div class="hero-actions"><Button href="/contact/">Request a Free Quote <ArrowIcon /></Button><a class="text-link" href="#services">Find your clean <span aria-hidden="true">↓</span></a></div>
+        <p class="demo-note">Fictional business · Demo inquiries only. No real bookings.</p>
+      </div>
+      <figure class="hero-image">
+        <img src="/images/calm-home.svg" width="840" height="920" alt="Illustration of a sunlit living room with a cream sofa, houseplants, and a wooden coffee table." loading="eager" fetchpriority="high" decoding="async" />
+        <figcaption><span aria-hidden="true">✧</span> A fresh start for your space.<small>Original demonstration illustration</small></figcaption>
+      </figure>
+    </section>
+
+    <section class="home-section" id="services" aria-labelledby="services-title">
+      <div class="section-top"><SectionHeading id="services-title" eyebrow="A clean for every chapter" title="What does your home need?" description="From a regular reset to a fresh beginning, explore three ways to lighten your list." /><a class="text-link" href="/services/">All services <ArrowIcon /></a></div>
+      <div class="services-grid">{services.map(service => <ServiceCard {...service} />)}</div>
+      <p class="scope-note">Illustrative services only. A real quote would confirm tasks, home size, pricing, and any exclusions before scheduling.</p>
+    </section>
+
+    <section class="benefits home-section" aria-labelledby="benefits-title">
+      <div class="benefits-intro"><SectionHeading id="benefits-title" eyebrow="Less upkeep. More breathing room." title="Let home feel like a place to unwind." /><p>Life gets full. Professional cleaning can help take a recurring chore off your plate, whether you need an occasional refresh or a regular routine.</p><a class="text-link" href="/contact/">Talk through your priorities <ArrowIcon /></a></div>
+      <div class="benefit-list">{benefits.map(({ title, description }) => <article><span aria-hidden="true">✧</span><div><h3>{title}</h3><p>{description}</p></div></article>)}</div>
+    </section>
+
+    <section class="home-section process" aria-labelledby="process-title">
+      <SectionHeading id="process-title" eyebrow="From your list to a fresh start" title="A simpler way to a cleaner home." description="Here’s how a typical cleaning inquiry could work." />
+      <ol class="steps"><ProcessStep title="Request Quote" description="Share your home’s size, the service you’re interested in, and your cleaning priorities." /><ProcessStep title="Schedule Cleaning" description="Review the proposed scope and price, then discuss a date that fits your routine." /><ProcessStep title="Enjoy Your Home" description="With the agreed cleaning taken care of, settle back into your space." /></ol>
+    </section>
+
+    <section class="area home-section" aria-labelledby="area-title">
+      <div><SectionHeading id="area-title" eyebrow="Around the neighborhood" title="At home in North Texas." description="Example service areas in the Dallas–Fort Worth metroplex. These locations illustrate a possible service footprint, not confirmed coverage." /><ul class="city-list" aria-label="Example service cities">{business.serviceAreas.map(city => <li><ArrowIcon /> {city}</li>)}</ul><a class="text-link" href="/contact/">Ask about your area <ArrowIcon /></a></div>
+      <aside class="area-note"><span class="area-mark" aria-hidden="true">N TX</span><h3>Your home. Your priorities.</h3><p>Start with your location and the kind of clean you have in mind. The details can come together from there.</p><p class="demo-note">Sample locations · Fictional service</p></aside>
+    </section>
+
+    <section class="final-cta" aria-labelledby="cta-title"><p class="eyebrow">Make room for what matters</p><h2 id="cta-title">Your fresh start begins here.</h2><p>Tell us what a cleaner home would look like for you.</p><Button href="/contact/">Request a Free Quote <ArrowIcon /></Button><p class="demo-note">Visit the Contact page for demo information. No real quotes or bookings are available.</p></section>
+    <div class="mobile-cta"><Button href="/contact/">Request a Free Quote <ArrowIcon /></Button></div>
+  </div>
 </BaseLayout>
+<style>
+  .home { padding-bottom: 1rem; }
+  .hero { display: grid; gap: 2.5rem; align-items: center; padding-block: 3rem; }
+  .hero-copy { min-width: 0; }
+  h1 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-size: clamp(2.8rem, 5.2vw, 4.6rem); line-height: 1.06; letter-spacing: -.045em; margin-block: 1.25rem; }
+  h1 em { color: var(--color-primary); font-weight: 400; }
+  .hero-description { font-size: 1.125rem; color: var(--color-muted); max-width: 43ch; }
+  .hero-actions { display: flex; gap: 1.25rem; flex-wrap: wrap; align-items: center; margin-top: 2rem; }
+  .text-link { display: inline-flex; align-items: center; gap: .75rem; min-height: 48px; font-weight: 600; text-decoration: none; }
+  .text-link:hover { text-decoration: underline; }
+  .demo-note, .scope-note { font-size: .8rem; color: var(--color-muted); }
+  .hero-copy .demo-note { margin-top: 1rem; }
+  .hero-image { position: relative; margin: 0; }
+  .hero-image img { display: block; width: 100%; height: auto; max-height: 36rem; object-fit: cover; border-radius: 8rem 8rem 1rem 1rem; background: #eee5d3; }
+  figcaption { position: absolute; bottom: 1.25rem; left: 1rem; right: 1rem; padding: 1rem; border-radius: .75rem; background: #fffaf0; color: #344d3e; font-family: Georgia, serif; font-size: 1.15rem; box-shadow: 0 5px 20px #292e2b12; }
+  figcaption span { margin-right: .5rem; }
+  figcaption small { display: block; margin-top: .25rem; font: .7rem system-ui, sans-serif; color: var(--color-muted); }
+  .home-section { padding-block: 3.5rem; scroll-margin-top: 1rem; }
+  .section-top { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+  .section-top :global(.section-heading) { max-width: 39rem; }
+  .section-top :global(.section-description) { margin-bottom: 0; }
+  .services-grid { display: grid; gap: 1.25rem; }
+  .scope-note { margin-top: 1.25rem; }
+  .benefits { display: grid; gap: 2rem; border-block: 1px solid var(--color-border); }
+  .benefits-intro > p { color: var(--color-muted); }
+  .benefit-list article { display: flex; gap: 1rem; padding-block: 1.25rem; }
+  .benefit-list article + article { border-top: 1px solid var(--color-border); }
+  .benefit-list article > span { color: var(--color-primary); font-size: 1.8rem; line-height: 1.3; }
+  .benefit-list h3 { margin: 0; font-size: 1.2rem; }
+  .benefit-list p { color: var(--color-muted); margin-bottom: 0; }
+  .steps { counter-reset: steps; list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 2rem; }
+  .area { display: grid; gap: 2rem; border-top: 1px solid var(--color-border); }
+  .city-list { display: flex; flex-wrap: wrap; list-style: none; padding: 0; gap: .75rem; margin-block: 1.5rem; }
+  .city-list li { border: 1px solid var(--color-border); padding: .5rem 1rem; border-radius: 100px; background: white; }
+  .city-list span { color: var(--color-primary); }
+  .area-note { background: #e7eee6; padding: 2rem; border-radius: 1rem; align-self: center; }
+  .area-mark { font-family: Georgia, serif; font-size: 3rem; letter-spacing: -.06em; color: var(--color-primary); }
+  .area-note h3 { font-size: 1.3rem; }
+  .final-cta { text-align: center; background: #e7eee6; border-radius: 1.5rem; padding: 3rem 1.25rem; }
+  .final-cta h2 { font: 400 clamp(2rem, 4vw, 3rem)/1.15 Georgia, serif; letter-spacing: -.035em; }
+  .final-cta p { margin-inline: auto; }
+  .final-cta :global(.button) { margin-block: 1rem; }
+  .mobile-cta { position: fixed; bottom: 0; left: 0; right: 0; padding: .75rem 1rem max(.75rem, env(safe-area-inset-bottom)); background: #fafbf8; border-top: 1px solid var(--color-border); z-index: 5; }
+  .mobile-cta :global(.button) { width: 100%; }
+  @media (max-width: 39.999rem) { :global(body:has(.home)) { padding-bottom: calc(5rem + env(safe-area-inset-bottom)); } }
+  @media (min-width: 40rem) {
+    .hero { grid-template-columns: 1.1fr 1fr; gap: 2rem; padding-block: 4rem; }
+    .hero-image img { min-height: 28rem; }
+    .services-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mobile-cta { display: none; }
+    .home-section { padding-block: 4.5rem; }
+  }
+  @media (min-width: 64rem) {
+    .hero { gap: 5rem; }
+    .benefits { grid-template-columns: 1fr 1fr; gap: 6rem; }
+    .area { grid-template-columns: 1.4fr 1fr; gap: 5rem; }
+    .final-cta { padding: 4rem; }
+  }
+</style>

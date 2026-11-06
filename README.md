@@ -1,92 +1,128 @@
-# Small-business website starter
+# North Texas Home Cleaning — Astro demo
 
-A minimal Astro + TypeScript starter using plain CSS. **North Texas Home Cleaning is a fictional demonstration business.** All contact details, service areas, hours, and service categories are sample data. This is a scaffold, not a finished website or a real service offering.
+A five-page small-business website built with Astro, TypeScript, and plain CSS.
+**North Texas Home Cleaning is fictional.** Contact information, service scopes,
+hours, and areas are examples. Gallery images are labeled AI-generated interiors,
+not customer work. The Contact form validates locally and never sends or saves entries.
 
-## Requirements and local development
+## Open and run locally
 
-Use Node.js 22.23.4 or newer (Node 24 recommended) and npm 9.6.5 or newer.
+Use **Node.js 24** (`.nvmrc` is included) and a recent npm. In VS Code, open the
+repository folder and run these commands in its terminal:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Run commands from the repository root. Open the local address Astro prints. To expose the development server inside a container, use `npm run dev -- --host 0.0.0.0`.
+Open the local URL Astro prints, normally `http://localhost:4321/`. Stop the server
+with **Ctrl+C**. For a container preview, use `npm run dev -- --host 0.0.0.0`.
+No database, backend, API keys, or environment variables are needed.
 
-Routes: `/`, `/services/`, `/about/`, `/gallery/`, and `/contact/`.
+To update an existing local checkout after a pull request is merged:
 
 ```sh
-npm run build
-npm run preview
+git switch main
+git pull --ff-only
+npm ci
 ```
 
-The build generates static HTML and assets in `dist/`. Preview serves that production output locally. No database, authentication, backend, API keys, or environment variables are required. Astro is the only direct dependency; TypeScript uses Astro’s strict configuration. The build compiles the site but is not a standalone TypeScript type-checking command. No automated test suite is included yet.
+Commit or otherwise preserve local changes before switching branches. Use one local
+checkout; switching branches changes the files VS Code displays automatically.
 
-## Major files
+## Pages and folders
+
+| Route        | Content                                                                |
+| ------------ | ---------------------------------------------------------------------- |
+| `/`          | Homepage, service summaries, benefits, process, areas, and quote links |
+| `/services/` | Detailed example cleaning scopes, inclusions, and exclusions           |
+| `/about/`    | Fictional introduction, intended philosophy, and example areas         |
+| `/gallery/`  | Responsive, optimized, clearly labeled demo imagery                    |
+| `/contact/`  | Sample business details and browser-only form validation               |
 
 ```text
+.github/workflows/checks.yml   Automated pull-request and main-branch checks
 src/
-  components/
-    SiteHeader.astro      Shared brand and responsive navigation
-    SiteFooter.astro      Shared demo disclaimer and service areas
+  assets/gallery/             Original gallery images and provenance README
+  components/                 Buttons, headings, cards, CTAs, form, header/footer
   config/
-    business.ts           Business identity, contacts, hours, areas, branding
-    navigation.ts         Navigation labels and routes
-  layouts/
-    BaseLayout.astro      HTML document, metadata, CSS, header, footer, content slot
-  pages/
-    index.astro           Home placeholder
-    services.astro        Sample service categories
-    about.astro           Business-story placeholder
-    gallery.astro         Responsive AI-generated demonstration photo gallery
-    contact.astro         Sample contacts and browser-only validation form
-  styles/
-    global.css            CSS variables, typography, shared layout, responsive rules
-public/                   Future static assets copied unchanged to the build
-astro.config.mjs          Static-output Astro configuration
-tsconfig.json            Strict TypeScript configuration
-package.json              Dependency and development/build/preview scripts
-package-lock.json         Reproducible npm dependency resolution
-.gitignore                Excludes dependencies, build output, and local secrets
+    business.ts               Business name, branding, contacts, hours, and areas
+    navigation.ts             Navigation labels and routes
+    serviceContent.ts         Shared service data, homepage summaries, philosophy
+    gallery.ts                Gallery image imports, captions, and alt text
+  layouts/BaseLayout.astro    Document, metadata, demo banner, header, and footer
+  pages/                      The five Astro routes above
+  styles/global.css           Shared design tokens and responsive layout rules
+public/images/                Homepage SVG illustration and its license
+docs/                        Customization and contact integration guides
+tests/                       Playwright browser regression tests
+playwright.config.ts          Production-preview test server and browser settings
+.prettierrc.json               Consistent formatting with Astro support
+package.json                  Commands and dependencies
+package-lock.json             Reproducible dependency versions
+astro.config.mjs              Static output configuration
+tsconfig.json                Strict Astro/TypeScript configuration
 ```
 
-Brand colors in `business.ts` become CSS variables through `BaseLayout.astro`. Other shared design tokens live in `global.css`. Add reusable UI to `components/`, page content to `pages/`, and shared page structure to `layouts/`. Astro routes follow page filenames.
+## Commands and checks
 
-## Next development stage
+| Command                | Purpose                                                      |
+| ---------------------- | ------------------------------------------------------------ |
+| `npm run dev`          | Start the development server                                 |
+| `npm run format`       | Format supported source/configuration/documentation files    |
+| `npm run format:check` | Check formatting without editing files                       |
+| `npm run check`        | Check Astro and TypeScript types                             |
+| `npm run build`        | Build static output in `dist/`                               |
+| `npm run preview`      | Serve the existing production build locally                  |
+| `npm test`             | Run browser tests against the existing production build      |
+| `npm run verify`       | Check formatting, check types, build, then run browser tests |
 
-Replace and verify the sample business information, write service and about content, and add approved photography. Keep the demo notice while using fictional content. Before a real launch, review contact links, accessibility, metadata, and the demo-only `noindex, nofollow` directive in `BaseLayout.astro`. Setting `isDemo` to false removes the top banner only; also update the explicit demo text in the footer, page content, and document title. No testimonials or business credentials should be added without verified source material.
+For browser tests, install Chromium once after `npm ci`:
 
-## Static hosting
+```sh
+npx playwright install chromium
+npm run verify
+```
 
-Cloudflare Pages and Netlify both support this static output without an adapter:
+Tests cover navigation and horizontal overflow at mobile, tablet, and desktop widths,
+gallery loading, form validation, error focus, demo non-delivery, and the
+JavaScript-disabled fallback. They use port **4322**. If you deliberately use a
+system Chromium instead of Playwright's download, set
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to its full path. Cloud environments with
+unwritable telemetry directories can set `ASTRO_TELEMETRY_DISABLED=1`.
 
-- Build command: `npm run build`
-- Output/publish directory: `dist`
-- Node version: 24 (or another release satisfying `package.json`)
+GitHub Actions runs the same verification on pull requests and pushes to `main`.
+A green check means these checks passed, not that every possible issue was tested.
+To enforce them before merging, configure the **Format, types, build, and browser
+tests** status check in a GitHub branch ruleset. This repository includes the workflow;
+repository settings must be configured separately.
 
-Connect the GitHub repository in the chosen hosting service and configure those settings. No deployment has been created by this starter. Add a production `site` URL to `astro.config.mjs` when a real domain is chosen.
+## Working with Git
 
-Use Git to review changes and commit the source and lockfile; keep `node_modules/` and `dist/` untracked. Future cloud tasks should use the existing isolated checkout rather than creating an additional Git worktree unless explicitly requested.
+Start changes from an up-to-date `main`, create a descriptive branch such as
+`feat/contact-delivery`, commit a focused change, push, and open a pull request.
+After its checks pass, review and merge it, then delete the finished branch.
+Deleting a fully merged branch removes its label, not the work retained in `main`.
+Never delete a branch with unmerged work just to tidy the list.
 
-## Shared design system
+Keep `node_modules/`, `dist/`, `.astro/`, Playwright results, and local `.env` files
+out of Git. Commit source code and `package-lock.json`. GitHub can automatically
+delete merged head branches through the repository's pull-request settings.
 
-`src/styles/global.css` defines color, typography, spacing, border, radius, and layout tokens. Brand colors still come from `src/config/business.ts`. Use `.container` (or `.container.container--narrow`) for content width, `.section` for vertical spacing, `.card`/`.panel` for surfaces, and `.card-grid` for responsive collections.
+## Customization and delivery
 
-- `Button.astro`: use `<Button href="/contact/">Contact</Button>` for navigation or `<Button type="submit">Submit</Button>` for actions; `variant="secondary"` provides an outlined style. Native attributes are forwarded.
-- `SectionHeading.astro`: accepts `title`, optional `eyebrow`, `description`, `id`, and `level` (`h1`, `h2`, or `h3`; default `h2`). Use one `h1` per page.
-- `SiteHeader.astro`: configuration-driven links and brand, current-page indication, and a mobile disclosure button with `aria-expanded`, Escape handling, and focus return. Navigation remains visible without JavaScript.
-- `SiteFooter.astro`: configuration-driven business details, hours, areas, and navigation. Demo contact details remain plain text.
+- [Customization guide](docs/customization.md): edit branding, copy, service scopes,
+  images, and design consistently.
+- [Contact integration notes](docs/contact-integration.md): current demo behavior and
+  steps required before accepting real inquiries.
+- [Gallery image provenance](src/assets/gallery/README.md) and
+  [homepage illustration license](public/images/LICENSE.md).
 
-Breakpoint reference tokens are `--breakpoint-content: 40rem` and `--breakpoint-nav: 64rem`. Native CSS cannot use custom properties in media conditions: update the documented literal CSS queries and the header’s `matchMedia` query together when changing breakpoints.
+This demo uses `noindex, nofollow`. Before a real launch, replace and verify business
+information, approve image rights and content, connect and test form delivery, and
+review demo labels and metadata together. No real service credentials or testimonials
+are represented.
 
-## Gallery and contact demo
-
-Gallery images are original AI-generated demonstration interiors, never customer
-work. Image descriptions live in `src/config/gallery.ts`; provenance and replacement
-guidance are in `src/assets/gallery/README.md`. Astro creates responsive WebP images.
-
-The Contact form validates locally without sending or saving entries. Business
-details come from `src/config/business.ts`; service choices come from
-`src/config/serviceContent.ts`. See [Contact integration notes](docs/contact-integration.md)
-for the integration marker, validation behavior, and work required before accepting
-real submissions. No backend or submission service is included.
+For static hosting, use Node 24, build command `npm run build`, and output directory
+`dist`. No hosting integration or deployment is configured here. Set Astro's `site`
+URL when a real domain is chosen. Preview the production build before publishing.

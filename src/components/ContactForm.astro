@@ -2,47 +2,166 @@
 import Button from './Button.astro';
 import { services } from '../config/serviceContent';
 ---
+
 <section class="panel" aria-labelledby="form-title">
   <h2 id="form-title">Tell us about your home</h2>
-  <p id="form-notice">Demo form only. This form checks your entries in your browser. It does not send or save them, request a quote, or book a cleaning. Please use sample details.</p>
-  <noscript><p class="notice">JavaScript is required to try this demonstration form. Sending messages is not available.</p></noscript>
-  <form data-contact-form aria-labelledby="form-title" aria-describedby="form-notice required-note">
-    <p id="required-note">Fields marked <span aria-hidden="true">*</span> are required. Phone is optional.</p>
+  <p id="form-notice">
+    Demo form only. This form checks your entries in your browser. It does not
+    send or save them, request a quote, or book a cleaning. Please use sample
+    details.
+  </p>
+  <noscript>
+    <p class="notice">
+      JavaScript is required to try this demonstration form. Sending messages is
+      not available.
+    </p>
+  </noscript>
+  <form
+    data-contact-form
+    aria-labelledby="form-title"
+    aria-describedby="form-notice required-note"
+  >
+    <p id="required-note">
+      Fields marked <span aria-hidden="true">*</span> are required. Phone is
+      optional.
+    </p>
     <p class="error-summary" data-error-summary role="alert" hidden></p>
     <fieldset disabled>
       <legend class="sr-only">Demo inquiry details</legend>
       <div class="form-grid">
-        <div class="field"><label for="contact-name">Name <span aria-hidden="true">*</span></label><input id="contact-name" name="name" autocomplete="name" required maxlength="100" aria-describedby="name-error" /><p id="name-error" class="field-error" hidden></p></div>
-        <div class="field"><label for="contact-email">Email <span aria-hidden="true">*</span></label><input id="contact-email" name="email" type="email" autocomplete="email" required maxlength="254" aria-describedby="email-error" /><p id="email-error" class="field-error" hidden></p></div>
-        <div class="field"><label for="contact-phone">Phone <span class="optional">(optional)</span></label><input id="contact-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" aria-describedby="phone-hint phone-error" /><p id="phone-hint" class="hint">If entered, use 7–15 digits with optional +, spaces, parentheses, dots, or hyphens.</p><p id="phone-error" class="field-error" hidden></p></div>
-        <div class="field"><label for="contact-service">Service type <span aria-hidden="true">*</span></label><select id="contact-service" name="service" required aria-describedby="service-error"><option value="">Choose a service</option>{services.map(service => <option value={service.id}>{service.title}</option>)}<option value="not-sure">Not sure yet</option></select><p id="service-error" class="field-error" hidden></p></div>
-        <div class="field full-width"><label for="contact-message">Message <span aria-hidden="true">*</span></label><textarea id="contact-message" name="message" required maxlength="2000" rows="6" aria-describedby="message-hint message-error"></textarea><p id="message-hint" class="hint">For example: home size, priority rooms, and preferred timing. Maximum 2,000 characters.</p><p id="message-error" class="field-error" hidden></p></div>
+        <div class="field">
+          <label for="contact-name">
+            Name <span aria-hidden="true">*</span>
+          </label>
+          <input
+            id="contact-name"
+            name="name"
+            autocomplete="name"
+            required
+            maxlength="100"
+            aria-describedby="name-error"
+          />
+          <p id="name-error" class="field-error" hidden></p>
+        </div>
+        <div class="field">
+          <label for="contact-email">
+            Email <span aria-hidden="true">*</span>
+          </label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+            maxlength="254"
+            aria-describedby="email-error"
+          />
+          <p id="email-error" class="field-error" hidden></p>
+        </div>
+        <div class="field">
+          <label for="contact-phone">
+            Phone <span class="optional">(optional)</span>
+          </label>
+          <input
+            id="contact-phone"
+            name="phone"
+            type="tel"
+            autocomplete="tel"
+            maxlength="40"
+            aria-describedby="phone-hint phone-error"
+          />
+          <p id="phone-hint" class="hint">
+            If entered, use 7–15 digits with optional +, spaces, parentheses,
+            dots, or hyphens.
+          </p>
+          <p id="phone-error" class="field-error" hidden></p>
+        </div>
+        <div class="field">
+          <label for="contact-service">
+            Service type <span aria-hidden="true">*</span>
+          </label>
+          <select
+            id="contact-service"
+            name="service"
+            required
+            aria-describedby="service-error"
+          >
+            <option value="">Choose a service</option>
+            {services.map((service) => (
+              <option value={service.id}>{service.title}</option>
+            ))}
+            <option value="not-sure">Not sure yet</option>
+          </select>
+          <p id="service-error" class="field-error" hidden></p>
+        </div>
+        <div class="field full-width">
+          <label for="contact-message">
+            Message <span aria-hidden="true">*</span>
+          </label>
+          <textarea
+            id="contact-message"
+            name="message"
+            required
+            maxlength="2000"
+            rows="6"
+            aria-describedby="message-hint message-error"
+          ></textarea>
+          <p id="message-hint" class="hint">
+            For example: home size, priority rooms, and preferred timing.
+            Maximum 2,000 characters.
+          </p>
+          <p id="message-error" class="field-error" hidden></p>
+        </div>
       </div>
       <Button type="submit">Check demo form</Button>
     </fieldset>
-    <p class="form-status" data-form-status role="status" aria-live="polite" aria-atomic="true"></p>
+    <p
+      class="form-status"
+      data-form-status
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+    ></p>
   </form>
 </section>
 <script>
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
   if (form) {
-    const controls = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>('input, textarea, select'));
+    const controls = Array.from(
+      form.querySelectorAll<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >('input, textarea, select'),
+    );
     const summary = form.querySelector<HTMLElement>('[data-error-summary]')!;
     const status = form.querySelector<HTMLElement>('[data-form-status]')!;
     const touched = new Set<string>();
     let attempted = false;
-    const getError = (field: typeof controls[number]) => {
+    const getError = (field: (typeof controls)[number]) => {
       const value = field.value.trim();
       if (field.required && !value) {
-        const messages: Record<string, string> = { name: 'Enter your name.', email: 'Enter your email address.', service: 'Choose a service or “Not sure yet”.', message: 'Enter a message about your cleaning needs.' };
+        const messages: Record<string, string> = {
+          name: 'Enter your name.',
+          email: 'Enter your email address.',
+          service: 'Choose a service or “Not sure yet”.',
+          message: 'Enter a message about your cleaning needs.',
+        };
         return messages[field.name];
       }
-      if (field.name === 'email' && field.validity.typeMismatch) return 'Enter a valid email address, such as name@example.com.';
-      if (field.name === 'phone' && value && (!/^[+\d\s().-]+$/.test(value) || value.replace(/\D/g, '').length < 7 || value.replace(/\D/g, '').length > 15)) return 'Enter 7–15 digits using only +, spaces, parentheses, dots, or hyphens, or leave phone blank.';
-      if (field.validity.tooLong) return 'Shorten this entry to the stated maximum length.';
+      if (field.name === 'email' && field.validity.typeMismatch)
+        return 'Enter a valid email address, such as name@example.com.';
+      if (
+        field.name === 'phone' &&
+        value &&
+        (!/^[+\d\s().-]+$/.test(value) ||
+          value.replace(/\D/g, '').length < 7 ||
+          value.replace(/\D/g, '').length > 15)
+      )
+        return 'Enter 7–15 digits using only +, spaces, parentheses, dots, or hyphens, or leave phone blank.';
+      if (field.validity.tooLong)
+        return 'Shorten this entry to the stated maximum length.';
       return '';
     };
-    const validate = (field: typeof controls[number]) => {
+    const validate = (field: (typeof controls)[number]) => {
       const error = getError(field);
       const output = form.querySelector<HTMLElement>(`#${field.name}-error`)!;
       output.textContent = error;
@@ -51,52 +170,142 @@ import { services } from '../config/serviceContent';
       return !error;
     };
     const updateSummary = () => {
-      const count = controls.filter(field => getError(field)).length;
+      const count = controls.filter((field) => getError(field)).length;
       summary.hidden = !count;
-      summary.textContent = count ? `Please check ${count} ${count === 1 ? 'field' : 'fields'} below. Nothing has been sent.` : '';
+      summary.textContent = count
+        ? `Please check ${count} ${count === 1 ? 'field' : 'fields'} below. Nothing has been sent.`
+        : '';
     };
-    controls.forEach(field => {
-      field.addEventListener('blur', () => { touched.add(field.name); validate(field); });
-      for (const event of ['input', 'change']) field.addEventListener(event, () => {
-        status.textContent = '';
-        if (attempted || touched.has(field.name)) validate(field);
-        if (attempted) updateSummary();
+    controls.forEach((field) => {
+      field.addEventListener('blur', () => {
+        touched.add(field.name);
+        validate(field);
       });
+      for (const event of ['input', 'change'])
+        field.addEventListener(event, () => {
+          status.textContent = '';
+          if (attempted || touched.has(field.name)) validate(field);
+          if (attempted) updateSummary();
+        });
     });
-    form.addEventListener('submit', event => {
+    form.addEventListener('submit', (event) => {
       event.preventDefault();
       attempted = true;
       status.textContent = '';
-      const results = controls.map(field => validate(field));
+      const results = controls.map((field) => validate(field));
       updateSummary();
       const invalidIndex = results.indexOf(false);
-      if (invalidIndex !== -1) { controls[invalidIndex].focus(); return; }
+      if (invalidIndex !== -1) {
+        controls[invalidIndex].focus();
+        return;
+      }
       // FUTURE INTEGRATION: connect an approved submission service here.
       // Keep preventDefault until real submission, failure, and success handling exist.
       // Never display a sent/booking confirmation based on validation alone.
-      status.textContent = 'Demo check complete. Your entries pass validation, but nothing has been sent or saved. A submission service must be connected before inquiries can be delivered.';
+      status.textContent =
+        'Demo check complete. Your entries pass validation, but nothing has been sent or saved. A submission service must be connected before inquiries can be delivered.';
     });
     form.noValidate = true;
     form.querySelector<HTMLFieldSetElement>('fieldset')!.disabled = false;
   }
 </script>
 <style>
-  h2 { margin-top: 0; }
-  #form-notice { color: var(--color-muted); }
-  fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
-  .form-grid { display: grid; gap: var(--space-5); margin-block: var(--space-5); }
-  .field { min-width: 0; }
-  label { display: block; font-weight: var(--weight-medium); margin-bottom: var(--space-2); }
-  input, select, textarea { display: block; width: 100%; min-width: 0; min-height: 48px; padding: var(--space-3); border: 1px solid var(--color-muted); border-radius: var(--radius-small); color: var(--color-text); background: var(--color-surface); }
-  textarea { resize: vertical; }
-  [aria-invalid="true"] { border: 2px solid #9b2929; }
-  .hint, .optional, #required-note { color: var(--color-muted); font-size: var(--text-small); }
-  .hint, .field-error { margin-block: var(--space-2) 0; }
-  .field-error { color: #9b2929; font-weight: var(--weight-medium); font-size: var(--text-small); }
-  .error-summary, .notice { padding: var(--space-4); border: 1px solid #9b2929; border-radius: var(--radius-small); color: #822222; background: #fff5f3; }
-  .form-status:empty { display: none; }
-  .form-status { padding: var(--space-4); background: var(--color-accent); border-radius: var(--radius-small); }
-  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  @media (min-width: 40rem) { .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .full-width { grid-column: 1 / -1; } }
-  @media (max-width: 39.999rem) { form :global(.button) { width: 100%; } }
+  h2 {
+    margin-top: 0;
+  }
+  #form-notice {
+    color: var(--color-muted);
+  }
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+  }
+  .form-grid {
+    display: grid;
+    gap: var(--space-5);
+    margin-block: var(--space-5);
+  }
+  .field {
+    min-width: 0;
+  }
+  label {
+    display: block;
+    font-weight: var(--weight-medium);
+    margin-bottom: var(--space-2);
+  }
+  input,
+  select,
+  textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: var(--space-3);
+    border: 1px solid var(--color-muted);
+    border-radius: var(--radius-small);
+    color: var(--color-text);
+    background: var(--color-surface);
+  }
+  textarea {
+    resize: vertical;
+  }
+  [aria-invalid='true'] {
+    border: 2px solid #9b2929;
+  }
+  .hint,
+  .optional,
+  #required-note {
+    color: var(--color-muted);
+    font-size: var(--text-small);
+  }
+  .hint,
+  .field-error {
+    margin-block: var(--space-2) 0;
+  }
+  .field-error {
+    color: #9b2929;
+    font-weight: var(--weight-medium);
+    font-size: var(--text-small);
+  }
+  .error-summary,
+  .notice {
+    padding: var(--space-4);
+    border: 1px solid #9b2929;
+    border-radius: var(--radius-small);
+    color: #822222;
+    background: #fff5f3;
+  }
+  .form-status:empty {
+    display: none;
+  }
+  .form-status {
+    padding: var(--space-4);
+    background: var(--color-accent);
+    border-radius: var(--radius-small);
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  @media (min-width: 40rem) {
+    .form-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .full-width {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 39.999rem) {
+    form :global(.button) {
+      width: 100%;
+    }
+  }
 </style>

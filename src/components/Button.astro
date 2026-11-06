@@ -1,14 +1,34 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 type Shared = { variant?: 'primary' | 'secondary'; class?: string };
-type Props = Shared & (
-  | (HTMLAttributes<'a'> & { href: string })
-  | (HTMLAttributes<'button'> & { href?: never })
-);
-const { variant = 'primary', class: className, ...attributes } = Astro.props;
-const buttonType = attributes.type === 'submit' || attributes.type === 'reset' ? attributes.type : 'button';
+type Props = Shared &
+  (
+    | (HTMLAttributes<'a'> & { href: string })
+    | (HTMLAttributes<'button'> & { href?: never })
+  );
+const {
+  variant = 'primary',
+  class: className,
+  type,
+  ...attributes
+} = Astro.props;
+const buttonType = type === 'submit' || type === 'reset' ? type : 'button';
 ---
-{ 'href' in attributes && attributes.href
-  ? <a {...attributes} class:list={['button', `button--${variant}`, className]}><slot /></a>
-  : <button type={buttonType} {...attributes} class:list={['button', `button--${variant}`, className]}><slot /></button>
-}
+
+{'href' in attributes && attributes.href ? (
+  <a
+    {...attributes}
+    type={type}
+    class:list={['button', `button--${variant}`, className]}
+  >
+    <slot />
+  </a>
+) : (
+  <button
+    type={buttonType}
+    {...attributes}
+    class:list={['button', `button--${variant}`, className]}
+  >
+    <slot />
+  </button>
+)}

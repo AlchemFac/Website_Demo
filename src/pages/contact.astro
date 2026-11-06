@@ -4,24 +4,84 @@ import SectionHeading from '../components/SectionHeading.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { business } from '../config/business';
 ---
-<BaseLayout title="Contact" description="Explore sample contact details and try a browser-only inquiry form for North Texas Home Cleaning, a fictional demonstration business.">
+
+<BaseLayout
+  title="Contact"
+  description="Explore sample contact details and try a browser-only inquiry form for North Texas Home Cleaning, a fictional demonstration business."
+>
   <section class="page-intro" aria-labelledby="contact-title">
-    <SectionHeading level="h1" id="contact-title" eyebrow="A fresh start begins with a conversation" title="Let’s talk about your space." description="Explore the sample contact details or try the demo form below. North Texas Home Cleaning is fictional; no real inquiries or bookings are accepted." />
+    <SectionHeading
+      level="h1"
+      id="contact-title"
+      eyebrow="A fresh start begins with a conversation"
+      title="Let’s talk about your space."
+      description="Explore the sample contact details or try the demo form below. North Texas Home Cleaning is fictional; no real inquiries or bookings are accepted."
+    />
   </section>
   <div class="contact-layout">
     <aside class="contact-info" aria-label="Sample business information">
-      <section class="panel" aria-labelledby="details-title"><h2 id="details-title">Sample contact details</h2><p>{business.name}</p><dl><dt>Phone</dt><dd>{business.phone.display}</dd><dt>Email</dt><dd>{business.email}</dd></dl><p class="note">Demonstration details only. These do not reach a real cleaning company.</p></section>
-      <section class="panel" aria-labelledby="hours-title"><h2 id="hours-title">Sample business hours</h2><dl>{business.hours.map(({ days, hours }) => <div><dt>{days}</dt><dd>{hours}</dd></div>)}</dl></section>
-      <section class="panel" aria-labelledby="areas-title"><h2 id="areas-title">Example service areas</h2><ul>{business.serviceAreas.map(area => <li>{area}</li>)}</ul><p class="note">Illustrative DFW locations, not confirmed coverage.</p></section>
+      <section class="panel" aria-labelledby="details-title">
+        <h2 id="details-title">Sample contact details</h2>
+        <p>{business.name}</p>
+        <dl>
+          <dt>Phone</dt>
+          <dd>{business.phone.display}</dd>
+          <dt>Email</dt>
+          <dd>{business.email}</dd>
+        </dl>
+        <p class="note">
+          Demonstration details only. These do not reach a real cleaning
+          company.
+        </p>
+      </section>
+      <section class="panel" aria-labelledby="hours-title">
+        <h2 id="hours-title">Sample business hours</h2>
+        <dl>
+          {business.hours.map(({ days, hours }) => (
+            <div>
+              <dt>{days}</dt>
+              <dd>{hours}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+      <section class="panel" aria-labelledby="areas-title">
+        <h2 id="areas-title">Example service areas</h2>
+        <ul>
+          {business.serviceAreas.map((area) => (
+            <li>{area}</li>
+          ))}
+        </ul>
+        <p class="note">Illustrative DFW locations, not confirmed coverage.</p>
+      </section>
     </aside>
     <ContactForm />
   </div>
 </BaseLayout>
 <style>
-  .contact-layout { display: grid; gap: var(--space-6); align-items: start; }
-  .contact-info { display: grid; gap: var(--space-5); min-width: 0; }
-  .contact-info h2 { font-size: 1.25rem; }
-  .note { color: var(--color-muted); font-size: var(--text-small); }
-  ul { padding-left: 1.25rem; }
-  @media (min-width: 64rem) { .contact-layout { grid-template-columns: minmax(0, .8fr) minmax(0, 1.6fr); } }
+  .contact-layout {
+    display: grid;
+    gap: var(--space-6);
+    align-items: start;
+  }
+  .contact-info {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0;
+  }
+  .contact-info h2 {
+    font-size: 1.25rem;
+  }
+  .note {
+    color: var(--color-muted);
+    font-size: var(--text-small);
+  }
+  ul {
+    padding-left: 1.25rem;
+  }
+  @media (min-width: 64rem) {
+    .contact-layout {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+    }
+  }
 </style>

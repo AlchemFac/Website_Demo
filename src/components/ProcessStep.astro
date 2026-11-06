@@ -1,11 +1,35 @@
 ---
-interface Props { title: string; description: string; }
+interface Props {
+  title: string;
+  description: string;
+}
 const { title, description } = Astro.props;
 ---
-<li><h3>{title}</h3><p>{description}</p></li>
+
+<li>
+  <h3>{title}</h3>
+  <p>{description}</p>
+</li>
 <style>
-  li { counter-increment: steps; position: relative; padding: 1.5rem 0 0; border-top: 1px solid #b9cbbd; }
-  li::before { content: '0' counter(steps); display: block; font-family: Georgia, serif; color: var(--color-primary); font-size: 2rem; }
-  h3 { font-size: 1.3rem; margin-block: 1rem .5rem; }
-  p { color: var(--color-muted); margin: 0; }
+  li {
+    counter-increment: steps;
+    position: relative;
+    padding: 1.5rem 0 0;
+    border-top: 1px solid #b9cbbd;
+  }
+  li::before {
+    content: '0' counter(steps);
+    display: block;
+    font-family: Georgia, serif;
+    color: var(--color-primary);
+    font-size: 2rem;
+  }
+  h3 {
+    font-size: 1.3rem;
+    margin-block: 1rem 0.5rem;
+  }
+  p {
+    color: var(--color-muted);
+    margin: 0;
+  }
 </style>

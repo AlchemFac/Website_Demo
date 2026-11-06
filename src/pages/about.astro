@@ -1,10 +1,46 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import Button from '../components/Button.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import PageCTA from '../components/PageCTA.astro';
+import { business } from '../config/business';
+import { philosophy } from '../config/serviceContent';
 ---
-<BaseLayout title="About">
-  <section class="page-intro">
-    <SectionHeading level="h1" eyebrow="Demo · Placeholder" title="About the business" description="This space is reserved for the business’s story, approach, and team introduction." />
+<BaseLayout title="About" description="Meet the idea behind North Texas Home Cleaning: a fictional cleaning company built around clear expectations, thoughtful home care, and everyday ease.">
+  <section class="page-intro" aria-labelledby="about-title">
+    <SectionHeading level="h1" id="about-title" eyebrow="The idea behind the clean" title="More room for everyday life." description="A home is where life happens. The idea behind North Texas Home Cleaning is simple: thoughtful cleaning that helps make daily routines feel a little lighter." />
+    <Button href="/contact/">Request a Free Quote</Button>
+    <p class="demo-note">A fictional company, presented as a demonstration. No real services or bookings.</p>
   </section>
-  <section class="panel"><h2>A story to come</h2><p>North Texas Home Cleaning is fictional. No customer reviews, certifications, insurance claims, or business credentials are represented in this template.</p></section>
+  <section class="introduction" aria-labelledby="introduction-title">
+    <SectionHeading id="introduction-title" eyebrow="A thoughtful starting point" title="Home care with a clear purpose." />
+    <div class="introduction-copy"><p>{business.name} is a fictional residential cleaning company imagined for households in North Texas. Its proposed services cover everyday upkeep, more detailed refreshes, and cleaning around a move.</p><p>The intended focus is practical: understand what the household needs, agree on the work, and approach each space with care. This site describes that service concept, rather than an operating company’s history or credentials.</p><a class="text-link" href="/services/">Explore the example services <ArrowIcon /></a></div>
+  </section>
+  <section class="section philosophy" aria-labelledby="philosophy-title">
+    <SectionHeading id="philosophy-title" eyebrow="How we would approach the work" title="Simple principles. Clear expectations." description="These principles describe the company’s intended service philosophy, not verified performance claims." />
+    <div class="card-grid">{philosophy.map(({ title, description }, index) => <article class="card"><span class="principle-number" aria-hidden="true">0{index + 1}</span><h3>{title}</h3><p>{description}</p></article>)}</div>
+  </section>
+  <section class="area panel" aria-labelledby="area-title">
+    <div><SectionHeading id="area-title" eyebrow="Around North Texas" title="A neighborhood-minded idea." description="Dallas, Plano, and Frisco illustrate the proposed Dallas–Fort Worth service area. Actual coverage would need to be confirmed by a real provider." /><ul class="cities" aria-label="Example service areas">{business.serviceAreas.map(city => <li>{city}</li>)}</ul></div>
+    <div class="area-copy"><h3>Every home has its own routine.</h3><p>Location is only the starting point. Home size, preferred timing, and cleaning priorities would help shape a proposed visit.</p><a class="text-link" href="/contact/">Ask about your area <ArrowIcon /></a><p class="demo-note">Example locations only. Coverage is not confirmed.</p></div>
+  </section>
+  <PageCTA id="about-cta" title="What would a fresh start look like for you?" description="Explore the Contact page to see the sample details for this fictional business." />
 </BaseLayout>
+<style>
+  .demo-note { font-size: var(--text-small); color: var(--color-muted); }
+  .introduction { display: grid; gap: var(--space-5); border-block: var(--border-default); padding-block: var(--space-7); }
+  .introduction-copy > :first-child { margin-top: 0; }
+  .introduction-copy p, .card p, .area-copy p { color: var(--color-muted); }
+  .text-link { display: inline-flex; align-items: center; gap: var(--space-3); min-height: 48px; font-weight: var(--weight-medium); }
+  .philosophy .card-grid { margin-top: var(--space-6); }
+  .principle-number { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 50%; color: var(--color-primary); background: var(--color-accent); font-weight: var(--weight-bold); }
+  .card h3 { font-size: 1.25rem; margin-top: var(--space-5); }
+  .area { display: grid; gap: var(--space-6); padding: clamp(1.5rem, 4vw, 3rem); }
+  .cities { display: flex; flex-wrap: wrap; gap: var(--space-3); padding: 0; margin: var(--space-5) 0 0; list-style: none; }
+  .cities li { padding: var(--space-2) var(--space-4); border-radius: var(--radius-pill); background: var(--color-accent); }
+  .area-copy { align-self: center; }
+  .area-copy h3 { font-size: 1.3rem; margin-top: 0; }
+  @media (min-width: 48rem) { .introduction, .area { grid-template-columns: 1fr 1fr; gap: var(--space-8); } }
+  @media (max-width: 39.999rem) { .page-intro :global(.button) { width: 100%; } }
+</style>

@@ -1,0 +1,20 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Button from './Button.astro';
+import ArrowIcon from './ArrowIcon.astro';
+interface Props { id: string; title: string; description: string; }
+const { id, title, description } = Astro.props;
+---
+<section class="page-cta" aria-labelledby={id}>
+  <SectionHeading id={id} eyebrow="Make room for what matters" title={title} description={description} />
+  <Button href="/contact/">Request a Free Quote <ArrowIcon /></Button>
+  <p class="demo-note">Fictional business. The Contact page provides sample information only; no real quotes or bookings are available.</p>
+</section>
+<style>
+  .page-cta { margin-top: var(--space-8); padding: clamp(1.5rem, 5vw, 4rem); background: var(--color-accent); border-radius: var(--radius); text-align: center; }
+  .page-cta :global(.section-heading) { margin-inline: auto; }
+  .page-cta :global(.section-description) { margin-inline: auto; }
+  .page-cta :global(.button) { margin-block: var(--space-4); }
+  .demo-note { margin-inline: auto; font-size: var(--text-small); color: var(--color-muted); }
+  @media (max-width: 39.999rem) { .page-cta :global(.button) { width: 100%; } }
+</style>

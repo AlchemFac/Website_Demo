@@ -1,14 +1,39 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import Button from '../components/Button.astro';
+import ServiceDetailCard from '../components/ServiceDetailCard.astro';
+import PageCTA from '../components/PageCTA.astro';
+import { services } from '../config/serviceContent';
 ---
-<BaseLayout title="Services">
-  <section class="page-intro">
-    <SectionHeading level="h1" eyebrow="Demo · Placeholder" title="Services" description="Use this page to describe the business’s services, scope, and scheduling details." />
+<BaseLayout title="Services" description="Explore example standard, deep, and move-in/move-out cleaning scopes for North Texas Home Cleaning, a fictional demonstration business.">
+  <section class="page-intro" aria-labelledby="services-title">
+    <SectionHeading level="h1" id="services-title" eyebrow="A clean for every chapter" title="Find the right fresh start." description="A routine reset, a closer look at the details, or a clean slate for a move. Explore three example ways to care for your home." />
+    <Button href="/contact/">Request a Free Quote</Button>
+    <p class="demo-note">Fictional services · Sample scopes only · No real bookings</p>
   </section>
-  <div class="card-grid">
-    {['Routine cleaning', 'Deep cleaning', 'Move-in / move-out cleaning'].map((title) => (
-      <section class="panel"><h2>{title}</h2><p>Sample category only. Add verified service details here before launch.</p></section>
-    ))}
-  </div>
+  <nav class="service-nav" aria-label="On this page"><ul>{services.map(service => <li><a href={`#${service.id}`}>{service.title}<span aria-hidden="true"> ↓</span></a></li>)}</ul></nav>
+  <div class="service-list">{services.map(service => <ServiceDetailCard {...service} />)}</div>
+  <section class="section planning" aria-labelledby="planning-title">
+    <SectionHeading id="planning-title" eyebrow="Before scheduling" title="Good expectations make a good starting point." description="These inclusions and exclusions illustrate possible service scopes. A real provider would confirm the details for each home before any work begins." />
+    <div class="card-grid">
+      <article class="card"><h3>Share what matters</h3><p>Describe your home’s size, condition, preferred timing, and priority rooms. Mention pets, delicate surfaces, and access needs.</p></article>
+      <article class="card"><h3>Confirm the details</h3><p>Review tasks, exclusions, product preferences, pricing, and any optional extras. Interior windows and inside appliances should never be assumed included.</p></article>
+      <article class="card"><h3>Prepare the space</h3><p>Agree on access and clear the surfaces to be cleaned. For a move-related visit, discuss when the home will be empty and whether utilities will be available.</p></article>
+    </div>
+  </section>
+  <PageCTA id="services-cta" title="Not sure which clean fits?" description="Start with your priorities and the kind of refresh you have in mind." />
 </BaseLayout>
+<style>
+  .demo-note { font-size: var(--text-small); color: var(--color-muted); }
+  .service-nav { margin-bottom: var(--space-6); }
+  .service-nav ul { display: flex; flex-wrap: wrap; gap: var(--space-3); list-style: none; padding: 0; margin: 0; }
+  .service-nav a { display: flex; align-items: center; gap: var(--space-3); min-height: 48px; padding: var(--space-3) var(--space-4); border: var(--border-default); border-radius: var(--radius-pill); text-decoration: none; background: var(--color-surface); font-weight: var(--weight-medium); }
+  .service-nav a:hover { background: var(--color-accent); text-decoration: underline; }
+  .service-list { display: grid; gap: var(--space-6); }
+  .planning { padding-bottom: 0; }
+  .planning .card-grid { margin-top: var(--space-6); }
+  .card h3 { font-size: 1.2rem; }
+  .card p { color: var(--color-muted); }
+  @media (max-width: 39.999rem) { .page-intro :global(.button) { width: 100%; } .service-nav li { width: 100%; } .service-nav a { justify-content: space-between; } }
+</style>

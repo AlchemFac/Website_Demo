@@ -3,8 +3,9 @@
 ## Status and provider choice
 
 The code supports Formspree HTTPS submissions with Cloudflare Turnstile and a
-`_gotcha` honeypot. **No live account, public identifiers, or email delivery have
-been configured or verified by this implementation.** With both environment values
+`_gotcha` honeypot. **The owner has configured the provider accounts and confirmed one local test
+email reached the inbox. See the verification record below. Public identifiers
+are kept in ignored local configuration; no secret key is part of this project.** With both environment values
 blank, the form remains a browser-only demo and sends nothing.
 
 Formspree works with static hosting without private browser API keys. As checked
@@ -118,7 +119,7 @@ errors, bad responses, network failure, timeouts, CAPTCHA failures/expiry, and h
 Ports 4322 (site suite) and 4323 (submission suite) must be available. Both test suites explicitly override public settings, so no local account identifiers
 are used by the browser tests.
 
-## Manual delivery verification — required before launch
+## Production launch checklist — repeat on the deployed hostname
 
 - [ ] Owner configured and verified the recipient and authorized a sample submission.
 - [ ] Correct Formspree/Turnstile settings are active for the exact test origin.
@@ -140,4 +141,19 @@ Record the test date, deployment version, provider submission identifier, and th
 owner's delivery confirmation privately. Do not commit test messages, addresses,
 provider response bodies, screenshots of inboxes, or secret values.
 
-Current manual-verification status: **NOT PERFORMED — awaiting account configuration.**
+## Local delivery verification record
+
+**Verified November 6, 2026:** the owner supplied an inbox screenshot showing a
+Formspree test email from `localhost:4321`. The owner had confirmed recipient
+verification and authorized the test. The local checkout was confirmed at commit
+`69ec0fe` on `feat/contact-submission` before the test.
+
+The email contained the expected form field categories, including the optional phone
+field left empty. No contact values, message contents, inbox screenshot, or private
+keys are recorded in this repository.
+
+This confirms email delivery for one local submission. It does not independently
+verify reply-to behavior, provider rejection of invalid CAPTCHA tokens, real-widget
+accessibility, or delivery from a deployed hostname. Those checks remain in the
+production checklist above. Automated success/failure tests use mocks and are
+separate from this manual inbox confirmation.

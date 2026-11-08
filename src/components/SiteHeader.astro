@@ -5,6 +5,11 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
 <header class="site-header" data-site-header>
+  {business.isDemo && (
+    <div class="demo-banner">
+      Demo only · Fictional business and sample information
+    </div>
+  )}
   <div class="container header-inner">
     <a class="brand" href="/">
       {business.name}

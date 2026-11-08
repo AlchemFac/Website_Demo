@@ -60,8 +60,7 @@ Turnstile enables “Send test inquiry” and provider acceptance/error states. 
 Turnstile secret stays in Formspree. Account setup and actual inbox delivery must
 be manually verified before launch; automated mocks cannot establish delivery.
 
-`business.isDemo` controls only the banner. Explicit notices, the title's “Demo”
-suffix, and the `noindex, nofollow` directive also require deliberate review in
+`business.isDemo` controls the demo banner, title suffix, and an indexing safety gate. Explicit notices and the indexing configuration still require deliberate review in
 `BaseLayout.astro`, page content, the footer, and CTA/form components. Flipping one
 flag does not make this demo a production business website.
 
@@ -75,3 +74,11 @@ flag does not make this demo a production business website.
 
 Keep new features small. The existing folder structure is sufficient for this site;
 new infrastructure, a CMS, or a backend is not required just to edit its content.
+
+## Domain and search discovery
+
+Use `SITE_URL` for the final root HTTPS origin and `ALLOW_INDEXING` for explicit
+indexing approval. The fictional demo remains blocked even if that flag is true.
+After verifying all client content and setting `business.isDemo=false`, rebuild
+with the domain and `ALLOW_INDEXING=true` to generate an indexable robots.txt and
+sitemap. See [Production readiness](production-readiness.md) before changing this.

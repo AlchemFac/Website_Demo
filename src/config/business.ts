@@ -2,7 +2,8 @@
 export const business = {
   name: 'North Texas Home Cleaning',
   isDemo: true,
-  description: 'A fictional small-business website template for a home cleaning service.',
+  description:
+    'A fictional small-business website template for a home cleaning service.',
   phone: { display: '(214) 555-0100', href: 'tel:+12145550100' },
   email: 'hello@example.com',
   serviceAreas: ['Dallas', 'Plano', 'Frisco'],
@@ -12,6 +13,11 @@ export const business = {
   ],
   branding: {
     tagline: 'A fresh start for your space.',
-    colors: { primary: '#466653', background: '#fafbf8', text: '#292e2b', accent: '#e7eee6' },
+    colors: {
+      primary: '#466653',
+      background: '#fafbf8',
+      text: '#292e2b',
+      accent: '#e7eee6',
+    },
   },
 } as const;

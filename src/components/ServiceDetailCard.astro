@@ -2,35 +2,98 @@
 import Button from './Button.astro';
 import ArrowIcon from './ArrowIcon.astro';
 interface Props {
-  id: string; number: string; title: string; summary: string; description: string;
-  includes: readonly string[]; excludes: readonly string[];
+  id: string;
+  number: string;
+  title: string;
+  summary: string;
+  description: string;
+  includes: readonly string[];
+  excludes: readonly string[];
 }
-const { id, number, title, summary, description, includes, excludes } = Astro.props;
+const { id, number, title, summary, description, includes, excludes } =
+  Astro.props;
 ---
+
 <article class="panel service-detail" id={id} aria-labelledby={`${id}-title`}>
   <div class="service-intro">
     <p class="eyebrow">Service {number} · Example scope</p>
     <h2 id={`${id}-title`}>{title}</h2>
     <p class="summary">{summary}</p>
     <p>{description}</p>
-    <Button href="/contact/" aria-label={`Request a free quote for ${title}`}>Request a Free Quote <ArrowIcon /></Button>
+    <Button href="/contact/" aria-label={`Request a free quote for ${title}`}>
+      Request a Free Quote <ArrowIcon />
+    </Button>
   </div>
   <div class="scope">
-    <section aria-labelledby={`${id}-includes`}><h3 id={`${id}-includes`}>Example inclusions</h3><ul>{includes.map(item => <li>{item}</li>)}</ul></section>
-    <section aria-labelledby={`${id}-excludes`}><h3 id={`${id}-excludes`}>Outside this example scope</h3><ul>{excludes.map(item => <li>{item}</li>)}</ul></section>
+    <section aria-labelledby={`${id}-includes`}>
+      <h3 id={`${id}-includes`}>Example inclusions</h3>
+      <ul>
+        {includes.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </section>
+    <section aria-labelledby={`${id}-excludes`}>
+      <h3 id={`${id}-excludes`}>Outside this example scope</h3>
+      <ul>
+        {excludes.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </section>
   </div>
 </article>
 <style>
-  .service-detail { display: grid; gap: var(--space-6); scroll-margin-top: var(--space-6); padding: clamp(1.5rem, 4vw, 3rem); }
-  h2 { margin-block: var(--space-3) var(--space-4); font-size: clamp(1.65rem, 3vw, 2.25rem); }
-  .summary { font-size: 1.125rem; color: var(--color-primary); font-weight: var(--weight-medium); }
-  .service-intro > p:not(.eyebrow):not(.summary) { color: var(--color-muted); }
-  .service-intro :global(.button) { margin-top: var(--space-4); }
-  .scope { display: grid; gap: var(--space-5); min-width: 0; }
-  .scope section { padding: var(--space-5); border-radius: var(--radius-small); background: var(--color-background); border: var(--border-default); }
-  .scope section:first-child { background: var(--color-accent); }
-  h3 { margin: 0 0 var(--space-3); font-size: 1rem; }
-  ul { padding-left: 1.25rem; margin: 0; }
-  li + li { margin-top: var(--space-2); }
-  @media (min-width: 48rem) { .service-detail { grid-template-columns: 1fr 1fr; gap: var(--space-7); } }
+  .service-detail {
+    display: grid;
+    gap: var(--space-6);
+    scroll-margin-top: var(--space-6);
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+  h2 {
+    margin-block: var(--space-3) var(--space-4);
+    font-size: clamp(1.65rem, 3vw, 2.25rem);
+  }
+  .summary {
+    font-size: 1.125rem;
+    color: var(--color-primary);
+    font-weight: var(--weight-medium);
+  }
+  .service-intro > p:not(.eyebrow):not(.summary) {
+    color: var(--color-muted);
+  }
+  .service-intro :global(.button) {
+    margin-top: var(--space-4);
+  }
+  .scope {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0;
+  }
+  .scope section {
+    padding: var(--space-5);
+    border-radius: var(--radius-small);
+    background: var(--color-background);
+    border: var(--border-default);
+  }
+  .scope section:first-child {
+    background: var(--color-accent);
+  }
+  h3 {
+    margin: 0 0 var(--space-3);
+    font-size: 1rem;
+  }
+  ul {
+    padding-left: 1.25rem;
+    margin: 0;
+  }
+  li + li {
+    margin-top: var(--space-2);
+  }
+  @media (min-width: 48rem) {
+    .service-detail {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-7);
+    }
+  }
 </style>

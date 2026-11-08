@@ -1,4 +1,5 @@
 ---
+import BusinessBrand from './BusinessBrand.astro';
 import { business } from '../config/business';
 import { navigation } from '../config/navigation';
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -11,10 +12,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     </div>
   )}
   <div class="container header-inner">
-    <a class="brand" href="/">
-      {business.name}
-      <span class="brand-tagline">{business.branding.tagline}</span>
-    </a>
+    <BusinessBrand showTagline />
     <button
       class="menu-toggle"
       type="button"

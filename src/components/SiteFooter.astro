@@ -1,4 +1,5 @@
 ---
+import BusinessBrand from './BusinessBrand.astro';
 import { business } from '../config/business';
 import { navigation } from '../config/navigation';
 ---
@@ -6,9 +7,7 @@ import { navigation } from '../config/navigation';
 <footer class="site-footer">
   <div class="container footer-grid">
     <div>
-      <a class="brand" href="/">
-        {business.name}
-      </a>
+      <BusinessBrand />
       <p>{business.branding.tagline}</p>
       {business.isDemo && (
         <p class="footer-note">

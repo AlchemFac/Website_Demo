@@ -1,4 +1,5 @@
 ---
+import { pageMetadata } from '../config/pageMetadata';
 import ArrowIcon from '../components/ArrowIcon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
@@ -27,8 +28,8 @@ const benefits = [
 ---
 
 <BaseLayout
-  title="Home Cleaning in Dallas–Fort Worth"
-  description="Explore sample home cleaning services in Dallas, Plano, and Frisco. North Texas Home Cleaning is a fictional demonstration business."
+  title={pageMetadata.home.title}
+  description={pageMetadata.home.description}
 >
   <div class="home">
     <section class="hero" aria-labelledby="hero-title">
@@ -275,7 +276,7 @@ const benefits = [
     max-height: 36rem;
     object-fit: cover;
     border-radius: 8rem 8rem 1rem 1rem;
-    background: #eee5d3;
+    background: var(--color-image-placeholder);
   }
   figcaption {
     position: absolute;
@@ -284,8 +285,8 @@ const benefits = [
     right: 1rem;
     padding: 1rem;
     border-radius: 0.75rem;
-    background: #fffaf0;
-    color: #344d3e;
+    background: var(--color-caption-surface);
+    color: var(--color-primary-hover);
     font-family: Georgia, serif;
     font-size: 1.15rem;
     box-shadow: 0 5px 20px #292e2b12;
@@ -380,13 +381,13 @@ const benefits = [
     border: 1px solid var(--color-border);
     padding: 0.5rem 1rem;
     border-radius: 100px;
-    background: white;
+    background: var(--color-surface);
   }
   .city-list span {
     color: var(--color-primary);
   }
   .area-note {
-    background: #e7eee6;
+    background: var(--color-accent);
     padding: 2rem;
     border-radius: 1rem;
     align-self: center;
@@ -402,7 +403,7 @@ const benefits = [
   }
   .final-cta {
     text-align: center;
-    background: #e7eee6;
+    background: var(--color-accent);
     border-radius: 1.5rem;
     padding: 3rem 1.25rem;
   }
@@ -424,7 +425,7 @@ const benefits = [
     left: 0;
     right: 0;
     padding: 0.75rem 1rem max(0.75rem, env(safe-area-inset-bottom));
-    background: #fafbf8;
+    background: var(--color-background);
     border-top: 1px solid var(--color-border);
     z-index: 5;
   }

@@ -22,13 +22,23 @@ const canonical =
     ? new URL(Astro.url.pathname, Astro.site).href
     : undefined;
 const { colors } = business.branding;
+const themeStyle = [
+  `--color-primary: ${colors.primary}`,
+  `--color-primary-hover: ${colors.primaryHover}`,
+  `--color-background: ${colors.background}`,
+  `--color-text: ${colors.text}`,
+  `--color-accent: ${colors.accent}`,
+  `--color-surface: ${colors.surface}`,
+  `--color-muted: ${colors.muted}`,
+  `--color-border: ${colors.border}`,
+  `--color-on-primary: ${colors.onPrimary}`,
+  `--color-caption-surface: ${colors.captionSurface}`,
+  `--color-image-placeholder: ${colors.imagePlaceholder}`,
+].join(';');
 ---
 
 <!doctype html>
-<html
-  lang="en"
-  style={`--color-primary: ${colors.primary}; --color-background: ${colors.background}; --color-text: ${colors.text}; --color-accent: ${colors.accent};`}
->
+<html lang="en" style={themeStyle}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

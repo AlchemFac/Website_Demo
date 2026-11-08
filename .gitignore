@@ -8,3 +8,5 @@ dist/
 playwright-report/
 test-results/
 *.tsbuildinfo
+.submission-test-dist/
+.site-test-dist/

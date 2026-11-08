@@ -54,9 +54,11 @@ PNGs into `public/`, which would bypass the existing image optimization pipeline
 
 ## Contact form and demo mode
 
-See [Contact integration](contact-integration.md). The current action is deliberately
-called “Check demo form”; validation cannot deliver an inquiry. Keep no-delivery
-messages until an approved submission service is connected and tested.
+See [Contact integration](contact-integration.md). With both public environment
+values blank, “Check demo form” validates locally only. Configuring Formspree and
+Turnstile enables “Send test inquiry” and provider acceptance/error states. The
+Turnstile secret stays in Formspree. Account setup and actual inbox delivery must
+be manually verified before launch; automated mocks cannot establish delivery.
 
 `business.isDemo` controls only the banner. Explicit notices, the title's “Demo”
 suffix, and the `noindex, nofollow` directive also require deliberate review in

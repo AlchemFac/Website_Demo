@@ -2,12 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ContactForm from '../components/ContactForm.astro';
+import { contactForm } from '../config/contactForm';
 import { business } from '../config/business';
 ---
 
 <BaseLayout
   title="Contact"
-  description="Explore sample contact details and try a browser-only inquiry form for North Texas Home Cleaning, a fictional demonstration business."
+  description="Sample contact information and a configurable test-inquiry form for North Texas Home Cleaning, a fictional demonstration business."
 >
   <section class="page-intro" aria-labelledby="contact-title">
     <SectionHeading
@@ -15,7 +16,11 @@ import { business } from '../config/business';
       id="contact-title"
       eyebrow="A fresh start begins with a conversation"
       title="Let’s talk about your space."
-      description="Explore the sample contact details or try the demo form below. North Texas Home Cleaning is fictional; no real inquiries or bookings are accepted."
+      description={
+        contactForm.configured
+          ? 'Send a test inquiry to the site owner using the form below. North Texas Home Cleaning remains fictional; no real cleaning bookings are available.'
+          : 'Explore the sample contact details or try the demo form below. North Texas Home Cleaning is fictional; no real inquiries or bookings are accepted.'
+      }
     />
   </section>
   <div class="contact-layout">

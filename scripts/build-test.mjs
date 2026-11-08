@@ -25,6 +25,8 @@ const result = spawnSync(
     stdio: 'inherit',
     env: {
       ...process.env,
+      SITE_URL: '',
+      ALLOW_INDEXING: 'false',
       PUBLIC_FORMSPREE_FORM_ID: submission ? 'testform' : '',
       PUBLIC_TURNSTILE_SITE_KEY: submission
         ? 'mock-site-key-not-a-credential'

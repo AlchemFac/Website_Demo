@@ -50,8 +50,9 @@ src/
     navigation.ts             Navigation labels and routes
     serviceContent.ts         Shared service data, homepage summaries, philosophy
     gallery.ts                Gallery image imports, captions, and alt text
+    seo.mjs                   Validated domain and discovery-file helpers
   layouts/BaseLayout.astro    Document, metadata, demo banner, header, and footer
-  pages/                      The five Astro routes above
+  pages/                      The five Astro routes above and a branded 404
   styles/global.css           Shared design tokens and responsive layout rules
 public/images/                Homepage SVG illustration and its license
 docs/                        Customization and contact integration guides
@@ -128,3 +129,12 @@ are represented.
 For static hosting, use Node 24, build command `npm run build`, and output directory
 `dist`. No hosting deployment is configured here. Set Astro's `site`
 URL when a real domain is chosen. Preview the production build before publishing.
+
+## Production readiness and indexing
+
+See [Production readiness review](docs/production-readiness.md) for verified checks,
+client-content replacements, and remaining manual launch checks. No final domain
+has been selected. Optional `SITE_URL` configures canonical URLs; sitemap publication
+and indexing also require `ALLOW_INDEXING=true` and `business.isDemo=false`. Leave
+the demo blocked until real business content and delivery are approved. Discovery
+files are generated during the build, without a sitemap dependency.

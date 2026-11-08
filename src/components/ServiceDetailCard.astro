@@ -25,7 +25,7 @@ const { id, number, title, summary, description, includes, excludes } =
     </Button>
   </div>
   <div class="scope">
-    <section aria-labelledby={`${id}-includes`}>
+    <section aria-labelledby={`${id}-title ${id}-includes`}>
       <h3 id={`${id}-includes`}>Example inclusions</h3>
       <ul>
         {includes.map((item) => (
@@ -33,7 +33,7 @@ const { id, number, title, summary, description, includes, excludes } =
         ))}
       </ul>
     </section>
-    <section aria-labelledby={`${id}-excludes`}>
+    <section aria-labelledby={`${id}-title ${id}-excludes`}>
       <h3 id={`${id}-excludes`}>Outside this example scope</h3>
       <ul>
         {excludes.map((item) => (

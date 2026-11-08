@@ -16,7 +16,7 @@ const { number, title, description, details } = Astro.props;
   <h3>{title}</h3>
   <p>{description}</p>
   <p class="service-details">{details}</p>
-  <a href="/services/" aria-label={`Explore ${title}`}>
+  <a href="/services/" aria-label={`Explore service: ${title}`}>
     Explore service <ArrowIcon />
   </a>
 </article>

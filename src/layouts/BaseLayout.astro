@@ -3,11 +3,24 @@ import { business } from '../config/business';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import '../styles/global.css';
+import { indexingAllowed } from '../config/seo.mjs';
 interface Props {
   title: string;
   description?: string;
+  noIndex?: boolean;
 }
-const { title, description = business.description } = Astro.props;
+const {
+  title,
+  description = business.description,
+  noIndex = false,
+} = Astro.props;
+const indexable =
+  !noIndex &&
+  indexingAllowed(Astro.site, import.meta.env.ALLOW_INDEXING, business.isDemo);
+const canonical =
+  !noIndex && Astro.site
+    ? new URL(Astro.url.pathname, Astro.site).href
+    : undefined;
 const { colors } = business.branding;
 ---
 
@@ -20,18 +33,25 @@ const { colors } = business.branding;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="robots" content="noindex, nofollow" />
-    <title>{title} | {business.name} — Demo</title>
+    <meta
+      name="robots"
+      content={indexable ? 'index, follow' : 'noindex, nofollow'}
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content={`${title} | ${business.name}${business.isDemo ? ' — Demo' : ''}`}
+    />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <title>{title} | {business.name}{business.isDemo ? ' — Demo' : ''}</title>
   </head>
   <body>
     <a class="skip-link" href="#main-content">
       Skip to content
     </a>
-    {business.isDemo && (
-      <div class="demo-banner">
-        Demo only · Fictional business and sample information
-      </div>
-    )}
     <SiteHeader />
     <main id="main-content" class="container" tabindex="-1">
       <slot />

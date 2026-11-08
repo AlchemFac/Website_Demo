@@ -13,8 +13,9 @@
     "format:check": "prettier --check .",
     "test": "node scripts/build-test.mjs demo && playwright test",
     "test:ui": "playwright test --ui",
-    "verify": "npm run format:check && npm run check && npm run build && npm test && npm run test:submission",
-    "test:submission": "node scripts/build-test.mjs submission && playwright test --config playwright.submission.config.ts"
+    "verify": "npm run format:check && npm run check && npm run test:seo && npm run build && npm test && npm run test:submission",
+    "test:submission": "node scripts/build-test.mjs submission && playwright test --config playwright.submission.config.ts",
+    "test:seo": "node --test tests/seo.test.mjs"
   },
   "dependencies": {
     "astro": "7.4.4"

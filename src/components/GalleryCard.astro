@@ -5,9 +5,11 @@ interface Props {
   src: ImageMetadata;
   title: string;
   alt: string;
+  label: string;
+  caption: string;
   eager?: boolean;
 }
-const { src, title, alt, eager = false } = Astro.props;
+const { src, title, alt, label, caption, eager = false } = Astro.props;
 ---
 
 <figure>
@@ -24,9 +26,9 @@ const { src, title, alt, eager = false } = Astro.props;
     decoding="async"
   />
   <figcaption>
-    <span class="eyebrow">AI-generated demonstration</span>
+    <span class="eyebrow">{label}</span>
     <h2>{title}</h2>
-    <p>Imagined interior. Not a customer home or completed cleaning job.</p>
+    <p>{caption}</p>
   </figcaption>
 </figure>
 <style>

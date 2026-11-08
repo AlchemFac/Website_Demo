@@ -1,140 +1,160 @@
-# North Texas Home Cleaning — Astro demo
+# Small-business website template — Astro
 
-A five-page small-business website built with Astro, TypeScript, and plain CSS.
-**North Texas Home Cleaning is fictional.** Contact information, service scopes,
-hours, and areas are examples. Gallery images are labeled AI-generated interiors,
-not customer work. The Contact form defaults to a browser-only demo. Optional Formspree and Turnstile configuration enables test inquiries; inbox delivery must be verified manually.
+A reusable five-page static website with responsive components, a configurable
+brand, optimized gallery images, and an optional Formspree contact integration.
+**The included North Texas Home Cleaning business is fictional.** Names, contacts,
+hours, services, cities, and business copy are demonstration content. Images are
+clearly labeled generated interiors, not customer work.
 
-## Open and run locally
+**Deployment status:** prepared for Cloudflare Pages, not deployed by this setup.
+No domain or DNS changes have been made. A real client launch still requires the
+[launch checklist](docs/LAUNCH_CHECKLIST.md) and owner approval.
 
-Use **Node.js 24** (`.nvmrc` is included) and a recent npm. In VS Code, open the
-repository folder and run these commands in its terminal:
+## Start here
+
+- [CLIENT_SETUP.md](CLIENT_SETUP.md) — adapt the site for a second business, including
+  name, logo, colors, services, photos, areas, metadata, and form destination.
+- [Cloudflare Pages deployment](docs/CLOUDFLARE_PAGES.md) — GitHub connection, exact
+  build settings, preview/production variables, custom domain, HTTPS, and rollback.
+- [Launch checklist](docs/LAUNCH_CHECKLIST.md) — approval gates and manual checks.
+- [Contact integration](docs/contact-integration.md) — provider account setup and
+  delivery verification. Local delivery was previously owner-verified; a future
+  production hostname must be tested separately.
+- [Production readiness review](docs/production-readiness.md) — historical findings,
+  automated checks, and manual accessibility/privacy work still needed.
+
+## Local development
+
+Use **Node.js 24** and npm; `.nvmrc` records the Node major version. Open the
+repository folder in VS Code, then run:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open the local URL Astro prints, normally `http://localhost:4321/`. Stop the server
-with **Ctrl+C**. For a container preview, use `npm run dev -- --host 0.0.0.0`.
-The default demo needs no database, backend, keys, or environment variables. Optional public form identifiers are documented in [Contact setup](docs/contact-integration.md).
+Visit the local address printed by Astro (normally `http://localhost:4321/`).
+Stop with **Ctrl+C**. For a container-only preview, add `-- --host 0.0.0.0`.
+The unconfigured demo needs no backend or credentials. To enable test inquiries,
+copy `.env.example` to ignored `.env.local`, set both public form identifiers, save,
+and restart the server. Never copy another client's environment file.
 
-To update an existing local checkout after a pull request is merged:
+## Build and test
 
 ```sh
-git switch main
-git pull --ff-only
-npm ci
+npm run build
+npm run preview
 ```
 
-Commit or otherwise preserve local changes before switching branches. Use one local
-checkout; switching branches changes the files VS Code displays automatically.
+`astro.config.mjs` uses `output: 'static'` and trailing-slash routes. Build artifacts
+are in **`dist`**, including optimized images, `404.html`, and `robots.txt`.
+A sitemap is generated only when a valid final domain, indexing approval, and a
+non-demo business are all configured. No Cloudflare adapter, Pages Functions,
+database, Workers runtime, Wrangler file, or API token is needed for this build.
 
-## Pages and folders
+| Command                   | Purpose                                                           |
+| ------------------------- | ----------------------------------------------------------------- |
+| `npm run dev`             | Development server                                                |
+| `npm run format`          | Apply Prettier/Astro formatting                                   |
+| `npm run format:check`    | Check formatting without edits                                    |
+| `npm run check`           | Astro/TypeScript diagnostics                                      |
+| `npm run test:seo`        | Domain, robots, and sitemap helper tests                          |
+| `npm test`                | Isolated demo build and Chromium site tests                       |
+| `npm run test:submission` | Isolated configured-form build with provider requests intercepted |
+| `npm run verify`          | Formatting, types, SEO tests, build, and both browser suites      |
 
-| Route        | Content                                                                |
-| ------------ | ---------------------------------------------------------------------- |
-| `/`          | Homepage, service summaries, benefits, process, areas, and quote links |
-| `/services/` | Detailed example cleaning scopes, inclusions, and exclusions           |
-| `/about/`    | Fictional introduction, intended philosophy, and example areas         |
-| `/gallery/`  | Responsive, optimized, clearly labeled demo imagery                    |
-| `/contact/`  | Sample business details and configurable test-inquiry form             |
-
-```text
-.github/workflows/checks.yml   Automated pull-request and main-branch checks
-src/
-  assets/gallery/             Original gallery images and provenance README
-  components/                 Buttons, headings, cards, CTAs, form, header/footer
-  config/
-    business.ts               Business name, branding, contacts, hours, and areas
-    navigation.ts             Navigation labels and routes
-    serviceContent.ts         Shared service data, homepage summaries, philosophy
-    gallery.ts                Gallery image imports, captions, and alt text
-    seo.mjs                   Validated domain and discovery-file helpers
-  layouts/BaseLayout.astro    Document, metadata, demo banner, header, and footer
-  pages/                      The five Astro routes above and a branded 404
-  styles/global.css           Shared design tokens and responsive layout rules
-public/images/                Homepage SVG illustration and its license
-docs/                        Customization and contact integration guides
-tests/                       Playwright browser regression tests
-playwright.config.ts          Production-preview test server and browser settings
-.prettierrc.json               Consistent formatting with Astro support
-package.json                  Commands and dependencies
-package-lock.json             Reproducible dependency versions
-astro.config.mjs              Static output configuration
-tsconfig.json                Strict Astro/TypeScript configuration
-```
-
-## Commands and checks
-
-| Command                | Purpose                                                      |
-| ---------------------- | ------------------------------------------------------------ |
-| `npm run dev`          | Start the development server                                 |
-| `npm run format`       | Format supported source/configuration/documentation files    |
-| `npm run format:check` | Check formatting without editing files                       |
-| `npm run check`        | Check Astro and TypeScript types                             |
-| `npm run build`        | Build static output in `dist/`                               |
-| `npm run preview`      | Serve the existing production build locally                  |
-| `npm test`             | Build an isolated offline demo and run browser tests         |
-| `npm run verify`       | Check formatting, check types, build, then run browser tests |
-
-For browser tests, install Chromium once after `npm ci`:
+For the full verification suite, install the test browser once:
 
 ```sh
 npx playwright install chromium
 npm run verify
 ```
 
-Tests cover navigation and horizontal overflow at mobile, tablet, and desktop widths,
-gallery loading, form validation, error focus, demo non-delivery, and the
-JavaScript-disabled fallback. They use port **4322**; the isolated mocked submission suite uses **4323**. If you deliberately use a
-system Chromium instead of Playwright's download, set
-`PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to its full path. Cloud environments with
-unwritable telemetry directories can set `ASTRO_TELEMETRY_DISABLED=1`.
+Ports 4322/4323 must be available for browser tests. Tests explicitly override live
+form settings and never send real inquiries. Their ignored output folders are
+`.site-test-dist` and `.submission-test-dist`; **deploy only `dist`**. These fixtures
+do not replace the normal build. A system Chromium can be selected with
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`. Cloud environments with unwritable telemetry
+directories can set `ASTRO_TELEMETRY_DISABLED=1`.
 
-GitHub Actions runs the same verification on pull requests and pushes to `main`.
-A green check means these checks passed, not that every possible issue was tested.
-To enforce them before merging, configure the **Format, types, build, and browser
-tests** status check in a GitHub branch ruleset. This repository includes the workflow;
-repository settings must be configured separately.
+## Production settings at a glance
 
-The separate `npm run test:submission` suite builds with non-credential fixtures and intercepts provider traffic. It never tests real email delivery or overwrites `dist/`. See [Contact setup and manual test checklist](docs/contact-integration.md) before enabling live submissions.
+The [Cloudflare guide](docs/CLOUDFLARE_PAGES.md) documents the approval steps and
+production/preview differences. Do not connect hosting or trigger a deployment
+without owner approval: a connected Git repository can deploy automatically.
 
-## Working with Git
+| Pages setting          | Value for this repository                                       |
+| ---------------------- | --------------------------------------------------------------- |
+| Framework              | Astro                                                           |
+| Production branch      | `main`                                                          |
+| Root directory         | Repository root; leave blank when `package.json` is at the root |
+| Build command          | `npm run build`                                                 |
+| Build output directory | `dist`                                                          |
+| Node                   | `24`, from `.nvmrc` or `NODE_VERSION=24`                        |
 
-Start changes from an up-to-date `main`, create a descriptive branch such as
-`feat/contact-delivery`, commit a focused change, push, and open a pull request.
-After its checks pass, review and merge it, then delete the finished branch.
-Deleting a fully merged branch removes its label, not the work retained in `main`.
-Never delete a branch with unmerged work just to tidy the list.
+Cloudflare installs dependencies before the build. Commit `package-lock.json`.
+GitHub Actions runs `npm run verify`; Cloudflare's build alone does **not** wait
+for GitHub checks. Require checks on `main` or use an explicitly approved manual
+release process before allowing automatic production deployments.
 
-Keep `node_modules/`, `dist/`, `.astro/`, `.site-test-dist/`, `.submission-test-dist/`, Playwright results, and local `.env` files
-out of Git. Commit source code and `package-lock.json`. GitHub can automatically
-delete merged head branches through the repository's pull-request settings.
+## Build-time variables
 
-## Customization and delivery
+Configure production and preview independently in the hosting dashboard; local
+`.env.local` is not uploaded through Git.
 
-- [Customization guide](docs/customization.md): edit branding, copy, service scopes,
-  images, and design consistently.
-- [Contact integration notes](docs/contact-integration.md): current demo behavior and
-  Formspree/Turnstile account setup, public environment variables, and mandatory manual email-delivery checks.
-- [Gallery image provenance](src/assets/gallery/README.md) and
-  [homepage illustration license](public/images/LICENSE.md).
+| Variable                    | Default / purpose                                                           |
+| --------------------------- | --------------------------------------------------------------------------- |
+| `SITE_URL`                  | Blank until a final root HTTPS domain is approved; then used for canonicals |
+| `ALLOW_INDEXING`            | `false`; `true` only after launch approval and `business.isDemo=false`      |
+| `PUBLIC_FORMSPREE_FORM_ID`  | Public form ID, not a private API key; blank for demo                       |
+| `PUBLIC_TURNSTILE_SITE_KEY` | Public widget key; configure together with the form ID                      |
 
-This demo uses `noindex, nofollow`. Before a real launch, replace and verify business
-information, approve image rights and content, connect and test form delivery, and
-review demo labels and metadata together. No real service credentials or testimonials
-are represented.
+The Turnstile **secret** belongs only in Formspree's dashboard. The displayed
+`business.email` is not the form recipient setting. Environment changes require
+a new static build and deployment to affect the hosted site.
 
-For static hosting, use Node 24, build command `npm run build`, and output directory
-`dist`. No hosting deployment is configured here. Set Astro's `site`
-URL when a real domain is chosen. Preview the production build before publishing.
+## Project map
 
-## Production readiness and indexing
+```text
+CLIENT_SETUP.md               Client-by-client customization guide
+src/config/business.ts        Identity, optional logo, palette, contacts, hours, areas
+src/config/pageMetadata.ts    Per-page search/social titles and descriptions
+src/config/serviceContent.ts Shared services, homepage summaries, About philosophy
+src/config/gallery.ts         Image imports, alt text, captions, provenance labels
+src/config/navigation.ts      Routes/navigation, also used by sitemap generation
+src/config/contactForm.ts     Public form configuration validation
+src/config/seo.mjs             Domain and discovery-file helpers
+src/components/               Reusable brand, cards, CTA, form, header/footer, UI
+src/layouts/BaseLayout.astro   Shared document, theme, metadata, layout
+src/pages/                    Home, Services, About, Gallery, Contact, 404
+src/styles/global.css         Shared typography, layout, responsive rules
+src/assets/gallery/           Gallery sources; Astro generates optimized output
+public/images/                Static homepage illustration and licensing notice
+docs/                         Deployment, launch, customization, contact, review notes
+tests/                        SEO, responsive/keyboard, and form browser tests
+.github/workflows/checks.yml   GitHub verification; no deployment job
+```
 
-See [Production readiness review](docs/production-readiness.md) for verified checks,
-client-content replacements, and remaining manual launch checks. No final domain
-has been selected. Optional `SITE_URL` configures canonical URLs; sitemap publication
-and indexing also require `ALLOW_INDEXING=true` and `business.isDemo=false`. Leave
-the demo blocked until real business content and delivery are approved. Discovery
-files are generated during the build, without a sitemap dependency.
+Business-specific body copy remains in pages/components. See the
+[hardcoded-content inventory](CLIENT_SETUP.md#remaining-demo-content-to-review)
+before claiming a complete rebrand. Changing only `business.name` or `isDemo`
+does not convert this demo into a real service offering.
+
+## Maintenance and Git workflow
+
+1. Update local `main` with `git switch main` and `git pull --ff-only`; run `npm ci`
+   when the lockfile changed. Preserve uncommitted work before switching branches.
+2. Create a focused branch, edit source/configuration, and run `npm run format`
+   and `npm run verify`. Review content and the production preview visually.
+3. Open a pull request with the purpose and actual test results. Review and merge
+   only after checks pass and any release/automatic-deployment approval is clear.
+4. After a successful release, record the commit/deployment ID in the client's
+   private handoff notes and delete fully merged working branches when appropriate.
+
+Keep dependencies and the lockfile in sync; review release notes and update through
+small pull requests rather than running a broad unreviewed upgrade. Periodically
+check links, provider quotas/spam, inbox delivery, domain renewals, and HTTPS.
+Store credentials and client records outside the repository. Never commit `.env.local`,
+`node_modules`, `dist`, test artifacts, inbox screenshots, or real customer messages.
+For an urgent regression, follow the approved rollback procedure in the Cloudflare
+guide, then fix the source so the next deployment does not restore the problem.

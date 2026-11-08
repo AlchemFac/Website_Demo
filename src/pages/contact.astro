@@ -1,4 +1,5 @@
 ---
+import { pageMetadata } from '../config/pageMetadata';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ContactForm from '../components/ContactForm.astro';
@@ -7,8 +8,8 @@ import { business } from '../config/business';
 ---
 
 <BaseLayout
-  title="Contact & Cleaning Inquiries"
-  description="Sample contact information and a configurable test-inquiry form for North Texas Home Cleaning, a fictional demonstration business."
+  title={pageMetadata.contact.title}
+  description={pageMetadata.contact.description}
 >
   <section class="page-intro" aria-labelledby="contact-title">
     <SectionHeading

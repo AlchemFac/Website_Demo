@@ -8,6 +8,8 @@
   --color-accent: #e7eee6;
   --color-border: #dce3dc;
   --color-on-primary: #fff;
+  --color-caption-surface: #fffaf0;
+  --color-image-placeholder: #eee5d3;
   --font-body:
     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --text-small: 0.875rem;

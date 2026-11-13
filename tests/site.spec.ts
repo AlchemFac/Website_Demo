@@ -241,3 +241,11 @@ test('200 percent text sizing remains within a narrow viewport', async ({
     ).toBe(true);
   }
 });
+
+test('default demo does not emit or link an optional Privacy page', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await expect(page.locator('a[href="/privacy/"]')).toHaveCount(0);
+  expect((await page.request.get('/privacy/')).status()).toBe(404);
+});

@@ -25,6 +25,7 @@ const result = spawnSync(
     stdio: 'inherit',
     env: {
       ...process.env,
+      WEBSITE_PACKAGE: 'business',
       SITE_URL: '',
       ALLOW_INDEXING: 'false',
       PUBLIC_FORMSPREE_FORM_ID: submission ? 'testform' : '',

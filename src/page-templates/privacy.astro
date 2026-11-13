@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { privacy } from '../config/privacy';
+---
+
+<BaseLayout
+  title={privacy.title}
+  description={privacy.description}
+  noIndex={!privacy.clientApproved}
+>
+  <section class="page-intro" aria-labelledby="privacy-title">
+    <SectionHeading
+      level="h1"
+      id="privacy-title"
+      title={privacy.heading}
+      description={privacy.introduction}
+    />
+  </section>
+  <div class="privacy-sections">
+    {privacy.sections.map((section) => (
+      <section class="panel" aria-labelledby={`privacy-${section.id}`}>
+        <h2 id={`privacy-${section.id}`}>{section.title}</h2>
+        {section.paragraphs.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </section>
+    ))}
+  </div>
+</BaseLayout>
+<style>
+  .privacy-sections {
+    display: grid;
+    gap: var(--space-5);
+    padding-bottom: var(--space-7);
+  }
+  h2 {
+    margin-top: 0;
+  }
+  p {
+    overflow-wrap: anywhere;
+  }
+</style>

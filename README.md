@@ -1,6 +1,6 @@
 # Small-business website template — Astro
 
-A reusable five-page static website with responsive components, a configurable
+A reusable static website with three-page Starter and five-page Business packages with responsive components, a configurable
 brand, optimized gallery images, and an optional Formspree contact integration.
 **The included North Texas Home Cleaning business is fictional.** Names, contacts,
 hours, services, cities, and business copy are demonstration content. Images are
@@ -52,16 +52,17 @@ A sitemap is generated only when a valid final domain, indexing approval, and a
 non-demo business are all configured. No Cloudflare adapter, Pages Functions,
 database, Workers runtime, Wrangler file, or API token is needed for this build.
 
-| Command                   | Purpose                                                           |
-| ------------------------- | ----------------------------------------------------------------- |
-| `npm run dev`             | Development server                                                |
-| `npm run format`          | Apply Prettier/Astro formatting                                   |
-| `npm run format:check`    | Check formatting without edits                                    |
-| `npm run check`           | Astro/TypeScript diagnostics                                      |
-| `npm run test:seo`        | Domain, robots, and sitemap helper tests                          |
-| `npm test`                | Isolated demo build and Chromium site tests                       |
-| `npm run test:submission` | Isolated configured-form build with provider requests intercepted |
-| `npm run verify`          | Formatting, types, SEO tests, build, and both browser suites      |
+| Command                   | Purpose                                                                        |
+| ------------------------- | ------------------------------------------------------------------------------ |
+| `npm run dev`             | Development server                                                             |
+| `npm run format`          | Apply Prettier/Astro formatting                                                |
+| `npm run format:check`    | Check formatting without edits                                                 |
+| `npm run check`           | Astro/TypeScript diagnostics                                                   |
+| `npm run test:seo`        | Domain, robots, and sitemap helper tests                                       |
+| `npm test`                | Isolated demo build and Chromium site tests                                    |
+| `npm run test:packages`   | Both package builds, navigation, output exclusion, sitemaps, and mobile checks |
+| `npm run test:submission` | Isolated configured-form build with provider requests intercepted              |
+| `npm run verify`          | Formatting, types, SEO tests, build, and both browser suites                   |
 
 For the full verification suite, install the test browser once:
 
@@ -113,6 +114,14 @@ The Turnstile **secret** belongs only in Formspree's dashboard. The displayed
 `business.email` is not the form recipient setting. Environment changes require
 a new static build and deployment to affect the hosted site.
 
+## Website packages
+
+Set `WEBSITE_PACKAGE=starter` in ignored `.env.local` for Home, Services, and Contact.
+Use `business` or leave it unset to keep all five demo content pages. The shared 404
+is always generated. Restart development / rebuild after changing the setting.
+Header, footer, and sitemap follow the selected preset; disabled About/Gallery
+pages are omitted from static output. See [client setup](CLIENT_SETUP.md#choose-starter-or-business).
+
 ## Project map
 
 ```text
@@ -124,12 +133,14 @@ src/config/siteContent.ts     Shared quote action, demo notices, footer labels
 src/config/contactContent.ts  Contact/form wording in offline and configured modes
 src/config/serviceContent.ts  Shared services, philosophy, Services copy and labels
 src/config/gallery.ts         Gallery copy, image imports, alt text and provenance
+src/config/website.ts         Starter/Business selection (WEBSITE_PACKAGE), default Business
 src/config/navigation.ts      Routes/navigation, also used by sitemap generation
 src/config/contactForm.ts     Public form configuration validation
 src/config/seo.mjs             Domain and discovery-file helpers
 src/components/               Reusable brand, cards, CTA, form, header/footer, UI
 src/layouts/BaseLayout.astro   Shared document, theme, metadata, layout
-src/pages/                    Home, Services, About, Gallery, Contact, 404
+src/pages/                    Home, Services, Contact, shared 404
+src/page-templates/            About and Gallery, registered only for Business
 src/styles/global.css         Shared typography, layout, responsive rules
 src/assets/gallery/           Gallery sources; Astro generates optimized output
 public/images/                Static homepage illustration and licensing notice
@@ -138,7 +149,7 @@ tests/                        SEO, responsive/keyboard, and form browser tests
 .github/workflows/checks.yml   GitHub verification; no deployment job
 ```
 
-Business-specific body copy remains in pages/components. See the
+Business-specific body copy is centralized under src/config/. See the
 [hardcoded-content inventory](CLIENT_SETUP.md#remaining-demo-content-to-review)
 before claiming a complete rebrand. Changing only `business.name` or `isDemo`
 does not convert this demo into a real service offering.
@@ -161,3 +172,11 @@ Store credentials and client records outside the repository. Never commit `.env.
 `node_modules`, `dist`, test artifacts, inbox screenshots, or real customer messages.
 For an urgent regression, follow the approved rollback procedure in the Cloudflare
 guide, then fix the source so the next deployment does not restore the problem.
+
+## Pre-launch gate
+
+Run `npm run validate` for a strict offline client launch check; this fictional demo
+intentionally reports blocking errors. `npm run validate -- --demo` reviews the demo
+with expected launch gaps as warnings. See [client setup](CLIENT_SETUP.md#pre-launch-validation-offline)
+for fixes, exit codes, limits and how to gate an approved release. Neither command
+deploys or sends inquiries.

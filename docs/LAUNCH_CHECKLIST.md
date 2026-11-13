@@ -89,3 +89,12 @@ Local build/test results for this template do not check off the client-specific,
 hosting, DNS, or manual inbox items above. The historical review and local demo
 inbox confirmation are in `production-readiness.md` and `contact-integration.md`.
 Repeat the relevant checks for every new business and hostname.
+
+## Automated client gate
+
+- [ ] Run `npm run validate` and resolve all errors; do not substitute `--demo` for a client release.
+- [ ] Review warnings and confirm client-approved privacy sections, actual image rights and provider ownership.
+- [ ] After deployment approval, manually verify the deployed hostname, token enforcement and recipient delivery; automated checks cannot establish them.
+
+See [validator instructions](../CLIENT_SETUP.md#pre-launch-validation-offline). The
+existing demo remains buildable and is not represented as production-ready.

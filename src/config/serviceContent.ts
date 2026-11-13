@@ -1,3 +1,16 @@
+/** One public offering, shared by Home, Services, and the Contact select. */
+export interface Service {
+  /** Unique stable anchor/form value, such as standard-cleaning. */
+  id: string;
+  number: string;
+  title: string;
+  homepage: { description: string; details: string };
+  summary: string;
+  description: string;
+  includes: readonly string[];
+  excludes: readonly string[];
+}
+
 /** Demonstration copy only. Customize and verify scope before use by a real business. */
 export const services = [
   {
@@ -75,7 +88,7 @@ export const services = [
       'Inside appliances unless separately discussed and agreed',
     ],
   },
-] as const;
+] as const satisfies readonly Service[];
 
 export const philosophy = [
   {

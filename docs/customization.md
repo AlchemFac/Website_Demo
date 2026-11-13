@@ -1,6 +1,8 @@
 # Customization quick reference
 
-The complete, current guide is [CLIENT_SETUP.md](../CLIENT_SETUP.md). It covers
+Start with the [configuration directory guide](../src/config/README.md).
+The complete guide with required/optional values and replacement examples is
+[CLIENT_SETUP.md](../CLIENT_SETUP.md). It covers
 copying a clean template, business name, optional logo, palette, contacts/hours,
 services, imagery/provenance, areas, page metadata, and the form destination. It
 also identifies demo content that needs editorial review and technical UI text
@@ -15,6 +17,8 @@ that intentionally stays in components.
 | Gallery introduction, photos, alt text, provenance/captions                | `src/config/gallery.ts`                                                                                        |
 | Shared quote CTA, demo banner, footer labels/notices                       | `src/config/siteContent.ts`                                                                                    |
 | Search/social titles and descriptions, including 404                       | `src/config/pageMetadata.ts`                                                                                   |
+| Starter/Business package                                                   | `src/config/website.ts` and `WEBSITE_PACKAGE` in local/hosting build settings                                  |
+| Privacy information                                                        | `src/config/privacy.ts`; enabled separately from marketing packages, client approval required                  |
 | Navigation/sitemap routes                                                  | `src/config/navigation.ts`                                                                                     |
 | Public provider configuration                                              | `src/config/contactForm.ts` and ignored/hosting environment variables                                          |
 | Form behavior and generic validation/network errors                        | `src/components/ContactForm.astro`, `src/scripts/contact-form.ts`; [integration notes](contact-integration.md) |
@@ -38,3 +42,10 @@ alternatives. Default generated imagery is demonstration content, never proof of
 Run `npm run format`, `npm run verify`, and a visual production preview before a
 release. Follow the [launch checklist](LAUNCH_CHECKLIST.md). Do not deploy, connect
 hosting automation, or change DNS without the owner's approval.
+
+Branding checks run at build setup; `primary` and secondary `accent` reuse the
+existing CSS variables. See CLIENT_SETUP.md for image dimensions/formats and
+contrast limits. Real-client form wording is selected by `business.isDemo`; provider
+readiness is independent. Privacy is optional for demo review and required with
+client-approved information by the production validator. Run `npm run validate`
+before a client release; `--demo` is only a demo review, never launch approval.

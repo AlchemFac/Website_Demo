@@ -1,3 +1,9 @@
+/** Each page needs a distinct title and factual description. */
+export interface PageMetadata {
+  title: string;
+  description: string;
+}
+
 /** Per-page search/social metadata. Edit for each client; this copy remains fictional. */
 export const pageMetadata = {
   notFound: {
@@ -30,4 +36,4 @@ export const pageMetadata = {
     description:
       'Sample contact information and a configurable test-inquiry form for North Texas Home Cleaning, a fictional demonstration business.',
   },
-} as const;
+} as const satisfies Record<string, PageMetadata>;

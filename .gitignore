@@ -10,3 +10,6 @@ test-results/
 *.tsbuildinfo
 .submission-test-dist/
 .site-test-dist/
+
+.package-starter-dist/
+.package-business-dist/

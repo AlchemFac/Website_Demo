@@ -5,7 +5,43 @@ export interface BusinessLogo {
   height: number;
 }
 
-/** Fictional sample data. Replace and verify every value before launch. */
+/** Keep all color tokens; customizing their values is optional. */
+export interface BrandColors {
+  primary: string;
+  primaryHover: string;
+  background: string;
+  text: string;
+  /** Secondary accent surface, used with the normal text color. */
+  accent: string;
+  surface: string;
+  muted: string;
+  border: string;
+  onPrimary: string;
+  captionSurface: string;
+  imagePlaceholder: string;
+}
+
+/** Public business information only. See CLIENT_SETUP.md for client examples. */
+export interface BusinessConfig {
+  name: string;
+  isDemo: boolean;
+  description: string;
+  // Only an approved public business number/address belongs here.
+  phone: { display: string; href: string };
+  email: string;
+  serviceAreas: readonly string[];
+  hours: readonly { days: string; hours: string }[];
+  branding: {
+    tagline: string;
+    // The property is required; null means no logo image.
+    logo: BusinessLogo | null;
+    colors: BrandColors;
+  };
+}
+
+/** Fictional defaults. Edit this existing object; do not create a second client config.
+ * Public contacts, hours, and areas must be verified before a real client launch.
+ */
 export const business = {
   name: 'North Texas Home Cleaning',
   isDemo: true,
@@ -20,6 +56,7 @@ export const business = {
   ],
   branding: {
     tagline: 'A fresh start for your space.',
+    // Optional image: keep null, or supply src, width, and height.
     logo: null as BusinessLogo | null,
     colors: {
       primary: '#466653',
@@ -35,4 +72,4 @@ export const business = {
       imagePlaceholder: '#eee5d3',
     },
   },
-} as const;
+} as const satisfies BusinessConfig;

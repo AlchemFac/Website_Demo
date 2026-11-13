@@ -1,3 +1,4 @@
+import { business } from './business';
 import livingRoom from '../assets/gallery/living-room.png';
 import kitchen from '../assets/gallery/kitchen.png';
 import bathroom from '../assets/gallery/bathroom.png';
@@ -28,3 +29,16 @@ export const galleryImages = [
     alt: 'AI-generated bathroom with a light oak vanity, round mirror, white basin, folded towels, and a small plant.',
   },
 ] as const;
+
+/** Client-editable demonstration copy. Keep claims and demo notices truthful. */
+export const galleryContent = {
+  eyebrow: 'A little inspiration for your space',
+  title: 'Picture a fresh start.',
+  description:
+    'A few calm interiors to inspire the everyday. These original AI-generated images show imagined spaces, not customer homes, before-and-after results, or completed cleaning jobs.',
+  ctaTitle: 'What does your home need?',
+  ctaDescription:
+    'Explore the sample contact details and the test-inquiry form.',
+  noticeTitle: 'Demonstration imagery, clearly labeled.',
+  notice: `${business.name} is fictional. This gallery illustrates a visual style only; it does not document the quality or results of any cleaning service.`,
+} as const;

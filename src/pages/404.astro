@@ -1,12 +1,13 @@
 ---
+import { pageMetadata } from '../config/pageMetadata';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Button from '../components/Button.astro';
 ---
 
 <BaseLayout
-  title="Page Not Found"
-  description="This page could not be found. Return to the homepage or explore the cleaning services."
+  title={pageMetadata.notFound.title}
+  description={pageMetadata.notFound.description}
   noIndex
 >
   <section class="page-intro" aria-labelledby="not-found-title">

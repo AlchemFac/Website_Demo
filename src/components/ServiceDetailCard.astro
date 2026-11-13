@@ -1,4 +1,6 @@
 ---
+import { siteContent } from '../config/siteContent';
+import { serviceLabels } from '../config/serviceContent';
 import Button from './Button.astro';
 import ArrowIcon from './ArrowIcon.astro';
 interface Props {
@@ -16,17 +18,22 @@ const { id, number, title, summary, description, includes, excludes } =
 
 <article class="panel service-detail" id={id} aria-labelledby={`${id}-title`}>
   <div class="service-intro">
-    <p class="eyebrow">Service {number} · Example scope</p>
+    <p class="eyebrow">
+      {serviceLabels.service} {number} · {serviceLabels.scope}
+    </p>
     <h2 id={`${id}-title`}>{title}</h2>
     <p class="summary">{summary}</p>
     <p>{description}</p>
-    <Button href="/contact/" aria-label={`Request a free quote for ${title}`}>
-      Request a Free Quote <ArrowIcon />
+    <Button
+      href={siteContent.quoteAction.href}
+      aria-label={`${serviceLabels.quoteAccessiblePrefix} ${title}`}
+    >
+      {siteContent.quoteAction.label} <ArrowIcon />
     </Button>
   </div>
   <div class="scope">
     <section aria-labelledby={`${id}-title ${id}-includes`}>
-      <h3 id={`${id}-includes`}>Example inclusions</h3>
+      <h3 id={`${id}-includes`}>{serviceLabels.includes}</h3>
       <ul>
         {includes.map((item) => (
           <li>{item}</li>
@@ -34,7 +41,7 @@ const { id, number, title, summary, description, includes, excludes } =
       </ul>
     </section>
     <section aria-labelledby={`${id}-title ${id}-excludes`}>
-      <h3 id={`${id}-excludes`}>Outside this example scope</h3>
+      <h3 id={`${id}-excludes`}>{serviceLabels.excludes}</h3>
       <ul>
         {excludes.map((item) => (
           <li>{item}</li>

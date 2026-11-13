@@ -1,3 +1,5 @@
+import { formContent, formMessages } from '../config/contactContent';
+
 interface TurnstileAPI {
   render(
     container: HTMLElement,
@@ -56,7 +58,7 @@ if (form) {
   let captchaToken = '';
   let widgetId: string | undefined;
   let loadingCaptcha = false;
-  const initialLabel = submit.textContent ?? 'Send test inquiry';
+  const initialLabel = submit.textContent ?? formContent.configuredSubmit;
   const clearSubmissionError = () => {
     submissionError.hidden = true;
     submissionError.textContent = '';
@@ -73,7 +75,7 @@ if (form) {
         name: 'Enter your name.',
         email: 'Enter your email address.',
         service: 'Choose a service or “Not sure yet”.',
-        message: 'Enter a message about your cleaning needs.',
+        message: formMessages.requiredMessage,
       };
       return messages[field.name] ?? 'Complete this field.';
     }
@@ -213,8 +215,7 @@ if (form) {
       return;
     }
     if (!configured) {
-      status.textContent =
-        'Demo check complete. Your entries pass validation, but nothing has been sent or saved. A submission service must be connected before inquiries can be delivered.';
+      status.textContent = formMessages.offlineSuccess;
       return;
     }
     if (!allowedEndpoint) {
@@ -246,7 +247,7 @@ if (form) {
     fieldset.disabled = true;
     form.setAttribute('aria-busy', 'true');
     submit.textContent = 'Sending…';
-    status.textContent = 'Sending your test inquiry…';
+    status.textContent = formMessages.sendingStatus;
     let fieldToFocus: (typeof controls)[number] | undefined;
     try {
       const response = await fetch(endpoint, {
@@ -316,9 +317,8 @@ if (form) {
         return;
       }
       completed = true;
-      status.textContent =
-        'Formspree accepted your test inquiry for processing. This is not a booking confirmation or proof of email delivery.';
-      submit.textContent = 'Inquiry accepted';
+      status.textContent = formMessages.acceptedStatus;
+      submit.textContent = formMessages.acceptedLabel;
       newInquiry.hidden = false;
     } catch {
       status.textContent = '';

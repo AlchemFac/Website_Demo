@@ -1,4 +1,5 @@
 ---
+import { siteContent } from '../config/siteContent';
 import BusinessBrand from './BusinessBrand.astro';
 import { business } from '../config/business';
 import { navigation } from '../config/navigation';
@@ -9,15 +10,10 @@ import { navigation } from '../config/navigation';
     <div>
       <BusinessBrand />
       <p>{business.branding.tagline}</p>
-      {business.isDemo && (
-        <p class="footer-note">
-          Fictional demonstration business. Sample details only; this template
-          does not offer real services or accept bookings.
-        </p>
-      )}
+      {business.isDemo && <p class="footer-note">{siteContent.footerNotice}</p>}
     </div>
     <nav aria-label="Footer navigation">
-      <h2 class="footer-heading">Explore</h2>
+      <h2 class="footer-heading">{siteContent.footer.explore}</h2>
       <ul class="footer-links">
         {navigation.map(({ label, href }) => (
           <li>
@@ -29,8 +25,8 @@ import { navigation } from '../config/navigation';
     <div>
       <h2 class="footer-heading">
         {business.isDemo
-          ? 'Sample business information'
-          : 'Business information'}
+          ? siteContent.footer.demoInformation
+          : siteContent.footer.information}
       </h2>
       <p>
         {business.isDemo ? (
@@ -45,7 +41,9 @@ import { navigation } from '../config/navigation';
           <a href={`mailto:${business.email}`}>{business.email}</a>
         )}
       </p>
-      <p>Service areas: {business.serviceAreas.join(', ')}</p>
+      <p>
+        {siteContent.footer.serviceAreas} {business.serviceAreas.join(', ')}
+      </p>
       <dl class="business-hours">
         {business.hours.map(({ days, hours }) => (
           <div>

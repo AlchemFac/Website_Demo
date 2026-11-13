@@ -1,4 +1,5 @@
 ---
+import { siteContent } from '../config/siteContent';
 import SectionHeading from './SectionHeading.astro';
 import Button from './Button.astro';
 import ArrowIcon from './ArrowIcon.astro';
@@ -13,17 +14,14 @@ const { id, title, description } = Astro.props;
 <section class="page-cta" aria-labelledby={id}>
   <SectionHeading
     id={id}
-    eyebrow="Make room for what matters"
+    eyebrow={siteContent.pageCTA.eyebrow}
     title={title}
     description={description}
   />
-  <Button href="/contact/">
-    Request a Free Quote <ArrowIcon />
+  <Button href={siteContent.quoteAction.href}>
+    {siteContent.quoteAction.label} <ArrowIcon />
   </Button>
-  <p class="demo-note">
-    Fictional business. The Contact page provides sample information only; no
-    real quotes or bookings are available.
-  </p>
+  <p class="demo-note">{siteContent.pageCTA.notice}</p>
 </section>
 <style>
   .page-cta {

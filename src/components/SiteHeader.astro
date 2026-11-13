@@ -1,4 +1,5 @@
 ---
+import { siteContent } from '../config/siteContent';
 import BusinessBrand from './BusinessBrand.astro';
 import { business } from '../config/business';
 import { navigation } from '../config/navigation';
@@ -6,11 +7,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
 <header class="site-header" data-site-header>
-  {business.isDemo && (
-    <div class="demo-banner">
-      Demo only · Fictional business and sample information
-    </div>
-  )}
+  {business.isDemo && <div class="demo-banner">{siteContent.demoBanner}</div>}
   <div class="container header-inner">
     <BusinessBrand showTagline />
     <button

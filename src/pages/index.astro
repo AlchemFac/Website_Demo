@@ -1,4 +1,5 @@
 ---
+import { homeContent } from '../config/pageContent';
 import { pageMetadata } from '../config/pageMetadata';
 import ArrowIcon from '../components/ArrowIcon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -6,25 +7,9 @@ import Button from '../components/Button.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import ProcessStep from '../components/ProcessStep.astro';
+import { siteContent } from '../config/siteContent';
 import { business } from '../config/business';
 import { services } from '../config/serviceContent';
-const benefits = [
-  {
-    title: 'More time for your life',
-    description:
-      'Spend less of your weekend catching up on chores and more of it doing what matters to you.',
-  },
-  {
-    title: 'A space that feels settled',
-    description:
-      'A clean kitchen, refreshed bathroom, and dusted living spaces can make everyday routines feel easier.',
-  },
-  {
-    title: 'A plan for your priorities',
-    description:
-      'Discuss the rooms and tasks that need attention so the proposed cleaning fits your home.',
-  },
-];
 ---
 
 <BaseLayout
@@ -34,42 +19,36 @@ const benefits = [
   <div class="home">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">A little less on your to-do list</p>
+        <p class="eyebrow">{homeContent.heroEyebrow}</p>
         <h1 id="hero-title">
-          A cleaner home.
+          {homeContent.heroTitle}
           <br />
-          <em>A little more life.</em>
+          <em>{homeContent.heroEmphasis}</em>
         </h1>
-        <p class="hero-description">
-          Make space for slow mornings and weekends well spent. Explore
-          thoughtful home cleaning for everyday living in the Dallas–Fort Worth
-          area.
-        </p>
+        <p class="hero-description">{homeContent.heroDescription}</p>
         <div class="hero-actions">
-          <Button href="/contact/">
-            Request a Free Quote <ArrowIcon />
+          <Button href={siteContent.quoteAction.href}>
+            {siteContent.quoteAction.label} <ArrowIcon />
           </Button>
           <a class="text-link" href="#services">
-            Find your clean <span aria-hidden="true">↓</span>
+            {homeContent.findServicesLabel} <span aria-hidden="true">↓</span>
           </a>
         </div>
-        <p class="demo-note">
-          Fictional business · Demo inquiries only. No real bookings.
-        </p>
+        <p class="demo-note">{homeContent.heroNotice}</p>
       </div>
       <figure class="hero-image">
         <img
-          src="/images/calm-home.svg"
-          width="840"
-          height="920"
-          alt="Illustration of a sunlit living room with a cream sofa, houseplants, and a wooden coffee table."
+          src={homeContent.heroImageSrc}
+          width={homeContent.heroImageWidth}
+          height={homeContent.heroImageHeight}
+          alt={homeContent.heroImageAlt}
           loading="eager"
           fetchpriority="high"
           decoding="async"
         />
         <figcaption>
-          <span aria-hidden="true">✧</span> A fresh start for your space.
-          <small>Original demonstration illustration</small>
+          <span aria-hidden="true">✧</span> {homeContent.heroCaption}
+          <small>{homeContent.heroImageLabel}</small>
         </figcaption>
       </figure>
     </section>
@@ -82,12 +61,12 @@ const benefits = [
       <div class="section-top">
         <SectionHeading
           id="services-title"
-          eyebrow="A clean for every chapter"
-          title="What does your home need?"
-          description="From a regular reset to a fresh beginning, explore three ways to lighten your list."
+          eyebrow={homeContent.servicesEyebrow}
+          title={homeContent.servicesTitle}
+          description={homeContent.servicesDescription}
         />
         <a class="text-link" href="/services/">
-          All services <ArrowIcon />
+          {homeContent.allServicesLabel} <ArrowIcon />
         </a>
       </div>
       <div class="services-grid">
@@ -100,30 +79,23 @@ const benefits = [
           />
         ))}
       </div>
-      <p class="scope-note">
-        Illustrative services only. A real quote would confirm tasks, home size,
-        pricing, and any exclusions before scheduling.
-      </p>
+      <p class="scope-note">{homeContent.scopeNote}</p>
     </section>
 
     <section class="benefits home-section" aria-labelledby="benefits-title">
       <div class="benefits-intro">
         <SectionHeading
           id="benefits-title"
-          eyebrow="Less upkeep. More breathing room."
-          title="Let home feel like a place to unwind."
+          eyebrow={homeContent.benefitsEyebrow}
+          title={homeContent.benefitsTitle}
         />
-        <p>
-          Life gets full. Professional cleaning can help take a recurring chore
-          off your plate, whether you need an occasional refresh or a regular
-          routine.
-        </p>
-        <a class="text-link" href="/contact/">
-          Talk through your priorities <ArrowIcon />
+        <p>{homeContent.benefitsDescription}</p>
+        <a class="text-link" href={siteContent.quoteAction.href}>
+          {homeContent.prioritiesLabel} <ArrowIcon />
         </a>
       </div>
       <div class="benefit-list">
-        {benefits.map(({ title, description }) => (
+        {homeContent.benefits.map(({ title, description }) => (
           <article>
             <span aria-hidden="true">✧</span>
             <div>
@@ -138,23 +110,14 @@ const benefits = [
     <section class="home-section process" aria-labelledby="process-title">
       <SectionHeading
         id="process-title"
-        eyebrow="From your list to a fresh start"
-        title="A simpler way to a cleaner home."
-        description="Here’s how a typical cleaning inquiry could work."
+        eyebrow={homeContent.processEyebrow}
+        title={homeContent.processTitle}
+        description={homeContent.processDescription}
       />
       <ol class="steps">
-        <ProcessStep
-          title="Request Quote"
-          description="Share your home’s size, the service you’re interested in, and your cleaning priorities."
-        />
-        <ProcessStep
-          title="Schedule Cleaning"
-          description="Review the proposed scope and price, then discuss a date that fits your routine."
-        />
-        <ProcessStep
-          title="Enjoy Your Home"
-          description="With the agreed cleaning taken care of, settle back into your space."
-        />
+        {homeContent.steps.map((step) => (
+          <ProcessStep {...step} />
+        ))}
       </ol>
     </section>
 
@@ -162,49 +125,43 @@ const benefits = [
       <div>
         <SectionHeading
           id="area-title"
-          eyebrow="Around the neighborhood"
-          title="At home in North Texas."
-          description="Example service areas in the Dallas–Fort Worth metroplex. These locations illustrate a possible service footprint, not confirmed coverage."
+          eyebrow={homeContent.areaEyebrow}
+          title={homeContent.areaTitle}
+          description={homeContent.areaDescription}
         />
-        <ul class="city-list" aria-label="Example service cities">
+        <ul class="city-list" aria-label={homeContent.citiesLabel}>
           {business.serviceAreas.map((city) => (
             <li>
               <ArrowIcon /> {city}
             </li>
           ))}
         </ul>
-        <a class="text-link" href="/contact/">
-          Ask about your area <ArrowIcon />
+        <a class="text-link" href={siteContent.quoteAction.href}>
+          {homeContent.areaLabel} <ArrowIcon />
         </a>
       </div>
       <aside class="area-note">
         <span class="area-mark" aria-hidden="true">
-          N TX
+          {homeContent.areaMark}
         </span>
-        <h3>Your home. Your priorities.</h3>
-        <p>
-          Start with your location and the kind of clean you have in mind. The
-          details can come together from there.
-        </p>
-        <p class="demo-note">Sample locations · Fictional service</p>
+        <h3>{homeContent.areaNoteTitle}</h3>
+        <p>{homeContent.areaNoteDescription}</p>
+        <p class="demo-note">{homeContent.areaNotice}</p>
       </aside>
     </section>
 
     <section class="final-cta" aria-labelledby="cta-title">
-      <p class="eyebrow">Make room for what matters</p>
-      <h2 id="cta-title">Your fresh start begins here.</h2>
-      <p>Tell us what a cleaner home would look like for you.</p>
-      <Button href="/contact/">
-        Request a Free Quote <ArrowIcon />
+      <p class="eyebrow">{homeContent.ctaEyebrow}</p>
+      <h2 id="cta-title">{homeContent.ctaTitle}</h2>
+      <p>{homeContent.ctaDescription}</p>
+      <Button href={siteContent.quoteAction.href}>
+        {siteContent.quoteAction.label} <ArrowIcon />
       </Button>
-      <p class="demo-note">
-        Visit the Contact page for demo information. No real quotes or bookings
-        are available.
-      </p>
+      <p class="demo-note">{homeContent.ctaNotice}</p>
     </section>
     <div class="mobile-cta">
-      <Button href="/contact/">
-        Request a Free Quote <ArrowIcon />
+      <Button href={siteContent.quoteAction.href}>
+        {siteContent.quoteAction.label} <ArrowIcon />
       </Button>
     </div>
   </div>

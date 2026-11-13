@@ -157,3 +157,12 @@ verify reply-to behavior, provider rejection of invalid CAPTCHA tokens, real-wid
 accessibility, or delivery from a deployed hostname. Those checks remain in the
 production checklist above. Automated success/failure tests use mocks and are
 separate from this manual inbox confirmation.
+
+## Client copy and repeat deployments
+
+`business.isDemo` selects demo/client copy in `src/config/contactContent.ts`.
+Provider readiness is independent: both public identifiers blank keeps all
+submissions offline; configured demos send labeled test inquiries, while configured
+clients use ordinary inquiry wording. See the [client handoff checklist](../CLIENT_SETUP.md#repeatable-client-form-handoff)
+for client-owned accounts, secrets, hostnames and required post-deployment tests.
+No automated test is evidence of recipient delivery for a new hostname.

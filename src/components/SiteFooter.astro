@@ -1,5 +1,6 @@
 ---
 import { siteContent } from '../config/siteContent';
+import { privacy } from '../config/privacy';
 import BusinessBrand from './BusinessBrand.astro';
 import { business } from '../config/business';
 import { navigation } from '../config/navigation';
@@ -10,6 +11,11 @@ import { navigation } from '../config/navigation';
     <div>
       <BusinessBrand />
       <p>{business.branding.tagline}</p>
+      {privacy.enabled && (
+        <p>
+          <a href="/privacy/">{privacy.linkLabel}</a>
+        </p>
+      )}
       {business.isDemo && <p class="footer-note">{siteContent.footerNotice}</p>}
     </div>
     <nav aria-label="Footer navigation">

@@ -33,7 +33,7 @@ npm run verify
 npm run preview
 ```
 
-Review all five pages and the 404 page at the local preview URL. The full suite
+Review all enabled package pages and the 404 page at the local preview URL. The full suite
 contains formatting, type, SEO, site, and mocked submission checks. It cannot prove
 DNS, TLS, provider dashboard settings, or production email delivery.
 
@@ -77,13 +77,14 @@ Set environment values in the Pages project settings, selecting the correct
 **Production** or **Preview** environment. Treat preview settings as independent;
 inspect them rather than assuming they match production or local files.
 
-| Setting                     | Approved production                         | Demo / client preview                                                          |
-| --------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------ |
-| `NODE_VERSION`              | `24`                                        | `24`                                                                           |
-| `SITE_URL`                  | Final root HTTPS origin, no path/query/hash | Blank until chosen; or approved canonical production origin for content review |
-| `ALLOW_INDEXING`            | `true` only after launch approval           | `false`                                                                        |
-| `PUBLIC_FORMSPREE_FORM_ID`  | Client-owned public form ID                 | Blank or a separate test form ID                                               |
-| `PUBLIC_TURNSTILE_SITE_KEY` | Public key for the authorized hostname      | Blank or a separate test-widget public key                                     |
+| Setting                     | Approved production                                | Demo / client preview                                                          |
+| --------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `WEBSITE_PACKAGE`           | `business` (five pages) or `starter` (three pages) | Same reviewed package; blank defaults to `business`                            |
+| `NODE_VERSION`              | `24`                                               | `24`                                                                           |
+| `SITE_URL`                  | Final root HTTPS origin, no path/query/hash        | Blank until chosen; or approved canonical production origin for content review |
+| `ALLOW_INDEXING`            | `true` only after launch approval                  | `false`                                                                        |
+| `PUBLIC_FORMSPREE_FORM_ID`  | Client-owned public form ID                        | Blank or a separate test form ID                                               |
+| `PUBLIC_TURNSTILE_SITE_KEY` | Public key for the authorized hostname             | Blank or a separate test-widget public key                                     |
 
 Use both public form settings or neither. Partial/malformed values fail the build.
 Store the Turnstile secret **in Formspree**, not in a public variable or this repo.

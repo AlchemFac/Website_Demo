@@ -1,4 +1,5 @@
 ---
+import { privacy } from '../config/privacy';
 import { formContent } from '../config/contactContent';
 import Button from './Button.astro';
 import { contactForm } from '../config/contactForm';
@@ -12,6 +13,11 @@ import { services } from '../config/serviceContent';
       ? formContent.configuredNotice
       : formContent.offlineNotice}
   </p>
+  {privacy.enabled && (
+    <p>
+      <a href="/privacy/">{privacy.linkLabel}</a>
+    </p>
+  )}
   <noscript>
     <p class="notice">
       JavaScript is required to use this form. Nothing can be submitted while

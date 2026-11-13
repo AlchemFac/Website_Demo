@@ -1,6 +1,6 @@
-import { business } from './business';
+import { business } from './business.ts';
 /** Client-editable demonstration copy. Keep claims and demo notices truthful. */
-export const contactContent = {
+const demoContactContent = {
   eyebrow: 'A fresh start begins with a conversation',
   title: 'Let’s talk about your space.',
   informationLabel: 'Sample business information',
@@ -15,7 +15,7 @@ export const contactContent = {
 } as const;
 
 /** Editable copy; preserve accurate validation and provider-acceptance language. */
-export const formContent = {
+const demoFormContent = {
   title: 'Tell us about your home',
   configuredNotice:
     'This is a fictional business. This form sends a test inquiry through Formspree to the site owner; it does not book a cleaning. Please use sample details. Your entries are shared with Formspree, and Cloudflare provides spam protection.',
@@ -30,7 +30,7 @@ export const formContent = {
 } as const;
 
 /** Editable copy; preserve accurate validation and provider-acceptance language. */
-export const formMessages = {
+const demoFormMessages = {
   requiredMessage: 'Enter a message about your cleaning needs.',
   offlineSuccess:
     'Demo check complete. Your entries pass validation, but nothing has been sent or saved. A submission service must be connected before inquiries can be delivered.',
@@ -39,3 +39,53 @@ export const formMessages = {
     'Formspree accepted your test inquiry for processing. This is not a booking confirmation or proof of email delivery.',
   acceptedLabel: 'Inquiry accepted',
 } as const;
+
+/** Approved client copy belongs here. A live form is not a booking or delivery guarantee. */
+const productionContactContent = {
+  ...demoContactContent,
+  informationLabel: 'Business information',
+  configuredDescription:
+    'Send your inquiry using the form below. We can discuss your priorities and confirm the proposed scope before scheduling.',
+  offlineDescription:
+    'Online submission is unavailable. Use the business contact details below; checking this form will not send an inquiry.',
+  detailsTitle: 'Contact details',
+  detailsNotice: 'Use these details to contact the business directly.',
+  hoursTitle: 'Business hours',
+  areasTitle: 'Service areas',
+  areasNotice: 'Contact the business to confirm coverage for your address.',
+};
+const productionFormContent = {
+  ...demoFormContent,
+  configuredNotice:
+    'Your inquiry is submitted through Formspree. Cloudflare Turnstile provides spam protection. Submitting this form does not confirm a booking.',
+  offlineNotice:
+    'Online submission is unavailable. This form only checks entries in your browser; nothing is sent or saved. Contact the business directly using the details on this page.',
+  legend: 'Inquiry details',
+  configuredSubmit: 'Send inquiry',
+  offlineSubmit: 'Check form entries',
+};
+const productionFormMessages = {
+  ...demoFormMessages,
+  offlineSuccess:
+    'Your entries pass validation, but nothing has been sent or saved. Contact the business directly while online submission is unavailable.',
+  sendingStatus: 'Sending your inquiry…',
+  acceptedStatus:
+    'Formspree accepted your inquiry for processing. This is not a booking confirmation or proof of email delivery.',
+};
+
+export function getContactCopy(isDemo: boolean) {
+  return isDemo
+    ? {
+        contactContent: demoContactContent,
+        formContent: demoFormContent,
+        formMessages: demoFormMessages,
+      }
+    : {
+        contactContent: productionContactContent,
+        formContent: productionFormContent,
+        formMessages: productionFormMessages,
+      };
+}
+export const { contactContent, formContent, formMessages } = getContactCopy(
+  business.isDemo,
+);

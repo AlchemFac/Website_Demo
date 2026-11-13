@@ -6,6 +6,179 @@ The existing design works without a logo or form account. Customize a separate
 client copy, keep demo safeguards on during review, and obtain approval before
 publishing or changing DNS.
 
+## Start here: one configuration folder
+
+The [configuration directory guide](src/config/README.md) is the short file map.
+There is no new master config to populate: edit the existing objects in place.
+For a second business, work in a separate client copy and branch, then:
+
+1. Update `business.ts` for identity and approved public details.
+2. Update `serviceContent.ts` for the actual offerings and service philosophy.
+3. Review `pageContent.ts`, `contactContent.ts`, `gallery.ts`, and `siteContent.ts`
+   for every heading, regional reference, notice, caption, and call to action.
+4. Update `pageMetadata.ts`; retain the current routes unless page structure changes.
+5. Choose offline demo mode or client-owned form accounts in build settings.
+6. Run `npm run verify` and review the content before requesting release approval.
+
+The default North Texas demo remains unchanged. The examples below are also
+fictional; they are instructions, not a second set of live configuration values.
+
+### Required fields versus optional features
+
+“Required” here means required by the current page structure or for a real launch.
+TypeScript checks field shapes, not factual accuracy or whether a string is empty.
+Keep existing keys; do not delete required fields to hide a section.
+
+| Value / feature                           | Required or optional?                                     | What to do                                                                                                                    |
+| ----------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `name`, `description`, `branding.tagline` | Required by current pages                                 | Use public, owner-approved wording; edit related page content too                                                             |
+| `phone.display`, `phone.href`, `email`    | Required by current contact/footer layout                 | Supply verified public channels; if a client does not publish one, adapt the UI deliberately rather than inventing a value    |
+| `hours`                                   | Required by current layout                                | Supply at least one meaningful schedule row; use “By appointment” if that is the approved policy                              |
+| `serviceAreas`                            | Required by current layout                                | Supply at least one approved area and review regional prose separately                                                        |
+| `branding.colors`                         | Required keys; recoloring is optional                     | Keep all existing tokens; the default palette works without edits                                                             |
+| `branding.logo`                           | Optional image                                            | Keep `null`, or supply all of `src`, `width`, `height`                                                                        |
+| `services`                                | At least one offering for current pages                   | Supply every `Service` field with unique stable IDs; inclusion/exclusion lists may be empty only if intentionally appropriate |
+| Page content and `pageMetadata`           | Required keys                                             | Keep every referenced key; replace copy where needed, including image alt text and provenance                                 |
+| `siteContent.quoteAction`                 | Required                                                  | Keep a nonempty label and a working `href`; the default `/contact/` works                                                     |
+| `isDemo`                                  | Required boolean                                          | Keep `true` for this fictional demo and unfinished client review                                                              |
+| `WEBSITE_PACKAGE`                         | Optional, defaults to `business`                          | Use `starter` for three content pages or `business` for five                                                                  |
+| Formspree / Turnstile integration         | Optional as a pair                                        | Both public identifiers blank means offline; both configured enables submission mode                                          |
+| `SITE_URL`                                | Optional for demo; required for canonical URLs / indexing | Use only the approved root HTTPS origin when chosen                                                                           |
+| `ALLOW_INDEXING`                          | Optional environment override                             | Leave unset or `false` for demos/previews; real indexing also requires `isDemo=false` and a valid `SITE_URL`                  |
+
+## Choose Starter or Business
+
+Set one public build setting in ignored `.env.local` (and separately in hosting
+build settings when deploying an approved release):
+
+```dotenv
+WEBSITE_PACKAGE=starter
+```
+
+Use `business` instead for the five-page package, or leave it unset/blank to retain
+the existing demo. Only these two lowercase values are accepted; a typo stops the
+build instead of silently publishing the wrong package. Restart the development
+server after changing it; rebuild before using `npm run preview`.
+
+| Package            | Content pages                           | Limit |
+| ------------------ | --------------------------------------- | ----- |
+| Starter            | Home, Services, Contact                 | 3     |
+| Business (default) | Home, Services, About, Gallery, Contact | 5     |
+
+The shared 404 is a technical error page and does not count toward either package.
+These are fixed presets; Home, Services, and Contact remain available for shared
+CTAs. No CMS, database, or new dependency is involved.
+
+`src/config/website.ts` validates the choice and defines the preset page IDs.
+`navigation.ts` is the page registry: labels, paths, and optional template entries.
+Both header and footer use its selected list. About and Gallery live in
+`src/page-templates/` and Astro registers them only for Business, so Starter produces
+neither `/about/index.html` nor `/gallery/index.html`. Do not put duplicate copies
+back in `src/pages/`, where Astro would generate them unconditionally.
+
+The sitemap uses exactly the enabled routes when real-client indexing is approved.
+Demo protection still applies: package choice does not enable indexing. Internal
+CTAs continue to use enabled Home, Services, and Contact routes. When adding any new
+page/link, review its package membership, entrypoint, metadata, and tests together;
+merely hiding a navigation link is not enough to exclude a static page.
+
+`npm run verify` tests both presets, including emitted HTML, an isolated indexable
+sitemap, all internal link targets, mobile keyboard navigation, and switching from
+Business to Starter without stale output. Package fixtures are temporary copies
+with blank form identifiers and a reserved test origin; they do not change your
+client config or send inquiries. Existing site/form suites exercise Business even
+when your local selected package is Starter. `npm run test:packages` runs just the
+package checks. Review the selected package with `npm run build` and `npm run preview`.
+Never deploy `.package-starter-dist` or `.package-business-dist`: those are test fixtures.
+
+## Fictional replacement examples
+
+These are **editing fragments**, not extra objects or runtime assignments. Replace
+matching properties inside the existing exports; preserve keys not shown. Never
+paste private customer details into these examples or into source files.
+
+For `business.ts`, a different fictional business might use:
+
+```ts
+name: 'Cedar Grove Home Care',
+description: 'A fictional example of a residential cleaning business.',
+phone: { display: '(214) 555-0101', href: 'tel:+12145550101' },
+email: 'hello@example.com',
+hours: [{ days: 'Monday–Friday', hours: 'By appointment' }],
+serviceAreas: ['Example City'],
+isDemo: true,
+```
+
+These are reserved demonstration contacts, not real client contacts. Within the
+existing `branding` object, change `tagline` to `'Room for everyday life.'`, keep
+`logo: null` if no logo is supplied, and keep the existing `colors` object unless
+rebranding. For an optional logo object, see section 3 below.
+
+In `serviceContent.ts`, replace or add one item in the existing `services` array:
+
+```ts
+{
+  id: 'kitchen-refresh',
+  number: '01',
+  title: 'Kitchen Refresh',
+  homepage: {
+    description: 'A sample focused refresh for everyday kitchen surfaces.',
+    details: 'Example scope: accessible counters, sink, and floors.',
+  },
+  summary: 'An example focused on the kitchen.',
+  description: 'A fictional scope for discussion; a real provider must confirm tasks and exclusions.',
+  includes: ['Wipe accessible counters', 'Clean the sink'],
+  excludes: ['Inside appliances', 'Repairs or stain restoration'],
+},
+```
+
+Every item needs the same fields. Its ID must be unique; matching homepage cards,
+Services detail cards, and Contact choices read this single array. Do not leave old
+IDs, cleaning claims, or service counts in surrounding copy for an unrelated client.
+
+For `pageContent.ts`, edit the existing `homeContent` properties:
+
+```ts
+heroTitle: 'A calmer space.',
+heroEmphasis: 'More time for you.',
+heroDescription: 'Explore the fictional Cedar Grove Home Care service concept.',
+```
+
+Update `aboutContent` and both Contact-mode notices separately. Some introductions
+interpolate `business.name`, but regional language and most descriptions are editorial
+copy. `pageMetadata.ts` controls search/social copy separately from visible headings.
+To replace the shared quote wording, edit `siteContent.quoteAction.label`; keep its
+`href` pointing to an existing page, and review service-card accessible quote labels.
+
+### Form configuration choices
+
+Copy `.env.example` to ignored `.env.local` for local work; keep it out of commits.
+The unchanged example is the safe offline configuration:
+
+```dotenv
+PUBLIC_FORMSPREE_FORM_ID=
+PUBLIC_TURNSTILE_SITE_KEY=
+SITE_URL=
+ALLOW_INDEXING=false
+```
+
+For sending, replace the first two blanks with the client's **public form ID**
+(the part after `/f/`, not the full endpoint) and **public Turnstile site key**.
+Both are needed; partial or malformed values fail the build. Do not paste literal
+placeholder text into these fields. Configure the same public values independently
+in hosting build settings; your local file is not uploaded by Git.
+
+Verify the client-owned recipient in Formspree, enable Turnstile there with the
+matching widget's **secret key**, and authorize the intended hostname in Turnstile.
+The secret stays in Formspree, never in a `PUBLIC_` value or repository file.
+`business.email` is the displayed address and does not set the recipient. Restart
+local development after environment changes; hosting changes require a rebuild.
+
+Review `contactContent`, `formContent`, and `formMessages` for privacy and accurate
+submission wording. A provider acceptance response is not proof of inbox delivery
+or a booking. Test the approved hostname and have the owner confirm actual receipt
+before launch. Local automated tests use mocked submissions, not a client's inbox.
+
 ## 1. Make a clean client copy
 
 Use one repository and one set of hosting/form accounts per client. Do not clone a
@@ -179,7 +352,8 @@ Set the final root HTTPS origin in local/hosting **build settings** as `SITE_URL
 There must be no path, query, credentials, or fragment. Leave it blank until chosen.
 The 404 page intentionally has no canonical and is never put into the sitemap.
 
-`src/config/navigation.ts` controls shared navigation and sitemap routes. If adding
+`src/config/navigation.ts` controls page labels/routes and uses the selected package
+from `src/config/website.ts` for shared navigation and sitemap routes. If adding
 a page, review navigation, metadata, headings, internal links, and tests together.
 Keep root-relative route links and trailing-slash behavior consistent.
 
@@ -237,6 +411,7 @@ text and the components retain semantic markup and accessible labels.
 | `gallery.ts`                                        | Images, alt text, per-image provenance/captions; `galleryContent` introduction, note, and CTA                                                      |
 | `siteContent.ts`                                    | Shared quote button label/destination, PageCTA eyebrow/notice, header demo banner, footer labels/notice                                            |
 | `pageMetadata.ts`                                   | Per-page SEO titles/descriptions, including the 404 metadata                                                                                       |
+| `website.ts`                                        | Starter/Business package choice and preset page membership                                                                                         |
 | `navigation.ts`                                     | Navigation labels and routes                                                                                                                       |
 
 For example, change `homeContent.heroTitle` and `heroEmphasis` for the two visual
@@ -276,3 +451,118 @@ then follow [Cloudflare deployment](docs/CLOUDFLARE_PAGES.md) and the
 [launch checklist](docs/LAUNCH_CHECKLIST.md). Deployment and DNS each need approval.
 Record account ownership and operating instructions privately; hand off source,
 not private credentials in Git. Keep the approved release and rollback references.
+
+## Branding assets and checks
+
+The public name and tagline, optional logo, and palette stay in `business.ts`.
+`primary`/`primaryHover` style buttons and links; `accent` is the secondary accent
+surface (`--color-accent`), paired with `text`. No separate competing theme exists.
+The hero asset, dimensions, alt text, caption and provenance are `homeContent` in
+`pageContent.ts`; gallery imports/captions are in `gallery.ts`.
+
+Use six-digit hex colors. Builds reject malformed colors, missing local hero/logo
+files, blank hero alt text and invalid dimensions. Warnings flag common text pairs
+below 4.5:1; they do not certify accessibility. Review actual text, image overlays,
+focus indicators and all form states in a browser.
+
+| Asset         | Recommended source                                                                                                         | Loading behavior to preserve                                                                                          |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Optional logo | Safely authored SVG, or a compact transparent PNG/WebP roughly 360 px wide for a 180 px display; use its true aspect ratio | Public local file, explicit dimensions; adjacent visible name provides the accessible link label                      |
+| Hero          | Existing 840×920 SVG; for a raster, roughly 840–1680 px wide with the intended crop, compressed WebP/AVIF                  | Eager/high-priority hero with reserved dimensions; public files are served as-is, so optimize before adding them      |
+| Gallery       | Rights-cleared PNG/JPEG/WebP source around 960–1920 px wide, large enough for the existing 960 px variant                  | Import through `src/assets/`; Astro keeps responsive 360/640/960 WebP variants and lazy loading after the first image |
+
+Do not upscale small originals or ship full camera files. Keep the existing demo
+assets until approved replacements exist. Update descriptive alt text, dimensions,
+captions and truthful provenance together. Preserve `public/images/LICENSE.md` and
+`src/assets/gallery/README.md` licensing/provenance records (and any required new
+attributions). A stock/generated room is never evidence of completed customer work.
+
+## Repeatable client form handoff
+
+`business.isDemo` selects demo versus production text in `contactContent.ts`.
+This is separate from provider configuration: a fictional demo with both public
+identifiers configured deliberately sends **test** inquiries; an offline demo sends
+nothing. A real client without provider settings shows an explicit unavailable
+notice and never pretends to submit. Changing copy or `isDemo` does not configure
+accounts or prove delivery. Keep all other demo content under review too.
+
+For each client, use their own Formspree form and recipient and their own Turnstile
+widget. Verify recipient ownership, configure CAPTCHA in Formspree with that widget's
+secret, and authorize the exact deployment/custom hostname in Turnstile. Copy only
+the public form ID and public site key into local/hosting build variables. Form
+destination, displayed contact email, widget hostnames, and private verification
+secret are distinct settings. Review provider plan limits and privacy terms with
+the owner; limits/prices can change. Do not reuse the demo account for a client.
+
+After an approved deployment, manually check required fields, keyboard error focus,
+widget success/expiration/retry, loading state and duplicate-click protection. With
+owner authorization, send one labeled test using the deployed hostname, confirm
+Formspree acceptance, and have the intended recipient confirm the email and reply-to
+behavior. Check Turnstile server validation activity and that missing/invalid tokens
+are rejected; successful delivery alone does not prove spam enforcement. Confirm a
+recoverable failure retains entries without automatic resends. Record the result
+privately, without storing inbox screenshots or inquiry contents in Git.
+
+Automated tests intercept provider requests; they do not establish account setup,
+server-side token enforcement, or inbox delivery. No contact details are saved to
+browser storage or application logs. Existing fields stay in memory until cleared
+or the page closes; provider-side retention must be supplied by the client in the
+approved privacy information. Success means provider acceptance, never guaranteed
+delivery or a scheduled cleaning.
+
+## Optional Privacy page — client approval required
+
+Edit `src/config/privacy.ts`. Set `enabled=true` to render `/privacy/` and its footer
+and Contact links. It is an auxiliary page outside both 3/5-page marketing limits.
+Keep `clientApproved=false` while drafting: the page is noindex, has no canonical,
+and is omitted from the sitemap regardless of other indexing settings. The default
+`enabled=false` preserves the existing demo and emits no Privacy HTML or links.
+
+Replace the clearly labeled placeholder introduction, metadata, and all five
+sections with client-approved facts: categories collected, purposes, actual service
+providers, retention criteria/periods, and public privacy contact/process. Add any
+additional reviewed information appropriate to the business. Do not invent data
+practices, legal compliance, deletion promises, retention periods, or legal rights.
+The template is not legal advice and does not establish compliance.
+
+Only after client review, replace draft metadata and set `clientApproved=true`.
+This permits normal canonical/sitemap behavior only when the global production
+origin, indexing permission, and non-demo settings also allow it. Approval is an
+editorial declaration, not an automated legal assessment; enabling a page is not
+approval. Do not publish this placeholder as a finished policy. Review form/provider
+privacy disclosures against the approved text.
+
+## Pre-launch validation (offline)
+
+Run `npm run validate` before a real client release. It exits with code 1 when
+errors remain, prints `ERROR` or `WARNING`, and names the configuration field plus
+a remedy without echoing its value. This demo intentionally fails the production
+check: default identity/contacts, fictional copy, absent client form/domain settings,
+and unapproved privacy information must not accidentally pass as a client launch.
+
+Use `npm run validate -- --demo` for demo review. Expected production gaps become
+warnings; broken routes, invalid package choices, malformed branding, missing
+assets, and inconsistent provider identifiers still fail. This mode is never
+production approval. `npm run verify` tests the validator and keeps demo builds
+working; it does not treat the demo as launch-ready.
+
+The validator checks enabled-page copy/metadata, public contacts, package/navigation
+consistency, internal action targets, local branding/gallery image references,
+provider identifier syntax, SEO settings, and required approved privacy sections.
+It reads existing config with Vite (already supplied by Astro); it makes no external
+network requests, sends no forms, and does not print identifiers, secrets or inquiry
+content. Syntax/import failures produce a generic safe error with files to inspect.
+Imported image existence is checked; decoding/rights/actual display remain manual.
+
+Warnings cover items that need judgment, including common contrast pairs, intentional
+noindex, provider delivery tests, image licensing, and legal/client approval. A zero
+error result does not prove accessibility, ownership, legal compliance or delivery.
+Keep private evidence outside Git. Complete the launch checklist after automated
+checks pass.
+
+This is an explicit check, not a deployment service. It does not alter DNS, accounts,
+hosting settings, or block an existing auto-deployment by itself. For an approved
+real-client release workflow, use `npm run validate && npm run build` as the build
+command (or require equivalent CI checks). Keep the demo's ordinary `npm run build`
+so demonstration deployments remain possible. Do not use `--demo` to bypass a real
+client's release gate. No hosting command has been changed here.

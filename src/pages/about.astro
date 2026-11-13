@@ -1,10 +1,12 @@
 ---
+import { aboutContent } from '../config/pageContent';
 import { pageMetadata } from '../config/pageMetadata';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Button from '../components/Button.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
 import PageCTA from '../components/PageCTA.astro';
+import { siteContent } from '../config/siteContent';
 import { business } from '../config/business';
 import { philosophy } from '../config/serviceContent';
 ---
@@ -17,45 +19,35 @@ import { philosophy } from '../config/serviceContent';
     <SectionHeading
       level="h1"
       id="about-title"
-      eyebrow="The idea behind the clean"
-      title="More room for everyday life."
-      description="A home is where life happens. The idea behind North Texas Home Cleaning is simple: thoughtful cleaning that helps make daily routines feel a little lighter."
+      eyebrow={aboutContent.eyebrow}
+      title={aboutContent.title}
+      description={aboutContent.description}
     />
-    <Button href="/contact/">Request a Free Quote</Button>
-    <p class="demo-note">
-      A fictional company, presented as a demonstration. No real services or
-      bookings.
-    </p>
+    <Button href={siteContent.quoteAction.href}>
+      {siteContent.quoteAction.label}
+    </Button>
+    <p class="demo-note">{aboutContent.notice}</p>
   </section>
   <section class="introduction" aria-labelledby="introduction-title">
     <SectionHeading
       id="introduction-title"
-      eyebrow="A thoughtful starting point"
-      title="Home care with a clear purpose."
+      eyebrow={aboutContent.introductionEyebrow}
+      title={aboutContent.introductionTitle}
     />
     <div class="introduction-copy">
-      <p>
-        {business.name} is a fictional residential cleaning company imagined for
-        households in North Texas. Its proposed services cover everyday upkeep,
-        more detailed refreshes, and cleaning around a move.
-      </p>
-      <p>
-        The intended focus is practical: understand what the household needs,
-        agree on the work, and approach each space with care. This site
-        describes that service concept, rather than an operating company’s
-        history or credentials.
-      </p>
+      <p>{aboutContent.introduction}</p>
+      <p>{aboutContent.purpose}</p>
       <a class="text-link" href="/services/">
-        Explore the example services <ArrowIcon />
+        {aboutContent.servicesLabel} <ArrowIcon />
       </a>
     </div>
   </section>
   <section class="section philosophy" aria-labelledby="philosophy-title">
     <SectionHeading
       id="philosophy-title"
-      eyebrow="How we would approach the work"
-      title="Simple principles. Clear expectations."
-      description="These principles describe the company’s intended service philosophy, not verified performance claims."
+      eyebrow={aboutContent.philosophyEyebrow}
+      title={aboutContent.philosophyTitle}
+      description={aboutContent.philosophyDescription}
     />
     <div class="card-grid">
       {philosophy.map(({ title, description }, index) => (
@@ -73,34 +65,29 @@ import { philosophy } from '../config/serviceContent';
     <div>
       <SectionHeading
         id="area-title"
-        eyebrow="Around North Texas"
-        title="A neighborhood-minded idea."
-        description="Dallas, Plano, and Frisco illustrate the proposed Dallas–Fort Worth service area. Actual coverage would need to be confirmed by a real provider."
+        eyebrow={aboutContent.areaEyebrow}
+        title={aboutContent.areaTitle}
+        description={aboutContent.areaDescription}
       />
-      <ul class="cities" aria-label="Example service areas">
+      <ul class="cities" aria-label={aboutContent.citiesLabel}>
         {business.serviceAreas.map((city) => (
           <li>{city}</li>
         ))}
       </ul>
     </div>
     <div class="area-copy">
-      <h3>Every home has its own routine.</h3>
-      <p>
-        Location is only the starting point. Home size, preferred timing, and
-        cleaning priorities would help shape a proposed visit.
-      </p>
-      <a class="text-link" href="/contact/">
-        Ask about your area <ArrowIcon />
+      <h3>{aboutContent.areaNoteTitle}</h3>
+      <p>{aboutContent.areaNoteDescription}</p>
+      <a class="text-link" href={siteContent.quoteAction.href}>
+        {aboutContent.areaLabel} <ArrowIcon />
       </a>
-      <p class="demo-note">
-        Example locations only. Coverage is not confirmed.
-      </p>
+      <p class="demo-note">{aboutContent.areaNotice}</p>
     </div>
   </section>
   <PageCTA
     id="about-cta"
-    title="What would a fresh start look like for you?"
-    description="Explore the Contact page to see the sample details for this fictional business."
+    title={aboutContent.ctaTitle}
+    description={aboutContent.ctaDescription}
   />
 </BaseLayout>
 <style>

@@ -1,15 +1,16 @@
 ---
+import { formContent } from '../config/contactContent';
 import Button from './Button.astro';
 import { contactForm } from '../config/contactForm';
 import { services } from '../config/serviceContent';
 ---
 
 <section class="panel" aria-labelledby="form-title">
-  <h2 id="form-title">Tell us about your home</h2>
+  <h2 id="form-title">{formContent.title}</h2>
   <p id="form-notice">
     {contactForm.configured
-      ? 'This is a fictional business. This form sends a test inquiry through Formspree to the site owner; it does not book a cleaning. Please use sample details. Your entries are shared with Formspree, and Cloudflare provides spam protection.'
-      : 'Demo form only. This form checks your entries in your browser. It does not send or save them, request a quote, or book a cleaning. Please use sample details.'}
+      ? formContent.configuredNotice
+      : formContent.offlineNotice}
   </p>
   <noscript>
     <p class="notice">
@@ -30,7 +31,7 @@ import { services } from '../config/serviceContent';
     </p>
     <p class="error-summary" data-error-summary role="alert" hidden></p>
     <fieldset disabled>
-      <legend class="sr-only">Demo inquiry details</legend>
+      <legend class="sr-only">{formContent.legend}</legend>
       <div class="form-grid">
         <div class="field">
           <label for="contact-name">
@@ -110,8 +111,7 @@ import { services } from '../config/serviceContent';
             aria-describedby="message-hint message-error"
           ></textarea>
           <p id="message-hint" class="hint">
-            For example: home size, priority rooms, and preferred timing.
-            Maximum 2,000 characters.
+            {formContent.messageHint}
           </p>
           <p id="message-error" class="field-error" hidden></p>
         </div>
@@ -143,7 +143,9 @@ import { services } from '../config/serviceContent';
         </section>
       )}
       <Button type="submit">
-        {contactForm.configured ? 'Send test inquiry' : 'Check demo form'}
+        {contactForm.configured
+          ? formContent.configuredSubmit
+          : formContent.offlineSubmit}
       </Button>
     </fieldset>
   </form>
@@ -163,7 +165,7 @@ import { services } from '../config/serviceContent';
     tabindex="-1"
   ></p>
   <Button type="button" variant="secondary" data-new-inquiry hidden>
-    Start a new inquiry
+    {formContent.newInquiry}
   </Button>
 </section>
 <script>

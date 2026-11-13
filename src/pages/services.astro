@@ -1,10 +1,12 @@
 ---
+import { servicesPageContent } from '../config/serviceContent';
 import { pageMetadata } from '../config/pageMetadata';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Button from '../components/Button.astro';
 import ServiceDetailCard from '../components/ServiceDetailCard.astro';
 import PageCTA from '../components/PageCTA.astro';
+import { siteContent } from '../config/siteContent';
 import { services } from '../config/serviceContent';
 ---
 
@@ -16,14 +18,14 @@ import { services } from '../config/serviceContent';
     <SectionHeading
       level="h1"
       id="services-title"
-      eyebrow="A clean for every chapter"
-      title="Find the right fresh start."
-      description="A routine reset, a closer look at the details, or a clean slate for a move. Explore three example ways to care for your home."
+      eyebrow={servicesPageContent.eyebrow}
+      title={servicesPageContent.title}
+      description={servicesPageContent.description}
     />
-    <Button href="/contact/">Request a Free Quote</Button>
-    <p class="demo-note">
-      Fictional services · Sample scopes only · No real bookings
-    </p>
+    <Button href={siteContent.quoteAction.href}>
+      {siteContent.quoteAction.label}
+    </Button>
+    <p class="demo-note">{servicesPageContent.notice}</p>
   </section>
   <nav class="service-nav" aria-label="On this page">
     <ul>
@@ -45,40 +47,23 @@ import { services } from '../config/serviceContent';
   <section class="section planning" aria-labelledby="planning-title">
     <SectionHeading
       id="planning-title"
-      eyebrow="Before scheduling"
-      title="Good expectations make a good starting point."
-      description="These inclusions and exclusions illustrate possible service scopes. A real provider would confirm the details for each home before any work begins."
+      eyebrow={servicesPageContent.planningEyebrow}
+      title={servicesPageContent.planningTitle}
+      description={servicesPageContent.planningDescription}
     />
     <div class="card-grid">
-      <article class="card">
-        <h3>Share what matters</h3>
-        <p>
-          Describe your home’s size, condition, preferred timing, and priority
-          rooms. Mention pets, delicate surfaces, and access needs.
-        </p>
-      </article>
-      <article class="card">
-        <h3>Confirm the details</h3>
-        <p>
-          Review tasks, exclusions, product preferences, pricing, and any
-          optional extras. Interior windows and inside appliances should never
-          be assumed included.
-        </p>
-      </article>
-      <article class="card">
-        <h3>Prepare the space</h3>
-        <p>
-          Agree on access and clear the surfaces to be cleaned. For a
-          move-related visit, discuss when the home will be empty and whether
-          utilities will be available.
-        </p>
-      </article>
+      {servicesPageContent.planningTips.map(({ title, description }) => (
+        <article class="card">
+          <h3>{title}</h3>
+          <p>{description}</p>
+        </article>
+      ))}
     </div>
   </section>
   <PageCTA
     id="services-cta"
-    title="Not sure which clean fits?"
-    description="Start with your priorities and the kind of refresh you have in mind."
+    title={servicesPageContent.ctaTitle}
+    description={servicesPageContent.ctaDescription}
   />
 </BaseLayout>
 <style>

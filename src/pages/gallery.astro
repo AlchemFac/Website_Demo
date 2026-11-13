@@ -1,4 +1,5 @@
 ---
+import { galleryContent } from '../config/gallery';
 import { pageMetadata } from '../config/pageMetadata';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
@@ -15,9 +16,9 @@ import { galleryImages } from '../config/gallery';
     <SectionHeading
       level="h1"
       id="gallery-title"
-      eyebrow="A little inspiration for your space"
-      title="Picture a fresh start."
-      description="A few calm interiors to inspire the everyday. These original AI-generated images show imagined spaces, not customer homes, before-and-after results, or completed cleaning jobs."
+      eyebrow={galleryContent.eyebrow}
+      title={galleryContent.title}
+      description={galleryContent.description}
     />
   </section>
   <div class="photo-grid">
@@ -26,17 +27,13 @@ import { galleryImages } from '../config/gallery';
     ))}
   </div>
   <section class="gallery-note" aria-labelledby="imagery-title">
-    <h2 id="imagery-title">Demonstration imagery, clearly labeled.</h2>
-    <p>
-      North Texas Home Cleaning is fictional. This gallery illustrates a visual
-      style only; it does not document the quality or results of any cleaning
-      service.
-    </p>
+    <h2 id="imagery-title">{galleryContent.noticeTitle}</h2>
+    <p>{galleryContent.notice}</p>
   </section>
   <PageCTA
     id="gallery-cta"
-    title="What does your home need?"
-    description="Explore the sample contact details and the test-inquiry form."
+    title={galleryContent.ctaTitle}
+    description={galleryContent.ctaDescription}
   />
 </BaseLayout>
 <style>

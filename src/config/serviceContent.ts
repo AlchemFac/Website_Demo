@@ -94,3 +94,47 @@ export const philosophy = [
       'An ideal visit would respect personal belongings, surface care instructions, and agreed access arrangements. Special materials and delicate items should be discussed in advance.',
   },
 ] as const;
+
+/** Client-editable demonstration copy. Keep claims and demo notices truthful. */
+export const servicesPageContent = {
+  eyebrow: 'A clean for every chapter',
+  title: 'Find the right fresh start.',
+  description:
+    'A routine reset, a closer look at the details, or a clean slate for a move. Explore three example ways to care for your home.',
+  planningEyebrow: 'Before scheduling',
+  planningTitle: 'Good expectations make a good starting point.',
+  planningDescription:
+    'These inclusions and exclusions illustrate possible service scopes. A real provider would confirm the details for each home before any work begins.',
+  ctaTitle: 'Not sure which clean fits?',
+  ctaDescription:
+    'Start with your priorities and the kind of refresh you have in mind.',
+  notice: 'Fictional services · Sample scopes only · No real bookings',
+  planningTips: [
+    {
+      title: 'Share what matters',
+      description:
+        'Describe your home’s size, condition, preferred timing, and priority rooms. Mention pets, delicate surfaces, and access needs.',
+    },
+    {
+      title: 'Confirm the details',
+      description:
+        'Review tasks, exclusions, product preferences, pricing, and any optional extras. Interior windows and inside appliances should never be assumed included.',
+    },
+    {
+      title: 'Prepare the space',
+      description:
+        'Agree on access and clear the surfaces to be cleaned. For a move-related visit, discuss when the home will be empty and whether utilities will be available.',
+    },
+  ],
+} as const;
+
+/** Editable copy; preserve accurate validation and provider-acceptance language. */
+export const serviceLabels = {
+  explore: 'Explore service',
+  exploreAccessiblePrefix: 'Explore service:',
+  service: 'Service',
+  scope: 'Example scope',
+  includes: 'Example inclusions',
+  excludes: 'Outside this example scope',
+  quoteAccessiblePrefix: 'Request a free quote for',
+} as const;

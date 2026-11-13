@@ -119,8 +119,11 @@ a new static build and deployment to affect the hosted site.
 CLIENT_SETUP.md               Client-by-client customization guide
 src/config/business.ts        Identity, optional logo, palette, contacts, hours, areas
 src/config/pageMetadata.ts    Per-page search/social titles and descriptions
-src/config/serviceContent.ts Shared services, homepage summaries, About philosophy
-src/config/gallery.ts         Image imports, alt text, captions, provenance labels
+src/config/pageContent.ts     Homepage and About headings, body copy, image and CTAs
+src/config/siteContent.ts     Shared quote action, demo notices, footer labels
+src/config/contactContent.ts  Contact/form wording in offline and configured modes
+src/config/serviceContent.ts  Shared services, philosophy, Services copy and labels
+src/config/gallery.ts         Gallery copy, image imports, alt text and provenance
 src/config/navigation.ts      Routes/navigation, also used by sitemap generation
 src/config/contactForm.ts     Public form configuration validation
 src/config/seo.mjs             Domain and discovery-file helpers

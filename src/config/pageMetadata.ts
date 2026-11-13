@@ -1,5 +1,10 @@
 /** Per-page search/social metadata. Edit for each client; this copy remains fictional. */
 export const pageMetadata = {
+  notFound: {
+    title: 'Page Not Found',
+    description:
+      'This page could not be found. Return to the homepage or explore the cleaning services.',
+  },
   home: {
     title: 'Home Cleaning in Dallas–Fort Worth',
     description:

@@ -44,8 +44,9 @@ Edit `src/config/business.ts`:
 
 The shared header/footer brand and Contact information read from this file.
 Page metadata is centralized separately in `src/config/pageMetadata.ts`.
-Business-specific body copy still needs review; changing the name alone does not
-replace every North Texas or cleaning reference.
+Business names in About, Contact, and Gallery introductions reuse `business.name`.
+Other editorial copy lives in the content configuration files below; changing the
+name alone does not replace regional or cleaning-specific messaging.
 
 ## 3. Logo
 
@@ -101,7 +102,7 @@ example.com address are not a real contact channel.
 
 The footer supports phone/email links for a non-demo business. The Contact page
 currently presents sample details as text; review its headings, links, and explanatory
-copy in `src/pages/contact.astro` for the actual service. Do not publish labels
+copy in `src/config/contactContent.ts` for the actual service. Do not publish labels
 such as “Sample contact details” on a finished client site.
 
 **Changing `business.email` does not change the form recipient.** Configure that
@@ -118,6 +119,8 @@ Edit `src/config/serviceContent.ts`:
 - `homepage.description`, `homepage.details`: short homepage card content.
 - `summary`, `description`, `includes`, `excludes`: detailed Services page content.
 - `philosophy`: intended principles presented on About.
+- `servicesPageContent`: page introduction, planning tips, scope notice, and final CTA.
+- `serviceLabels`: shared card links, accessible quote labels, and scope headings.
 
 Adding/removing an entry updates the homepage service cards, Services detail cards,
 and Contact service choices. Have the owner approve actual scopes, exclusions,
@@ -125,8 +128,9 @@ pricing/quote language, and anything claimed about the business. No years of
 experience, certifications, insurance, awards, or customer reviews are provided
 by this template and none should be invented.
 
-Homepage benefits/process wording and some About paragraphs are page copy, not
-service data. Review them for a different type of business.
+Homepage benefits/process wording and About paragraphs are in
+`src/config/pageContent.ts` (`homeContent` and `aboutContent`). Review them for a
+different type of business; philosophy items remain in `serviceContent.ts`.
 
 ## 7. Images and captions
 
@@ -145,17 +149,20 @@ a demonstration photo into service evidence.
 after the first photo. Keep source images in `src/assets/` for optimization. Files
 in `public/` are served as-is.
 
-The homepage uses `public/images/calm-home.svg`. To replace it, edit the hero image
-in `src/pages/index.astro`, its alt text/dimensions, and the adjacent caption together.
+The homepage uses `public/images/calm-home.svg`. To replace it, edit `homeContent`
+in `src/config/pageContent.ts`: `heroImageSrc`, `heroImageWidth`, `heroImageHeight`,
+`heroImageAlt`, `heroCaption`, and `heroImageLabel` together. The default caption
+reuses `business.branding.tagline`; replace that reference if separate copy is needed.
 Use Astro Image for a large raster replacement rather than serving an unnecessarily
-large raw file. Keep image rights/attribution notices current. Gallery introduction
-and demo-note paragraphs in `gallery.astro` also need review after image replacement.
+large raw file. Keep image rights/attribution notices current. `galleryContent` in
+`src/config/gallery.ts` controls the gallery introduction, demo note, and CTA; review
+those after image replacement.
 
 ## 8. Service areas
 
 Edit `business.serviceAreas` with confirmed city names/locations. Shared city lists
 in Home, About, Contact, and the footer read that data. Geographic prose such as
-“Dallas–Fort Worth” or “North Texas” remains in page copy and page metadata. Change
+“Dallas–Fort Worth” or “North Texas” remains in content configuration and page metadata. Change
 those explicitly; do not imply coverage the owner has not approved. A map is not
 included and no fabricated street address should be introduced.
 
@@ -164,8 +171,9 @@ included and no fabricated street address should be introduced.
 Edit each page's `title` and `description` in `src/config/pageMetadata.ts`.
 `BaseLayout.astro` builds the document title and matching Open Graph metadata;
 the business name is appended automatically. Keep titles/descriptions unique,
-factual, and relevant to the page. Visible h1 headings and descriptions remain
-in the page files, so review them too. The 404 page has separate generic metadata.
+factual, and relevant to the page. Visible h1 headings and descriptions live in
+the content files, so review them too. The 404 metadata uses `pageMetadata.notFound`
+and retains its independent noindex behavior.
 
 Set the final root HTTPS origin in local/hosting **build settings** as `SITE_URL`.
 There must be no path, query, credentials, or fragment. Leave it blank until chosen.
@@ -204,35 +212,55 @@ and redeploy to affect hosting. See [Contact integration](docs/contact-integrati
 for detailed account setup, privacy, error behavior, and the manual inbox test.
 
 Configured mode currently says “Send test inquiry” because this is fictional.
-Before real inquiries are accepted, approve the wording in `ContactForm.astro`,
-`src/scripts/contact-form.ts`, and `contact.astro`, and add the client's privacy
-information. Preserve validation, field errors/focus, pending state, duplicate
+Before real inquiries are accepted, approve `contactContent`, `formContent`, and
+`formMessages` in `src/config/contactContent.ts`, and add the client's privacy
+information. Both offline and configured modes have separate notices. The form
+component and script consume the same copy configuration; provider configuration
+stays in `src/config/contactForm.ts`. Preserve validation, field errors/focus, pending state, duplicate
 protection, and honest provider-acceptance messaging. Do not change success copy
 to claim inbox delivery or a booking merely because the provider accepted a request.
 
-## Remaining demo content to review
+## Content editing map and remaining manual review
 
-This inventory deliberately identifies editorial work instead of pretending every
-phrase is automatically configurable:
+Frequently customized text is plain typed data under `src/config/`. No CMS, HTML
+strings, or translation system is required. Edit the values directly; Astro escapes
+text and the components retain semantic markup and accessible labels.
 
-| Location                                                      | Remaining business-specific or demo content                             |
-| ------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `business.ts`                                                 | Default identity, contacts, hours, cities, tagline, colors, `isDemo`    |
-| `pageMetadata.ts`                                             | Per-page cleaning/region/fictional descriptions and titles              |
-| `serviceContent.ts`                                           | Cleaning-specific descriptions, scopes, philosophy                      |
-| `gallery.ts`                                                  | Generated-room titles, alt text, provenance labels/captions             |
-| `pages/index.astro`                                           | Hero, benefits, process, region prose, illustration/caption, notices    |
-| `pages/about.astro`                                           | Fictional introduction and geographic/philosophy prose                  |
-| `pages/services.astro`                                        | Page introduction, scope disclaimer, preparation tips                   |
-| `pages/gallery.astro`                                         | Generated-demo introduction and “not customer work” note                |
-| `pages/contact.astro`                                         | Sample headings/hours/coverage text and fictional inquiry introduction  |
-| `components/PageCTA.astro`                                    | “Free Quote” action and fictional-business notice                       |
-| `components/SiteHeader.astro`, `SiteFooter.astro`             | Demo banner/footer notices; some are conditional on `isDemo`            |
-| `components/ContactForm.astro`, `scripts/contact-form.ts`     | Demo/test labels, notices, validation and acceptance messages           |
-| `pages/404.astro`                                             | Generic title/description that still refers to cleaning services        |
-| `public/images/calm-home.svg`                                 | Original illustration with its own fixed art palette/license            |
-| `ContactForm.astro`, `ProcessStep.astro`                      | Semantic error colors and a decorative divider outside the main palette |
-| `docs/contact-integration.md`, `docs/production-readiness.md` | Historical testing of this demo, not evidence about a new client's site |
+| File in `src/config/`                               | What to change                                                                                                                                     |
+| --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `business.ts`                                       | Identity, contacts, hours, cities, tagline, optional logo, palette, `isDemo`                                                                       |
+| `pageContent.ts` → `homeContent`                    | Hero (including emphasized second line), illustration, benefits, process steps, region copy, notices, homepage CTA                                 |
+| `pageContent.ts` → `aboutContent`                   | Introduction, purpose, philosophy headings, area prose, notices, About CTA                                                                         |
+| `serviceContent.ts`                                 | Service descriptions/scopes, homepage summaries, philosophy items, Services introduction, planning tips, scope labels and accessible link prefixes |
+| `contactContent.ts` → `contactContent`              | Contact introduction in both modes, sample detail/hours/area headings, coverage notice                                                             |
+| `contactContent.ts` → `formContent`, `formMessages` | Form notices, message hint, demo/test action labels, required cleaning-needs message, sending/acceptance and offline statuses                      |
+| `gallery.ts`                                        | Images, alt text, per-image provenance/captions; `galleryContent` introduction, note, and CTA                                                      |
+| `siteContent.ts`                                    | Shared quote button label/destination, PageCTA eyebrow/notice, header demo banner, footer labels/notice                                            |
+| `pageMetadata.ts`                                   | Per-page SEO titles/descriptions, including the 404 metadata                                                                                       |
+| `navigation.ts`                                     | Navigation labels and routes                                                                                                                       |
+
+For example, change `homeContent.heroTitle` and `heroEmphasis` for the two visual
+headline lines. Change `siteContent.quoteAction.label` for all shared quote buttons;
+its `href` must lead to a working destination. Service-specific accessible labels
+use `serviceLabels.quoteAccessiblePrefix` plus the service title: keep them consistent
+with the visible quote action. Image dimensions must match the replacement asset.
+
+All current fictional copy is preserved. Replacing a business name or flipping
+`isDemo` does **not** automatically turn demonstration copy into verified claims.
+Read every content object for regional references, service scope, pricing language,
+image provenance, privacy disclosure, and test-only messaging before launch. Keep
+all demo notices while this remains the fictional cleaning example.
+
+Technical UI text (field labels, generic validation/network/CAPTCHA errors, menu
+controls, and generic 404 navigation) stays in the components/scripts. Those are
+not business identity settings; edit them only when changing behavior or language,
+and recheck accessibility. Page markup, semantic headings, image loading policy,
+and form validation/submission logic remain in their existing files.
+
+Still review the fixed illustration artwork/license in `public/images/calm-home.svg`,
+semantic error colors and decorative process divider, and historical test evidence
+in `docs/contact-integration.md` and `docs/production-readiness.md`. Those documents
+do not prove delivery for a second client or a new hostname.
 
 Use VS Code's **Ctrl+Shift+F** to search for `North Texas`, `Dallas`, `Plano`,
 `Frisco`, `cleaning`, `fictional`, `sample`, `demo`, `test inquiry`, `555-0100`, and

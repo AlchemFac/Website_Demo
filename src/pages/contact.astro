@@ -1,4 +1,5 @@
 ---
+import { contactContent } from '../config/contactContent';
 import { pageMetadata } from '../config/pageMetadata';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
@@ -15,19 +16,19 @@ import { business } from '../config/business';
     <SectionHeading
       level="h1"
       id="contact-title"
-      eyebrow="A fresh start begins with a conversation"
-      title="Let’s talk about your space."
+      eyebrow={contactContent.eyebrow}
+      title={contactContent.title}
       description={
         contactForm.configured
-          ? 'Send a test inquiry to the site owner using the form below. North Texas Home Cleaning remains fictional; no real cleaning bookings are available.'
-          : 'Explore the sample contact details or try the demo form below. North Texas Home Cleaning is fictional; no real inquiries or bookings are accepted.'
+          ? contactContent.configuredDescription
+          : contactContent.offlineDescription
       }
     />
   </section>
   <div class="contact-layout">
-    <aside class="contact-info" aria-label="Sample business information">
+    <aside class="contact-info" aria-label={contactContent.informationLabel}>
       <section class="panel" aria-labelledby="details-title">
-        <h2 id="details-title">Sample contact details</h2>
+        <h2 id="details-title">{contactContent.detailsTitle}</h2>
         <p>{business.name}</p>
         <dl>
           <dt>Phone</dt>
@@ -35,13 +36,10 @@ import { business } from '../config/business';
           <dt>Email</dt>
           <dd>{business.email}</dd>
         </dl>
-        <p class="note">
-          Demonstration details only. These do not reach a real cleaning
-          company.
-        </p>
+        <p class="note">{contactContent.detailsNotice}</p>
       </section>
       <section class="panel" aria-labelledby="hours-title">
-        <h2 id="hours-title">Sample business hours</h2>
+        <h2 id="hours-title">{contactContent.hoursTitle}</h2>
         <dl>
           {business.hours.map(({ days, hours }) => (
             <div>
@@ -52,13 +50,13 @@ import { business } from '../config/business';
         </dl>
       </section>
       <section class="panel" aria-labelledby="areas-title">
-        <h2 id="areas-title">Example service areas</h2>
+        <h2 id="areas-title">{contactContent.areasTitle}</h2>
         <ul>
           {business.serviceAreas.map((area) => (
             <li>{area}</li>
           ))}
         </ul>
-        <p class="note">Illustrative DFW locations, not confirmed coverage.</p>
+        <p class="note">{contactContent.areasNotice}</p>
       </section>
     </aside>
     <ContactForm />

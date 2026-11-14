@@ -6,3 +6,6 @@ playwright-report/
 test-results/
 .submission-test-dist/
 .site-test-dist/
+
+promotion-site/dist/
+promotion-site/.astro/

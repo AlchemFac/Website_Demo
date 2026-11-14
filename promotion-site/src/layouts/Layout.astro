@@ -1,0 +1,68 @@
+---
+import Arrow from '../components/Arrow.astro';
+import { studio } from '../config/studio';
+import Header from '../components/Header.astro';
+import '../styles/global.css';
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Small-business websites from $599',
+  description = 'One-time website builds for DFW small businesses. Starter $599, Business $999. Keep your website, with optional monthly care and no required subscription.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta property="og:title" content={`${title} | ${studio.name}`} />
+    <meta property="og:description" content={description} />
+    <meta name="theme-color" content="#16392d" />
+    <title>{title} | {studio.name}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="/#main">
+      Skip to content
+    </a>
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <a class="brand" href="/">
+          <span class="brand-symbol" aria-hidden="true">
+            <Arrow />
+          </span>
+          <span>
+            {studio.name}
+            <small>{studio.tagline}</small>
+          </span>
+        </a>
+        <p>
+          Built for small business.
+          <br />
+          Clear scope. Your website.
+        </p>
+        <nav aria-label="Footer navigation">
+          <a href="/#packages">Packages</a>
+          <a href="/#care">Optional care</a>
+          <a href="/#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="wrap footer-bottom">
+        <p>
+          Business name and public contact details are pending. This is an
+          unpublished working preview.
+        </p>
+        <p>No visitor inquiries are collected or sent.</p>
+      </div>
+    </footer>
+  </body>
+</html>

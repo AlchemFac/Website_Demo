@@ -1,0 +1,95 @@
+---
+import { studio } from '../config/studio';
+import Arrow from './Arrow.astro';
+---
+
+{studio.isPreview && (
+  <div class="preview-banner">
+    Private working preview · Business name and contact details to be finalized
+  </div>
+)}
+<header class="site-header" data-studio-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="/" aria-label={`${studio.name} homepage`}>
+      <span class="brand-symbol" aria-hidden="true">
+        <Arrow />
+      </span>
+      <span>
+        {studio.name}
+        <small>Websites for small business</small>
+      </span>
+    </a>
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-controls="studio-nav"
+      aria-expanded="false"
+      hidden
+    >
+      Menu
+    </button>
+    <nav id="studio-nav" aria-label="Main navigation">
+      <a href="/#packages">Packages</a>
+      <a href="/#example">The work</a>
+      <a href="/#process">How it works</a>
+      <a href="/#faq">Questions</a>
+    </nav>
+    <a class="button header-cta button-dark" href="/#contact">
+      Let’s talk websites
+      <Arrow />
+    </a>
+  </div>
+</header>
+<script>
+  const header = document.querySelector<HTMLElement>('[data-studio-header]');
+  const toggle = header?.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav = header?.querySelector<HTMLElement>('nav');
+  if (header && toggle && nav) {
+    const desktop = matchMedia('(min-width: 60rem)');
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.textContent = open ? 'Close menu' : 'Menu';
+      nav.hidden = !desktop.matches && !open;
+    };
+    const sync = () => {
+      if (desktop.matches && document.activeElement === toggle) {
+        nav.hidden = false;
+        nav.querySelector<HTMLAnchorElement>('a')?.focus();
+      } else if (!desktop.matches && nav.contains(document.activeElement)) {
+        toggle.hidden = false;
+        toggle.focus();
+      }
+      toggle.hidden = desktop.matches;
+      setOpen(false);
+    };
+    toggle.addEventListener('click', () =>
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true'),
+    );
+    nav.addEventListener('click', (event) => {
+      const link = (event.target as HTMLElement).closest<HTMLAnchorElement>(
+        'a',
+      );
+      if (link && !desktop.matches) {
+        setOpen(false);
+        const id = link.hash.slice(1);
+        const destination = document.getElementById(id);
+        if (destination) {
+          destination.tabIndex = -1;
+          destination.focus({ preventScroll: true });
+        }
+      }
+    });
+    header.addEventListener('keydown', (event) => {
+      if (
+        event.key === 'Escape' &&
+        !desktop.matches &&
+        toggle.getAttribute('aria-expanded') === 'true'
+      ) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    desktop.addEventListener('change', sync);
+    sync();
+  }
+</script>

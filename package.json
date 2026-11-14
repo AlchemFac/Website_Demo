@@ -18,7 +18,13 @@
     "test:seo": "node --test tests/seo.test.mjs",
     "test:packages": "node scripts/build-package-tests.mjs && playwright test --config playwright.packages.config.ts",
     "test:config": "node --test tests/branding.test.mjs tests/contact-copy.test.mjs tests/launch-validation.test.mjs",
-    "validate": "node scripts/validate.mjs"
+    "validate": "node scripts/validate.mjs",
+    "dev:promotion": "astro dev --root ./promotion-site --port 4330",
+    "build:promotion": "astro build --root ./promotion-site",
+    "check:promotion": "astro check --root ./promotion-site",
+    "preview:promotion": "astro preview --root ./promotion-site --port 4330",
+    "test:promotion": "npm run build:promotion && playwright test --config playwright.promotion.config.ts",
+    "verify:promotion": "npm run format:check && npm run check:promotion && npm run test:promotion"
   },
   "dependencies": {
     "astro": "7.4.4"

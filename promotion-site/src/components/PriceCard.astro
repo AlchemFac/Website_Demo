@@ -1,0 +1,59 @@
+---
+import Arrow from './Arrow.astro';
+import type { packages } from '../config/studio';
+interface Props {
+  plan: (typeof packages)[number];
+}
+const { plan } = Astro.props;
+---
+
+<article
+  class:list={['price-card', { featured: plan.id === 'business' }]}
+  aria-labelledby={`${plan.id}-title`}
+>
+  <div class="plan-top">
+    <h3 id={`${plan.id}-title`}>{plan.name}</h3>
+    <span class="plan-label">
+      {plan.id === 'business' ? 'Room to grow' : 'Keep it focused'}
+    </span>
+  </div>
+  <p class="plan-description">{plan.description}</p>
+  <p class="price">
+    <span class="currency">$</span>
+    {plan.price}
+    <span class="price-term">one time</span>
+  </p>
+  <p class="plan-pages">{plan.pages}</p>
+  <p class="page-list">{plan.pageList}</p>
+  <a
+    class:list={[
+      'button',
+      plan.id === 'business' ? 'button-lime' : 'button-dark',
+    ]}
+    href="#contact"
+    data-plan={plan.id}
+  >
+    Choose {plan.name}
+    <Arrow />
+  </a>
+  <ul class="check-list">
+    {plan.features.map((feature) => (
+      <li>
+        <span aria-hidden="true">✓</span>
+        {feature}
+      </li>
+    ))}
+    <li>
+      <span aria-hidden="true">✓</span>
+      {plan.revisions}
+    </li>
+    <li>
+      <span aria-hidden="true">✓</span>30-day delivery-defect correction
+    </li>
+  </ul>
+  <p class="plan-bottom">
+    50% to begin. 50% before launch.
+    <br />
+    No required subscription.
+  </p>
+</article>

@@ -180,3 +180,12 @@ intentionally reports blocking errors. `npm run validate -- --demo` reviews the 
 with expected launch gaps as warnings. See [client setup](CLIENT_SETUP.md#pre-launch-validation-offline)
 for fixes, exit codes, limits and how to gate an approved release. Neither command
 deploys or sends inquiries.
+
+## Separate promotional site
+
+The web-design business preview lives in `promotion-site/` on
+`feat/promotional-website`. Run `npm run dev:promotion` to work on it, or
+`npm run verify:promotion` to check it. The cleaning template uses the original
+commands and remains unchanged. See [the promotional site guide](promotion-site/README.md)
+for the placeholder business name, pending email, $599/$999 build packages, and
+optional care configuration. The promotional site is not published.

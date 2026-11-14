@@ -1,0 +1,404 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import Arrow from '../components/Arrow.astro';
+import PriceCard from '../components/PriceCard.astro';
+import SectionIntro from '../components/SectionIntro.astro';
+import { studio, packages, steps, faqs } from '../config/studio';
+import concept from '../assets/cleaning-concept.png';
+---
+
+<Layout>
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow">
+        <span class="status-dot" aria-hidden="true"></span>Small business. Big
+        next step.
+      </p>
+      <h1 id="hero-title">
+        A proper website.
+        <br />
+        <span>A simple price.</span>
+      </h1>
+      <p class="hero-description">
+        Get your business online with a clear, mobile-friendly website. Pay once
+        for the build. Keep your site. Choose ongoing care only if you need it.
+      </p>
+      <div class="hero-actions">
+        <a class="button button-dark" href="#packages">
+          Find your package
+          <Arrow />
+        </a>
+        <a class="quiet-link" href="#example">
+          Take a look at the work
+          <span aria-hidden="true">
+            <Arrow />
+          </span>
+        </a>
+      </div>
+      <p class="hero-fine">
+        Websites from <strong>$599 one time.</strong> No required monthly plan.
+      </p>
+    </div>
+    <div class="hero-visual">
+      <span class="visual-orbit" aria-hidden="true"></span>
+      <div class="browser-preview">
+        <div class="browser-bar">
+          <span class="window-dots" aria-hidden="true">
+            ● ● ●
+          </span>
+          <span>YOUR NEXT CHAPTER, ONLINE</span>
+          <span aria-hidden="true">
+            <Arrow />
+          </span>
+        </div>
+        <Image
+          src={concept}
+          alt="A screenshot of the fictional North Texas Home Cleaning website, with sage branding and a sunlit-room illustration."
+          width={1050}
+          height={780}
+          fit="cover"
+          position="top"
+          loading="eager"
+          fetchpriority="high"
+          format="webp"
+        />
+        <div class="preview-caption">
+          <span class="concept-dot" aria-hidden="true"></span>North Texas Home
+          Cleaning<span>Fictional concept site</span>
+        </div>
+      </div>
+      <div class="ownership-note">
+        <span class="note-icon" aria-hidden="true">
+          ✓
+        </span>
+        <div>
+          <strong>Your business. Your website.</strong>
+          <small>Keep the finished site after final payment.</small>
+        </div>
+      </div>
+      <p class="visual-footnote">
+        A real example of the template—not a claimed customer project.
+      </p>
+    </div>
+  </section>
+  <div class="promise-strip">
+    <div class="wrap promise-inner">
+      <p>
+        <span aria-hidden="true">
+          <Arrow />
+        </span>
+        Designed for DFW small businesses
+      </p>
+      <p>
+        <span aria-hidden="true">✓</span>Mobile-friendly from the start
+      </p>
+      <p>
+        <span aria-hidden="true">◇</span>Client-owned accounts & source files
+      </p>
+    </div>
+  </div>
+  <section class="section wrap" id="packages" aria-labelledby="packages-title">
+    <div class="section-heading-row">
+      <SectionIntro
+        id="packages-title"
+        eyebrow="01 / Straightforward packages"
+        title="Start with what you need."
+        description="Two fixed-price builds, based on a focused, reusable design. Your branding, your content, and a clear finish line."
+      />
+      <p class="section-aside">
+        Pay for the website.
+        <br />
+        <strong>Keep the website.</strong>
+      </p>
+    </div>
+    <div class="pricing-grid">
+      {packages.map((plan) => (
+        <PriceCard plan={plan} />
+      ))}
+    </div>
+    <div class="pricing-notes">
+      <p>
+        <strong>Privacy text doesn’t use a marketing page.</strong> Formatting
+        client-approved privacy content is included when supplied.
+      </p>
+      <p>
+        Domain registration, business email, paid provider plans, and applicable
+        taxes are separate.
+      </p>
+    </div>
+  </section>
+  <section class="ownership-band" aria-labelledby="ownership-title">
+    <div class="wrap ownership-inner">
+      <div>
+        <p class="eyebrow">The important part</p>
+        <h2 id="ownership-title">
+          You’re buying a website.
+          <br />
+          <span>You get to keep it.</span>
+        </h2>
+      </div>
+      <div>
+        <p>
+          Once the build is paid for, the completed site and source files are
+          yours to keep. Your domain, hosting and provider accounts stay in your
+          name.
+        </p>
+        <p>
+          Skip care or cancel it later—your website isn’t removed. Ongoing
+          maintenance and provider costs become your responsibility. The
+          reusable template and third-party assets retain their licensing terms.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section
+    class="section wrap example-section"
+    id="example"
+    aria-labelledby="example-title"
+  >
+    <div class="example-art">
+      <div class="mini-browser">
+        <div class="browser-bar">
+          <span class="window-dots" aria-hidden="true">
+            ● ● ●
+          </span>
+          <span>CONCEPT / HOME SERVICES</span>
+        </div>
+        <Image
+          src={concept}
+          alt="Desktop preview of the North Texas Home Cleaning concept homepage, showing service cards and a request-a-quote action."
+          width={900}
+          height={1000}
+          fit="cover"
+          position="top"
+          format="webp"
+          loading="lazy"
+        />
+      </div>
+      <span class="example-label">A concept, clearly labeled.</span>
+    </div>
+    <div class="example-copy">
+      <SectionIntro
+        id="example-title"
+        eyebrow="02 / An example, not a promise"
+        title="A little polish goes a long way."
+        description="The fictional North Texas Home Cleaning site shows the approach: clear services, useful information, responsive layouts, and a straightforward next step."
+      />
+      <ul class="numbered-features">
+        <li>
+          <span>01</span>
+          <div>
+            <h3>Clear at a glance.</h3>
+            <p>
+              Help visitors understand what you do, where you work, and how to
+              reach you.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span>02</span>
+          <div>
+            <h3>Comfortable on a phone.</h3>
+            <p>
+              Readable layouts, optimized images, and calls to action that are
+              easy to find.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span>03</span>
+          <div>
+            <h3>Built with a handoff in mind.</h3>
+            <p>
+              A static Astro website, editable source files, and client-owned
+              accounts.
+            </p>
+          </div>
+        </li>
+      </ul>
+      <p class="example-disclosure">
+        This is a fictional demonstration, not a completed client engagement.
+        Its images are original demonstration artwork, not customer-job photos.
+      </p>
+    </div>
+  </section>
+  <section
+    class="section process-section"
+    id="process"
+    aria-labelledby="process-title"
+  >
+    <div class="wrap">
+      <SectionIntro
+        id="process-title"
+        eyebrow="03 / A clear path to launch"
+        title="From “we need a website” to online."
+        description="We agree on the scope and schedule after reviewing your content, images and account setup."
+      />
+      <ol class="process-grid">
+        {steps.map((step) => (
+          <li>
+            <span class="step-number">{step.number}</span>
+            <h3>{step.title}</h3>
+            <p>{step.description}</p>
+            <span class="step-note">{step.note}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+  <section class="section wrap" id="care" aria-labelledby="care-title">
+    <div class="care-layout">
+      <div>
+        <SectionIntro
+          id="care-title"
+          eyebrow="04 / Stay supported, if you want"
+          title="A little help after launch."
+          description="The build stands on its own. Optional care adds scheduled maintenance review, website and form checks, support, and small content updates."
+        />
+        <p class="care-promise">
+          No required subscription.
+          <br />
+          <strong>No 12-month care commitment.</strong>
+        </p>
+      </div>
+      <div class="care-options">
+        {packages.map((plan) => (
+          <article class="care-card">
+            <div>
+              <h3>{plan.name} care</h3>
+              <p>
+                Up to {plan.careMinutes} minutes of content edits per month.
+              </p>
+            </div>
+            <p class="care-price">
+              ${plan.care}
+              <span>/month</span>
+            </p>
+          </article>
+        ))}
+        <p class="small-note">
+          Starts at launch if selected. Month-to-month billing. Unused editing
+          time doesn’t roll over. New pages, redesigns and added functionality
+          are quoted separately before work begins.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="scope-section">
+    <div class="wrap scope-grid">
+      <div>
+        <p class="eyebrow">Good work starts with clear scope</p>
+        <h2>
+          Simple websites.
+          <br />
+          Clearly defined.
+        </h2>
+      </div>
+      <div>
+        <h3>You bring the business details.</h3>
+        <p>
+          Approved facts, usable copy, supplied branding, images you can use,
+          and client-approved privacy information. Light editing is included.
+        </p>
+      </div>
+      <div>
+        <h3>Extra work gets its own quote.</h3>
+        <p>
+          Full copywriting, logos, booking systems, payments, additional
+          languages, custom integrations, and ongoing SEO aren’t included. No
+          ranking or lead guarantees.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section
+    class="section wrap faq-section"
+    id="faq"
+    aria-labelledby="faq-title"
+  >
+    <SectionIntro
+      id="faq-title"
+      eyebrow="05 / Before you decide"
+      title="Fair questions. Clear answers."
+    />
+    <div class="faq-list">
+      {faqs.map((faq) => (
+        <details>
+          <summary>
+            {faq.question}
+            <span aria-hidden="true">+</span>
+          </summary>
+          <p>{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+  <section
+    class="contact-section wrap"
+    id="contact"
+    aria-labelledby="contact-title"
+  >
+    <div>
+      <p class="eyebrow">Your next chapter starts here</p>
+      <h2 id="contact-title">
+        Let’s make room
+        <br />
+        for your business.
+      </h2>
+      <p>
+        Start with what you do, the pages you need, and whether you already have
+        a domain, copy and images.
+      </p>
+    </div>
+    <div class="contact-panel">
+      <p class="contact-label">Your starting point</p>
+      <p
+        class="selected-plan"
+        data-selected-plan
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        Starter from $599 · Business from $999
+      </p>
+      {studio.email ? (
+        <a class="button button-lime" href={`mailto:${studio.email}`}>
+          Email your project details
+          <Arrow />
+        </a>
+      ) : (
+        <>
+          <span class="button button-disabled" aria-disabled="true">
+            Contact opening soon
+            <Arrow />
+          </span>
+          <p class="contact-notice">
+            The public email is being finalized. Inquiries are not open yet, and
+            nothing is collected or sent from this preview.
+          </p>
+        </>
+      )}
+      <p class="contact-small">
+        A clear scope before work begins.
+        <br />
+        50% upfront. 50% before launch.
+      </p>
+    </div>
+  </section>
+  <script>
+    document
+      .querySelectorAll<HTMLAnchorElement>('[data-plan]')
+      .forEach((link) => {
+        link.addEventListener('click', () => {
+          const summary = document.querySelector<HTMLElement>(
+            '[data-selected-plan]',
+          );
+          if (summary)
+            summary.textContent =
+              link.dataset.plan === 'business'
+                ? 'Business · $999 one time'
+                : 'Starter · $599 one time';
+        });
+      });
+  </script>
+</Layout>

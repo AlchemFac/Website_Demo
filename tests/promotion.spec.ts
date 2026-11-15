@@ -158,7 +158,7 @@ test('404 provides a working route back to the promotional homepage', async ({
   await expect(page.locator('h1')).toContainText('A proper website.');
 });
 
-test('benefits are grouped, decorative labels are removed, and care has one scope', async ({
+test('benefits are concise, full scope stays available, and care has one scope', async ({
   page,
 }) => {
   await page.goto('/');
@@ -171,12 +171,28 @@ test('benefits are grouped, decorative labels are removed, and care has one scop
     .locator('.section-intro .eyebrow')
     .allTextContents())
     expect(eyebrow).not.toMatch(/^\s*0\d\s*\//);
-  await expect(page.locator('#benefits .benefit-group')).toHaveCount(3);
-  await expect(page.locator('#benefits h4')).toHaveCount(6);
+  await expect(page.locator('#benefits .benefits-list > li')).toHaveCount(3);
+  await expect(page.locator('#benefits h3')).toHaveCount(3);
+  await expect(page.locator('#benefits h4')).toHaveCount(0);
   await expect(page.locator('#benefits')).toContainText('source files');
-  await expect(page.locator('#benefits')).toContainText(
-    'No ranking or lead guarantees',
+  for (const paragraph of await page
+    .locator('#benefits .benefits-list p')
+    .allTextContents())
+    expect(paragraph.trim().split(/\s+/).length).toBeLessThanOrEqual(25);
+  const seo = page
+    .locator('details')
+    .filter({ hasText: 'What does basic SEO include?' });
+  await seo.locator('summary').click();
+  await expect(seo.locator('p')).toContainText('guaranteed rankings');
+  await expect(page.locator('.pricing-notes')).toContainText(
+    'paid provider plans',
   );
+  await expect(page.locator('.ownership-band')).toContainText('your name');
+  const corrections = page
+    .locator('details')
+    .filter({ hasText: 'What if something is wrong after launch?' });
+  await corrections.locator('summary').click();
+  await expect(corrections.locator('p')).toContainText('30 days');
   await expect(page.locator('#care .care-card')).toHaveCount(1);
   await expect(page.locator('#care')).toContainText('Website Care');
   await expect(page.locator('#care')).toContainText('30 minutes');

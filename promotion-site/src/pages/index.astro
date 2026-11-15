@@ -10,7 +10,7 @@ import {
   steps,
   faqs,
   carePlan,
-  benefitGroups,
+  benefits,
 } from '../config/studio';
 import concept from '../assets/cleaning-concept.png';
 ---
@@ -109,26 +109,17 @@ import concept from '../assets/cleaning-concept.png';
   >
     <SectionIntro
       id="benefits-title"
-      eyebrow="Why choose this approach"
-      title="A website that puts your business first."
-      description="Choose a clear scope, practical website features and control over what happens after launch. Here’s what your build includes—and why it matters."
+      eyebrow="Why work with us"
+      title="A straightforward way to get online."
     />
-    <div class="benefits-grid">
-      {benefitGroups.map((group) => (
-        <article class="benefit-group">
-          <h3>{group.title}</h3>
-          <p class="benefit-introduction">{group.introduction}</p>
-          <ul>
-            {group.benefits.map((benefit) => (
-              <li>
-                <h4>{benefit.title}</h4>
-                <p>{benefit.description}</p>
-              </li>
-            ))}
-          </ul>
-        </article>
+    <ul class="benefits-list" role="list">
+      {benefits.map((benefit) => (
+        <li>
+          <h3>{benefit.title}</h3>
+          <p>{benefit.description}</p>
+        </li>
       ))}
-    </div>
+    </ul>
     <a class="quiet-link" href="#packages">
       Compare the two build packages
       <Arrow />

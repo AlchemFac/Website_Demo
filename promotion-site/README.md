@@ -61,7 +61,10 @@ homepage illustration is original demonstration artwork; see the root
 Astro produces WebP variants for the screenshot. There are no external fonts,
 tracking scripts or unnecessary animations.
 
-`benefitGroups` organizes the customer benefits, and `carePlan` is the single source
+`benefits` controls the three short customer benefits, and `carePlan` is the single source
 for optional care. `studio.demoUrl` controls both live-concept links. Those open the
 fictional cleaning site in a new tab; they are not claims of paid customer work.
 See [SCOPE.md](SCOPE.md) for the current offer.
+
+The benefits section is intentionally brief. Detailed scope remains in the pricing,
+ownership, process, care and FAQ sections; SCOPE.md is the matching written summary.

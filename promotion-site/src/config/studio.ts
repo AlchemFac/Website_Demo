@@ -88,7 +88,7 @@ export const faqs = [
   {
     question: 'What do I need to provide?',
     answer:
-      'Your approved business information, usable website copy, logo if you have one, and images you have permission to use. You also supply or approve privacy-policy text. Light editing is included; full copywriting and logo design are separate.',
+      'Your approved business name, public contact details, hours, service areas, usable website copy, logo if you have one, and images you have permission to use. You also supply or approve privacy-policy text. Light editing is included; full copywriting and logo design are separate.',
   },
   {
     question: 'What does basic SEO include?',
@@ -132,54 +132,21 @@ export const carePlan = {
   ],
 } as const;
 
-/** Benefits describe our actual scope, not unverified comparisons or outcomes. */
-export const benefitGroups = [
+/** Keep the overview short; package, ownership, care and FAQ sections explain scope. */
+export const benefits = [
   {
-    title: 'Stay in control',
-    introduction: 'Clear costs and a website you can keep.',
-    benefits: [
-      {
-        title: 'Keep control of your website.',
-        description:
-          'Keep the completed site and source files after final payment. Your domain and provider accounts stay in your name, so you can choose who maintains them.',
-      },
-      {
-        title: 'Know the cost and scope upfront.',
-        description:
-          'A $599 or $999 one-time build, agreed scope, and defined revision rounds. Domain, email and paid provider costs are discussed separately before approval.',
-      },
-    ],
+    title: 'Clear, one-time pricing',
+    description:
+      'Choose a $599 or $999 build with an agreed scope. Monthly care is optional.',
   },
   {
-    title: 'Make it easy for customers',
-    introduction: 'Useful information, wherever people find you.',
-    benefits: [
-      {
-        title: 'Present your business clearly.',
-        description:
-          'Your colors, supplied logo, services, hours and service areas give visitors a clear picture of what you offer. A reusable foundation keeps the project focused.',
-      },
-      {
-        title: 'Make it easy to find information and get in touch.',
-        description:
-          'Responsive layouts, readable content, optimized images and straightforward contact actions help visitors find what they need. A contact form with spam protection is included.',
-      },
-    ],
+    title: 'Built for your customers',
+    description:
+      'Your branding, a mobile-friendly layout and a clear way for visitors to contact your business.',
   },
   {
-    title: 'Launch with a plan',
-    introduction: 'A solid starting point and an understandable handoff.',
-    benefits: [
-      {
-        title: 'Start with practical search foundations.',
-        description:
-          'Page titles, descriptions, semantic structure, image optimization and appropriate search-discovery setup are part of the build. No ranking or lead guarantees.',
-      },
-      {
-        title: 'Choose ongoing support when you need it.',
-        description:
-          'Testing, launch, handoff and 30 days of delivery-defect correction are included. Add Website Care for $59/month if you want ongoing help, or manage the site yourself.',
-      },
-    ],
+    title: 'Your website to keep',
+    description:
+      'Keep the finished site and source files after final payment, with accounts in your name.',
   },
 ] as const;

@@ -1216,46 +1216,28 @@ details > p {
 .benefits-section .section-intro {
   max-width: 47rem;
 }
-.benefits-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5rem;
-  margin-block: 2.5rem 1.2rem;
-}
-.benefit-group {
-  padding: 1.8rem;
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-}
-.benefit-group h3 {
-  font-size: 1.22rem;
-  margin-bottom: 0.75rem;
-}
-.benefit-introduction {
-  font-size: 0.83rem;
-  color: var(--muted);
-  padding-bottom: 1.3rem;
-  border-bottom: 1px solid var(--line);
-}
-.benefit-group ul {
+.benefits-list {
   list-style: none;
   padding: 0;
-  margin: 0;
   display: grid;
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.5rem;
+  margin-block: 2rem 1.25rem;
 }
-.benefit-group h4 {
-  margin: 0 0 0.5rem;
-  font-size: 0.94rem;
-  line-height: 1.4;
-  letter-spacing: -0.02em;
+.benefits-list li {
+  border-top: 1px solid var(--line);
+  padding-top: 1.5rem;
 }
-.benefit-group li p {
-  font-size: 0.82rem;
-  line-height: 1.85;
+.benefits-list h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.8rem;
+}
+.benefits-list p {
+  font-size: 0.98rem;
+  line-height: 1.8;
   color: var(--muted);
   margin-bottom: 0;
+  max-width: 35ch;
 }
 .process-grid li {
   border-top: 1px solid #c7d0bd;
@@ -1283,23 +1265,8 @@ details > p {
   }
 }
 @media (max-width: 959px) {
-  .benefits-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  .benefit-group ul {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2rem;
-  }
 }
 @media (max-width: 639px) {
-  .benefit-group {
-    padding: 1.5rem;
-  }
-  .benefit-group ul {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
   .demo-link {
     width: 100%;
     justify-content: space-between;
@@ -1361,16 +1328,11 @@ details > p {
 .intro-description {
   font-size: 1rem;
 }
-.benefit-introduction,
-.benefit-group li p,
 .example-features p,
 .process-grid p,
 .care-inclusions,
 details > p {
   font-size: 0.94rem;
-}
-.benefit-group h4 {
-  font-size: 1.03rem;
 }
 summary {
   font-size: 1rem;
@@ -1410,5 +1372,18 @@ summary {
   .price-term {
     display: block;
     margin: 0.8rem 0 0;
+  }
+}
+
+@media (max-width: 639px) {
+  .benefits-list {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+  .benefits-list li {
+    padding-top: 1.2rem;
+  }
+  .benefits-list p {
+    max-width: none;
   }
 }

@@ -192,10 +192,10 @@ test('benefits are concise, full scope stays available, and care has one scope',
     .locator('details')
     .filter({ hasText: 'What if something is wrong after launch?' });
   await corrections.locator('summary').click();
-  await expect(corrections.locator('p')).toContainText('30 days');
+  await expect(corrections.locator('p')).toContainText('30 calendar days');
   await expect(page.locator('#care .care-card')).toHaveCount(1);
   await expect(page.locator('#care')).toContainText('Website Care');
-  await expect(page.locator('#care')).toContainText('30 minutes');
+  await expect(page.locator('#care')).toContainText('30 combined minutes');
   const faq = page
     .locator('details')
     .filter({ hasText: 'Is there one care plan for both website packages?' });
@@ -219,4 +219,43 @@ test('live concept links use the configured URL, safe new tabs, and truthful lab
   await expect(page.locator('#example')).toContainText(
     'fictional demonstration',
   );
+});
+
+test('care and project policies match the agreed operating limits', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await expect(page.locator('.promise-inner')).toContainText(
+    'delivered remotely',
+  );
+  await expect(page.locator('body')).not.toContainText('DFW');
+  await expect(page.locator('.plan-allowances').first()).toContainText(
+    '1,000 supplied words',
+  );
+  await expect(page.locator('.plan-allowances').last()).toContainText(
+    '1,800 supplied words',
+  );
+  await expect(page.locator('#care')).toContainText('30 combined minutes');
+  await expect(page.locator('#care')).toContainText(
+    'separate from your request time',
+  );
+  const faq = (title: string) =>
+    page.locator('details').filter({ hasText: title });
+  const support = faq('When are care checks and support available?');
+  await support.locator('summary').click();
+  await expect(support).toContainText('within two business days');
+  await expect(support).toContainText('ordinary billing questions');
+  await expect(support).toContainText('quarterly if authorized');
+  const revisions = faq('What is a revision round?');
+  await revisions.locator('summary').click();
+  await expect(revisions).toContainText(
+    '10 minor, in-scope changes or 60 minutes',
+  );
+  const payments = faq('How do payments and extra work work?');
+  await payments.locator('summary').click();
+  await expect(payments).toContainText('$37.50 per separate approved job');
+  const cancel = faq('How do I cancel care, and what if a payment fails?');
+  await cancel.locator('summary').click();
+  await expect(cancel).toContainText('receipt time counts');
+  await expect(cancel).toContainText('does not disable your paid-for site');
 });

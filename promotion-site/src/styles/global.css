@@ -1387,3 +1387,12 @@ summary {
     max-width: none;
   }
 }
+
+.plan-allowances {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.featured .plan-allowances {
+  color: #d1decd;
+}

@@ -25,6 +25,10 @@ const { plan } = Astro.props;
   </p>
   <p class="plan-pages">{plan.pages}</p>
   <p class="page-list">{plan.pageList}</p>
+  <p class="plan-allowances">
+    Up to {plan.suppliedWords.toLocaleString('en-US')} supplied words ·{' '}
+    {plan.imageLimit} images
+  </p>
   <a
     class:list={[
       'button',
@@ -48,8 +52,7 @@ const { plan } = Astro.props;
       {plan.revisions}
     </li>
     <li>
-      <span aria-hidden="true">✓</span>30 days of corrections for delivery
-      defects
+      <span aria-hidden="true">✓</span>30 days to report delivery defects
     </li>
   </ul>
   <p class="plan-bottom">

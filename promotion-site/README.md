@@ -24,7 +24,7 @@ Edit `src/config/studio.ts` here:
 - `email` is blank. Inquiries stay unavailable. A public email enables a clearly
   labeled email link (not a backend form or guaranteed delivery).
 - Build prices are $599 Starter / $999 Business **one time**.
-- One optional Website Care plan is $59 monthly for either package, with up to 30 minutes of existing-content edits.
+- One optional Website Care plan is $59 monthly for either package, with one separate monthly website health check plus 30 combined minutes for content edits, minor fixes and technical help. See `SCOPE.md` for operating limits and billing policies.
 - Packages, revisions, and FAQ copy describe the agreed scope. Google Business
   Profile services remain excluded because those add-ons were not finalized.
 

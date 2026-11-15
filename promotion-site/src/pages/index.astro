@@ -4,7 +4,14 @@ import Layout from '../layouts/Layout.astro';
 import Arrow from '../components/Arrow.astro';
 import PriceCard from '../components/PriceCard.astro';
 import SectionIntro from '../components/SectionIntro.astro';
-import { studio, packages, steps, faqs } from '../config/studio';
+import {
+  studio,
+  packages,
+  steps,
+  faqs,
+  carePlan,
+  benefitGroups,
+} from '../config/studio';
 import concept from '../assets/cleaning-concept.png';
 ---
 
@@ -29,8 +36,14 @@ import concept from '../assets/cleaning-concept.png';
           Find your package
           <Arrow />
         </a>
-        <a class="quiet-link" href="#example">
-          Take a look at the work
+        <a
+          class="quiet-link"
+          href={studio.demoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View live demo of the fictional cleaning concept (opens in a new tab)"
+        >
+          View live demo
           <span aria-hidden="true">
             <Arrow />
           </span>
@@ -84,27 +97,50 @@ import concept from '../assets/cleaning-concept.png';
   </section>
   <div class="promise-strip">
     <div class="wrap promise-inner">
-      <p>
-        <span aria-hidden="true">
-          <Arrow />
-        </span>
-        Designed for DFW small businesses
-      </p>
-      <p>
-        <span aria-hidden="true">✓</span>Mobile-friendly from the start
-      </p>
-      <p>
-        <span aria-hidden="true">◇</span>Client-owned accounts & source files
-      </p>
+      <p>Designed for DFW small businesses</p>
+      <p>Mobile-friendly from the start</p>
+      <p>Client-owned accounts & source files</p>
     </div>
   </div>
+  <section
+    class="section benefits-section wrap"
+    id="benefits"
+    aria-labelledby="benefits-title"
+  >
+    <SectionIntro
+      id="benefits-title"
+      eyebrow="Why choose this approach"
+      title="A website that puts your business first."
+      description="Choose a clear scope, practical website features and control over what happens after launch. Here’s what your build includes—and why it matters."
+    />
+    <div class="benefits-grid">
+      {benefitGroups.map((group) => (
+        <article class="benefit-group">
+          <h3>{group.title}</h3>
+          <p class="benefit-introduction">{group.introduction}</p>
+          <ul>
+            {group.benefits.map((benefit) => (
+              <li>
+                <h4>{benefit.title}</h4>
+                <p>{benefit.description}</p>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+    <a class="quiet-link" href="#packages">
+      Compare the two build packages
+      <Arrow />
+    </a>
+  </section>
   <section class="section wrap" id="packages" aria-labelledby="packages-title">
     <div class="section-heading-row">
       <SectionIntro
         id="packages-title"
-        eyebrow="01 / Straightforward packages"
+        eyebrow="Straightforward packages"
         title="Start with what you need."
-        description="Two fixed-price builds, based on a focused, reusable design. Your branding, your content, and a clear finish line."
+        description="Two fixed-price website packages, customized with your branding and supplied content. Each includes a defined scope, a review process and a complete handoff."
       />
       <p class="section-aside">
         Pay for the website.
@@ -181,13 +217,12 @@ import concept from '../assets/cleaning-concept.png';
     <div class="example-copy">
       <SectionIntro
         id="example-title"
-        eyebrow="02 / An example, not a promise"
+        eyebrow="An example, not a promise"
         title="A little polish goes a long way."
         description="The fictional North Texas Home Cleaning site shows the approach: clear services, useful information, responsive layouts, and a straightforward next step."
       />
-      <ul class="numbered-features">
+      <ul class="example-features">
         <li>
-          <span>01</span>
           <div>
             <h3>Clear at a glance.</h3>
             <p>
@@ -197,7 +232,6 @@ import concept from '../assets/cleaning-concept.png';
           </div>
         </li>
         <li>
-          <span>02</span>
           <div>
             <h3>Comfortable on a phone.</h3>
             <p>
@@ -207,7 +241,6 @@ import concept from '../assets/cleaning-concept.png';
           </div>
         </li>
         <li>
-          <span>03</span>
           <div>
             <h3>Built with a handoff in mind.</h3>
             <p>
@@ -217,6 +250,16 @@ import concept from '../assets/cleaning-concept.png';
           </div>
         </li>
       </ul>
+      <a
+        class="button button-dark demo-link"
+        href={studio.demoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Open the live concept site (opens in a new tab)"
+      >
+        Open the live concept site
+        <Arrow />
+      </a>
       <p class="example-disclosure">
         This is a fictional demonstration, not a completed client engagement.
         Its images are original demonstration artwork, not customer-job photos.
@@ -231,14 +274,13 @@ import concept from '../assets/cleaning-concept.png';
     <div class="wrap">
       <SectionIntro
         id="process-title"
-        eyebrow="03 / A clear path to launch"
+        eyebrow="A clear path to launch"
         title="From “we need a website” to online."
         description="We agree on the scope and schedule after reviewing your content, images and account setup."
       />
       <ol class="process-grid">
         {steps.map((step) => (
           <li>
-            <span class="step-number">{step.number}</span>
             <h3>{step.title}</h3>
             <p>{step.description}</p>
             <span class="step-note">{step.note}</span>
@@ -252,9 +294,9 @@ import concept from '../assets/cleaning-concept.png';
       <div>
         <SectionIntro
           id="care-title"
-          eyebrow="04 / Stay supported, if you want"
-          title="A little help after launch."
-          description="The build stands on its own. Optional care adds scheduled maintenance review, website and form checks, support, and small content updates."
+          eyebrow="Stay supported, if you want"
+          title="One care plan. Your choice."
+          description="The build stands on its own. One optional $59/month care plan is available with either Starter or Business. Get scheduled maintenance review, website and form checks, support, and small content updates."
         />
         <p class="care-promise">
           No required subscription.
@@ -263,20 +305,21 @@ import concept from '../assets/cleaning-concept.png';
         </p>
       </div>
       <div class="care-options">
-        {packages.map((plan) => (
-          <article class="care-card">
-            <div>
-              <h3>{plan.name} care</h3>
-              <p>
-                Up to {plan.careMinutes} minutes of content edits per month.
-              </p>
-            </div>
-            <p class="care-price">
-              ${plan.care}
-              <span>/month</span>
-            </p>
-          </article>
-        ))}
+        <article class="care-card">
+          <div>
+            <h3>{carePlan.name}</h3>
+            <p>{carePlan.description}</p>
+          </div>
+          <p class="care-price">
+            ${carePlan.price}
+            <span>/month</span>
+          </p>
+        </article>
+        <ul class="care-inclusions">
+          {carePlan.includes.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
         <p class="small-note">
           Starts at launch if selected. Month-to-month billing. Unused editing
           time doesn’t roll over. New pages, redesigns and added functionality
@@ -319,7 +362,7 @@ import concept from '../assets/cleaning-concept.png';
   >
     <SectionIntro
       id="faq-title"
-      eyebrow="05 / Before you decide"
+      eyebrow="Before you decide"
       title="Fair questions. Clear answers."
     />
     <div class="faq-list">

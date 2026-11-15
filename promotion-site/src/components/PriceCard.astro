@@ -21,7 +21,7 @@ const { plan } = Astro.props;
   <p class="price">
     <span class="currency">$</span>
     {plan.price}
-    <span class="price-term">one time</span>
+    <span class="price-term">one-time build</span>
   </p>
   <p class="plan-pages">{plan.pages}</p>
   <p class="page-list">{plan.pageList}</p>
@@ -48,7 +48,8 @@ const { plan } = Astro.props;
       {plan.revisions}
     </li>
     <li>
-      <span aria-hidden="true">✓</span>30-day delivery-defect correction
+      <span aria-hidden="true">✓</span>30 days of corrections for delivery
+      defects
     </li>
   </ul>
   <p class="plan-bottom">

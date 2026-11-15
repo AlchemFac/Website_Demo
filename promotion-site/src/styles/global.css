@@ -12,7 +12,7 @@
   background: var(--paper);
   font-synthesis: none;
   line-height: 1.6;
-  font-size: 16px;
+  font-size: 17px;
   scroll-padding-top: 2rem;
 }
 * {
@@ -170,17 +170,6 @@ a:hover {
   font-weight: 500;
   letter-spacing: 0.08em;
   margin-top: 0.15rem;
-}
-.brand-symbol {
-  display: grid;
-  place-items: center;
-  background: var(--forest);
-  color: var(--lime);
-  font-size: 1.9rem;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  font-weight: 400;
 }
 .site-header nav {
   display: flex;
@@ -377,9 +366,6 @@ a:hover {
   gap: 0.7rem;
   font-size: 0.75rem;
   margin: 0;
-}
-.promise-inner p span {
-  font-size: 1.1rem;
 }
 .section-heading-row {
   display: flex;
@@ -599,32 +585,22 @@ a:hover {
   text-align: center;
   color: var(--muted);
 }
-.numbered-features {
+.example-features {
   padding: 0;
   list-style: none;
   display: grid;
   gap: 1.25rem;
   margin-block: 2rem;
 }
-.numbered-features li {
+.example-features li {
   display: flex;
   gap: 1rem;
 }
-.numbered-features > li > span {
-  border: 1px solid var(--line);
-  font-size: 0.65rem;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  flex: none;
-}
-.numbered-features h3 {
+.example-features h3 {
   font-size: 0.95rem;
   margin-bottom: 0.4rem;
 }
-.numbered-features p {
+.example-features p {
   font-size: 0.79rem;
   color: var(--muted);
   margin-bottom: 0;
@@ -647,16 +623,6 @@ a:hover {
   gap: 3rem;
   margin-top: 3rem;
   margin-bottom: 0;
-}
-.step-number {
-  display: block;
-  border-bottom: 1px solid #c7d0bd;
-  padding-bottom: 1.3rem;
-  margin-bottom: 1.8rem;
-  font-size: 1.9rem;
-  font-weight: 400;
-  letter-spacing: -0.06em;
-  color: #6a7d54;
 }
 .process-grid h3 {
   font-size: 1.23rem;
@@ -978,11 +944,6 @@ details > p {
   .brand {
     font-size: 0.83rem;
   }
-  .brand-symbol {
-    height: 36px;
-    width: 36px;
-    font-size: 1.6rem;
-  }
   .brand small {
     font-size: 0.52rem;
   }
@@ -1118,18 +1079,13 @@ details > p {
   .mini-browser img {
     aspect-ratio: 1.05;
   }
-  .numbered-features {
+  .example-features {
     gap: 1.4rem;
   }
   .process-grid {
     grid-template-columns: 1fr;
     gap: 2.2rem;
     margin-top: 2rem;
-  }
-  .step-number {
-    font-size: 1.4rem;
-    padding-bottom: 0.7rem;
-    margin-bottom: 1.2rem;
   }
   .process-grid h3 {
     font-size: 1.3rem;
@@ -1227,11 +1183,6 @@ details > p {
 }
 
 /* SVG marks avoid missing glyphs across operating-system fonts. */
-.brand-symbol svg {
-  width: 23px;
-  height: 23px;
-  transform: rotate(-45deg);
-}
 .quiet-link svg {
   width: 16px;
   height: 16px;
@@ -1241,12 +1192,6 @@ details > p {
   width: 10px;
   height: 10px;
   transform: rotate(-45deg);
-}
-.promise-inner p:first-child svg {
-  width: 18px;
-  height: 18px;
-  transform: rotate(-45deg);
-  vertical-align: middle;
 }
 @media (max-width: 639px) {
   .hero-actions {
@@ -1261,5 +1206,209 @@ details > p {
   .hero-actions .quiet-link {
     flex: none;
     justify-content: flex-start;
+  }
+}
+
+/* Benefits are grouped by customer priorities; no decorative icons or counters. */
+.benefits-section {
+  border-bottom: 1px solid var(--line);
+}
+.benefits-section .section-intro {
+  max-width: 47rem;
+}
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-block: 2.5rem 1.2rem;
+}
+.benefit-group {
+  padding: 1.8rem;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.benefit-group h3 {
+  font-size: 1.22rem;
+  margin-bottom: 0.75rem;
+}
+.benefit-introduction {
+  font-size: 0.83rem;
+  color: var(--muted);
+  padding-bottom: 1.3rem;
+  border-bottom: 1px solid var(--line);
+}
+.benefit-group ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1.5rem;
+}
+.benefit-group h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.94rem;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+.benefit-group li p {
+  font-size: 0.82rem;
+  line-height: 1.85;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+.process-grid li {
+  border-top: 1px solid #c7d0bd;
+  padding-top: 1.4rem;
+}
+.care-inclusions {
+  margin-block: 1.3rem;
+  padding-left: 1.2rem;
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.care-inclusions li + li {
+  margin-top: 0.5rem;
+}
+.demo-link {
+  margin-block: 0.5rem 1.5rem;
+}
+@media (min-width: 60rem) {
+  .header-inner {
+    gap: 1.3rem;
+  }
+  .site-header nav {
+    gap: 1.2rem;
+  }
+}
+@media (max-width: 959px) {
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .benefit-group ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+@media (max-width: 639px) {
+  .benefit-group {
+    padding: 1.5rem;
+  }
+  .benefit-group ul {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .demo-link {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* Readable package details and a stronger, consistent plan hierarchy. */
+.plan-description {
+  font-size: 0.98rem;
+  line-height: 1.7;
+  min-height: 3.4em;
+}
+.plan-pages {
+  font-size: 1rem;
+}
+.page-list {
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+.check-list {
+  font-size: 0.94rem;
+  line-height: 1.75;
+  gap: 0.9rem;
+}
+.plan-bottom {
+  font-size: 0.86rem;
+  line-height: 1.8;
+}
+.price-term {
+  font-size: 0.85rem;
+}
+.plan-label {
+  background: #e7efda;
+  border: 1px solid #91aa73;
+  color: #1b3e2d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  padding: 0.45rem 0.8rem;
+  line-height: 1.4;
+}
+.featured .plan-label {
+  background: var(--lime);
+  color: var(--forest);
+  border-color: var(--lime);
+}
+.section-aside {
+  background: #eaf0df;
+  border-left: 3px solid var(--forest);
+  border-radius: 5px;
+  padding: 1rem 1.25rem;
+  color: var(--ink);
+  font-size: 0.95rem;
+  min-width: 210px;
+}
+.section-aside strong {
+  font-size: 1.05rem;
+}
+.intro-description {
+  font-size: 1rem;
+}
+.benefit-introduction,
+.benefit-group li p,
+.example-features p,
+.process-grid p,
+.care-inclusions,
+details > p {
+  font-size: 0.94rem;
+}
+.benefit-group h4 {
+  font-size: 1.03rem;
+}
+summary {
+  font-size: 1rem;
+}
+.care-card > div > p {
+  font-size: 0.9rem;
+}
+.pricing-notes,
+.small-note,
+.example-disclosure,
+.visual-footnote {
+  font-size: 0.8rem;
+  line-height: 1.8;
+}
+.scope-grid > div > p:not(.eyebrow) {
+  font-size: 0.94rem;
+}
+@media (max-width: 639px) {
+  .plan-top {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+  .plan-top h3 {
+    font-size: 1.5rem;
+  }
+  .plan-description {
+    min-height: 0;
+  }
+  .section-aside {
+    display: block;
+    min-width: 0;
+    margin: 1.5rem 0 0;
+  }
+  .plan-label {
+    margin-left: auto;
+  }
+  .price-term {
+    display: block;
+    margin: 0.8rem 0 0;
   }
 }

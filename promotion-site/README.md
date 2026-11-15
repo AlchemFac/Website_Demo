@@ -24,7 +24,7 @@ Edit `src/config/studio.ts` here:
 - `email` is blank. Inquiries stay unavailable. A public email enables a clearly
   labeled email link (not a backend form or guaranteed delivery).
 - Build prices are $599 Starter / $999 Business **one time**.
-- Optional care is $59 / $99 monthly, with 15 / 30 minutes of content edits.
+- One optional Website Care plan is $59 monthly for either package, with up to 30 minutes of existing-content edits.
 - Packages, revisions, and FAQ copy describe the agreed scope. Google Business
   Profile services remain excluded because those add-ons were not finalized.
 
@@ -60,3 +60,8 @@ homepage illustration is original demonstration artwork; see the root
 `public/images/LICENSE.md`. Do not invent clients, reviews, statistics or guarantees.
 Astro produces WebP variants for the screenshot. There are no external fonts,
 tracking scripts or unnecessary animations.
+
+`benefitGroups` organizes the customer benefits, and `carePlan` is the single source
+for optional care. `studio.demoUrl` controls both live-concept links. Those open the
+fictional cleaning site in a new tab; they are not claims of paid customer work.
+See [SCOPE.md](SCOPE.md) for the current offer.

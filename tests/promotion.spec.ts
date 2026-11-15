@@ -16,7 +16,27 @@ for (const width of [320, 375, 768, 1440]) {
     await expect(page.locator('.price').nth(0)).toContainText('599');
     await expect(page.locator('.price').nth(1)).toContainText('999');
     await expect(page.locator('#care')).toContainText('$59');
-    await expect(page.locator('#care')).toContainText('$99');
+    await expect(page.locator('#care .care-card')).toHaveCount(1);
+    await expect(page.locator('#care')).not.toContainText('$99');
+    expect(
+      await page
+        .locator('.check-list li')
+        .first()
+        .evaluate((el) => parseFloat(getComputedStyle(el).fontSize)),
+    ).toBeGreaterThanOrEqual(15);
+    expect(
+      await page
+        .locator('.plan-label')
+        .first()
+        .evaluate((el) => parseFloat(getComputedStyle(el).fontSize)),
+    ).toBeGreaterThanOrEqual(12);
+    expect(
+      await page
+        .locator('.plan-label')
+        .first()
+        .evaluate((el) => Number(getComputedStyle(el).fontWeight)),
+    ).toBeGreaterThanOrEqual(600);
+
     for (const image of await page.locator('img').all()) {
       await image.scrollIntoViewIfNeeded();
       await image.evaluate((el: HTMLImageElement) => el.decode());
@@ -30,6 +50,10 @@ for (const width of [320, 375, 768, 1440]) {
         links.map((link) => link.getAttribute('href')!),
       )) {
       const target = new URL(href, page.url());
+      if (target.origin !== new URL(page.url()).origin) {
+        expect(target.href).toBe('https://website-demo-6vj.pages.dev/');
+        continue;
+      }
       expect(target.pathname).toBe('/');
       if (target.hash)
         expect(
@@ -132,4 +156,51 @@ test('404 provides a working route back to the promotional homepage', async ({
   await expect(page.locator('h1')).toHaveText('Let’s get you back on track.');
   await page.getByRole('link', { name: 'Return to homepage' }).click();
   await expect(page.locator('h1')).toContainText('A proper website.');
+});
+
+test('benefits are grouped, decorative labels are removed, and care has one scope', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await expect(
+    page.locator(
+      '.brand-symbol, .step-number, .example-features > li > span, .promise-inner span',
+    ),
+  ).toHaveCount(0);
+  for (const eyebrow of await page
+    .locator('.section-intro .eyebrow')
+    .allTextContents())
+    expect(eyebrow).not.toMatch(/^\s*0\d\s*\//);
+  await expect(page.locator('#benefits .benefit-group')).toHaveCount(3);
+  await expect(page.locator('#benefits h4')).toHaveCount(6);
+  await expect(page.locator('#benefits')).toContainText('source files');
+  await expect(page.locator('#benefits')).toContainText(
+    'No ranking or lead guarantees',
+  );
+  await expect(page.locator('#care .care-card')).toHaveCount(1);
+  await expect(page.locator('#care')).toContainText('Website Care');
+  await expect(page.locator('#care')).toContainText('30 minutes');
+  const faq = page
+    .locator('details')
+    .filter({ hasText: 'Is there one care plan for both website packages?' });
+  await faq.locator('summary').click();
+  await expect(faq.locator('p')).toContainText(
+    '$59 per month for either Starter or Business',
+  );
+});
+
+test('live concept links use the configured URL, safe new tabs, and truthful labels', async ({
+  page,
+}) => {
+  await page.goto('/');
+  const links = page.locator('a[href="https://website-demo-6vj.pages.dev/"]');
+  await expect(links).toHaveCount(2);
+  for (const link of await links.all()) {
+    await expect(link).toHaveAttribute('target', '_blank');
+    await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    await expect(link).toHaveAttribute('aria-label', /opens in a new tab/);
+  }
+  await expect(page.locator('#example')).toContainText(
+    'fictional demonstration',
+  );
 });

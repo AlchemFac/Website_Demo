@@ -2,6 +2,7 @@
 export const studio = {
   name: '[Your Business Name]',
   email: '',
+  demoUrl: 'https://website-demo-6vj.pages.dev/',
   tagline: 'A proper website. A simple price.',
   audience: 'Small businesses in Dallas–Fort Worth',
   isPreview: true,
@@ -14,18 +15,17 @@ export const packages = [
     name: 'Starter',
     price: 599,
     deposit: '299.50',
-    care: 59,
-    pages: 'Up to 3 marketing pages',
+    pages: 'Up to 3 website pages',
     pageList: 'Home, Services, Contact',
-    description: 'A clear, focused home for a business getting online.',
-    revisions: '1 consolidated revision round',
-    careMinutes: 15,
+    description:
+      'A focused website that introduces your business, explains your services and makes it easy to get in touch.',
+    revisions: '1 round of revisions from your combined feedback',
     features: [
-      'Your branding, colors & supplied logo',
-      'Mobile-friendly layouts',
-      'One contact form with spam protection',
-      'Basic technical & on-page SEO',
-      'Launch, source files & handoff',
+      'Your brand colors and supplied logo',
+      'Responsive layouts for phones, tablets and desktops',
+      'Contact form with spam protection',
+      'Page titles, descriptions and technical SEO setup',
+      'Website launch, source files and handoff instructions',
     ],
   },
   {
@@ -33,39 +33,35 @@ export const packages = [
     name: 'Business',
     price: 999,
     deposit: '499.50',
-    care: 99,
-    pages: 'Up to 5 marketing pages',
+    pages: 'Up to 5 website pages',
     pageList: 'Home, Services, About, Gallery, Contact',
-    description: 'More room to explain your services and show your work.',
-    revisions: '2 consolidated revision rounds',
-    careMinutes: 30,
+    description:
+      'A more detailed website for your services, business story and a gallery of approved images.',
+    revisions: '2 rounds of revisions from your combined feedback',
     features: [
-      'Everything in Starter',
-      'About page for your business story',
-      'Gallery with approved images & captions',
-      'More space for services and useful detail',
-      'The same straightforward ownership',
+      'All Starter features included',
+      'About page to introduce your business',
+      'Gallery with approved images and descriptive captions',
+      'Up to five pages with clear navigation',
+      'Client-owned domain and provider accounts',
     ],
   },
 ] as const;
 
 export const steps = [
   {
-    number: '01',
     title: 'Start with your business.',
     description:
       'Share what you do, who you serve, your content and approved images. We agree on the package and scope before work begins.',
     note: '50% of the build price to begin',
   },
   {
-    number: '02',
     title: 'Make it feel like you.',
     description:
       'Your branding and content are brought into a focused, reusable design. Review the site and send your included consolidated revisions.',
     note: 'A clear review, with a clear finish line',
   },
   {
-    number: '03',
     title: 'Launch it. Keep it.',
     description:
       'After approval and final payment, your site is launched into client-owned accounts. You receive the source files and handoff instructions.',
@@ -83,6 +79,11 @@ export const faqs = [
     question: 'Is there a required monthly subscription or 12-month term?',
     answer:
       'No. The build is a one-time purchase. Care is optional, starts at launch if selected, and renews month to month. There is no required 12-month care commitment.',
+  },
+  {
+    question: 'Is there one care plan for both website packages?',
+    answer:
+      'Yes. Optional Website Care is $59 per month for either Starter or Business. It includes scheduled maintenance review, website and form checks, support, and up to 30 minutes of updates to existing content each month. Unused editing time does not roll over. New pages, redesigns and additional features are quoted separately.',
   },
   {
     question: 'What do I need to provide?',
@@ -113,5 +114,72 @@ export const faqs = [
     question: 'How long will the website take?',
     answer:
       'The schedule is agreed after the content, images, scope and account setup are reviewed. Work depends on receiving those materials and your feedback; there is no blanket same-day or fixed-date promise.',
+  },
+] as const;
+
+/** One optional care service, available with either website package. */
+export const carePlan = {
+  name: 'Website Care',
+  price: 59,
+  editMinutes: 30,
+  description:
+    'The same ongoing support, whichever website package you choose.',
+  includes: [
+    'Scheduled dependency and maintenance review',
+    'Website and contact-form checks',
+    'Up to 30 minutes of updates to existing content each month',
+    'Support for your existing website',
+  ],
+} as const;
+
+/** Benefits describe our actual scope, not unverified comparisons or outcomes. */
+export const benefitGroups = [
+  {
+    title: 'Stay in control',
+    introduction: 'Clear costs and a website you can keep.',
+    benefits: [
+      {
+        title: 'Keep control of your website.',
+        description:
+          'Keep the completed site and source files after final payment. Your domain and provider accounts stay in your name, so you can choose who maintains them.',
+      },
+      {
+        title: 'Know the cost and scope upfront.',
+        description:
+          'A $599 or $999 one-time build, agreed scope, and defined revision rounds. Domain, email and paid provider costs are discussed separately before approval.',
+      },
+    ],
+  },
+  {
+    title: 'Make it easy for customers',
+    introduction: 'Useful information, wherever people find you.',
+    benefits: [
+      {
+        title: 'Present your business clearly.',
+        description:
+          'Your colors, supplied logo, services, hours and service areas give visitors a clear picture of what you offer. A reusable foundation keeps the project focused.',
+      },
+      {
+        title: 'Make it easy to find information and get in touch.',
+        description:
+          'Responsive layouts, readable content, optimized images and straightforward contact actions help visitors find what they need. A contact form with spam protection is included.',
+      },
+    ],
+  },
+  {
+    title: 'Launch with a plan',
+    introduction: 'A solid starting point and an understandable handoff.',
+    benefits: [
+      {
+        title: 'Start with practical search foundations.',
+        description:
+          'Page titles, descriptions, semantic structure, image optimization and appropriate search-discovery setup are part of the build. No ranking or lead guarantees.',
+      },
+      {
+        title: 'Choose ongoing support when you need it.',
+        description:
+          'Testing, launch, handoff and 30 days of delivery-defect correction are included. Add Website Care for $59/month if you want ongoing help, or manage the site yourself.',
+      },
+    ],
   },
 ] as const;

@@ -18,7 +18,13 @@
     "test:seo": "node --test tests/seo.test.mjs",
     "test:packages": "node scripts/build-package-tests.mjs && playwright test --config playwright.packages.config.ts",
     "test:config": "node --test tests/branding.test.mjs tests/contact-copy.test.mjs tests/launch-validation.test.mjs",
-    "validate": "node scripts/validate.mjs"
+    "validate": "node scripts/validate.mjs",
+    "dev:tango": "astro dev --root ./tango-site --port 4340",
+    "build:tango": "astro build --root ./tango-site",
+    "check:tango": "astro check --root ./tango-site",
+    "preview:tango": "astro preview --root ./tango-site --port 4340",
+    "test:tango": "npm run build:tango && playwright test --config playwright.tango.config.ts",
+    "verify:tango": "npm run format:check && npm run check:tango && npm run test:tango"
   },
   "dependencies": {
     "astro": "7.4.4"

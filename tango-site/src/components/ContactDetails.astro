@@ -1,0 +1,63 @@
+---
+import ArrowIcon from '../../../src/components/ArrowIcon.astro';
+import {
+  instructor,
+  emailHref,
+  telephoneHref,
+  socialHref,
+} from '../config/instructor';
+const { contact } = instructor;
+const email = emailHref(contact.email);
+const phone = telephoneHref(contact.phoneHref);
+const socials = [
+  { label: 'Instagram', href: socialHref(contact.instagram) },
+  { label: 'Facebook', href: socialHref(contact.facebook) },
+  { label: 'WhatsApp', href: socialHref(contact.whatsapp) },
+];
+---
+
+<div class="contact-details">
+  <div class="contact-method">
+    <span class="contact-label">Email</span>
+    {email ? (
+      <a class="contact-value" href={email}>
+        {contact.email}
+        <ArrowIcon />
+      </a>
+    ) : (
+      <p class="pending-value">Email to be added</p>
+    )}
+  </div>
+  <div class="contact-method">
+    <span class="contact-label">Phone</span>
+    {phone && contact.phoneDisplay ? (
+      <a class="contact-value" href={phone}>
+        {contact.phoneDisplay}
+        <ArrowIcon />
+      </a>
+    ) : (
+      <p class="pending-value">Phone to be added</p>
+    )}
+  </div>
+  <div class="social-row" aria-label="Social channels">
+    {socials.map(({ label, href }) =>
+      href ? (
+        <a
+          class="text-link"
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${label} (opens in a new tab)`}
+        >
+          {label}
+          <ArrowIcon />
+        </a>
+      ) : (
+        <span class="social-pending" aria-disabled="true">
+          {label}
+          <span class="sr-only"> link to be added</span>
+        </span>
+      ),
+    )}
+  </div>
+</div>

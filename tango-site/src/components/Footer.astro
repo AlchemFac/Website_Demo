@@ -1,0 +1,30 @@
+---
+import { instructor, navigation } from '../config/instructor';
+import { privacy } from '../config/privacy';
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-top">
+    <a class="wordmark" href="/">
+      <span class="wordmark-name">{instructor.name}</span>
+      <span class="wordmark-description">Tango · {instructor.area}</span>
+    </a>
+    <nav aria-label="Footer navigation">
+      {navigation.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))}
+      <a href="/privacy/">
+        {privacy.linkLabel}
+        {!privacy.clientApproved && ' (draft)'}
+      </a>
+    </nav>
+  </div>
+  <div class="wrap footer-bottom">
+    <p>
+      © {new Date().getFullYear()} {instructor.businessName}.
+    </p>
+    <p>
+      Dance imagery is illustrative; it does not depict Maria or her students.
+    </p>
+  </div>
+</footer>

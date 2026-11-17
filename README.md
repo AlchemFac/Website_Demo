@@ -180,3 +180,11 @@ intentionally reports blocking errors. `npm run validate -- --demo` reviews the 
 with expected launch gaps as warnings. See [client setup](CLIENT_SETUP.md#pre-launch-validation-offline)
 for fixes, exit codes, limits and how to gate an approved release. Neither command
 deploys or sends inquiries.
+
+## Tango instructor variation
+
+A separate one-page website for Maria Fernanda lives in `tango-site/` on the
+`feat/tango-instructor` branch. The cleaning template's configuration and pages
+remain unchanged. Run `npm run dev:tango` (port 4340) or `npm run verify:tango`.
+See [tango-site/README.md](tango-site/README.md) for customization and
+[tango-site/CLIENT_DETAILS.md](tango-site/CLIENT_DETAILS.md) for the owner meeting checklist.

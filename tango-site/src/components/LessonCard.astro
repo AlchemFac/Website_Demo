@@ -1,0 +1,22 @@
+---
+import ArrowIcon from '../../../src/components/ArrowIcon.astro';
+import type { Lesson } from '../config/instructor';
+interface Props {
+  lesson: Lesson;
+}
+const { lesson } = Astro.props;
+---
+
+<article class="lesson-card" aria-labelledby={`lesson-${lesson.id}`}>
+  <p class="lesson-format">{lesson.format}</p>
+  <h3 id={`lesson-${lesson.id}`}>{lesson.title}</h3>
+  <p class="lesson-description">{lesson.description}</p>
+  {(lesson.price || lesson.duration) && (
+    <p class="lesson-details">
+      {[lesson.price, lesson.duration].filter(Boolean).join(' · ')}
+    </p>
+  )}
+  <a class="text-link" href="/#contact" data-lesson={lesson.title}>
+    Ask about this lesson <ArrowIcon />
+  </a>
+</article>

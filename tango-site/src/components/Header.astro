@@ -1,0 +1,72 @@
+---
+import { instructor, navigation } from '../config/instructor';
+---
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a
+      class="wordmark"
+      href="/"
+      aria-label={`${instructor.businessName} homepage`}
+    >
+      <span class="wordmark-name">{instructor.name}</span>
+      <span class="wordmark-description">Tango · {instructor.area}</span>
+    </a>
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-navigation"
+    >
+      <span>Menu</span>
+      <span class="menu-lines" aria-hidden="true"></span>
+    </button>
+    <nav id="site-navigation" aria-label="Main navigation">
+      {navigation.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav = document.querySelector<HTMLElement>('#site-navigation');
+  if (toggle && nav) {
+    const close = (restoreFocus = false) => {
+      toggle.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) toggle.focus();
+    };
+    toggle.addEventListener('click', () => {
+      toggle.setAttribute(
+        'aria-expanded',
+        String(toggle.getAttribute('aria-expanded') !== 'true'),
+      );
+    });
+    document.addEventListener('keydown', (event) => {
+      if (
+        event.key === 'Escape' &&
+        toggle.getAttribute('aria-expanded') === 'true'
+      )
+        close(true);
+    });
+    document.addEventListener('click', (event) => {
+      if (
+        event.target instanceof Node &&
+        !nav.contains(event.target) &&
+        !toggle.contains(event.target)
+      )
+        close();
+    });
+    nav.querySelectorAll<HTMLAnchorElement>('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        close();
+        const target = new URL(link.href, location.href);
+        if (target.pathname === location.pathname && target.hash) {
+          const section = document.getElementById(target.hash.slice(1));
+          section?.focus({ preventScroll: true });
+        }
+      });
+    });
+    matchMedia('(min-width: 761px)').addEventListener('change', () => close());
+  }
+</script>

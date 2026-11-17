@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { privacy } from '../config/privacy';
+import ArrowIcon from '../../../src/components/ArrowIcon.astro';
+---
+
+<Layout
+  title={privacy.title}
+  description={privacy.description}
+  noIndex={!privacy.clientApproved}
+>
+  <div class="wrap policy-page">
+    <a class="text-link" href="/">
+      Back to the website
+      <ArrowIcon />
+    </a>
+    <p class="eyebrow">
+      {privacy.clientApproved
+        ? 'Privacy policy'
+        : 'Privacy policy · owner review required'}
+    </p>
+    <h1>{privacy.heading}</h1>
+    <p class="policy-status">{privacy.introduction}</p>
+    <div class="policy-content">
+      {privacy.sections.map((section) => (
+        <section aria-labelledby={`privacy-${section.id}`}>
+          <h2 id={`privacy-${section.id}`}>{section.title}</h2>
+          {section.paragraphs.map((p) => (
+            <p>{p}</p>
+          ))}
+        </section>
+      ))}
+    </div>
+  </div>
+</Layout>

@@ -59,7 +59,10 @@ Replace it with permission-cleared photography if available. Suggested hero:
 landscape 1800–2400px wide, dancers to the right with space for text to the left.
 Suggested portrait: 900–1200px tall, clear face, uncluttered background. JPG, PNG
 or WebP source works; retain the Astro Image calls, responsive widths, explicit
-sizes and eager/lazy priorities. The hero is prioritized; the lower image is lazy. Mobile hero sizing accounts for
+sizes and eager/lazy priorities. The hero is prioritized; the lower image is lazy. Desktop uses the full image,
+scaled to the hero height and aligned right, so wide screens do not crop the
+dancers. The mobile background retains its portrait crop. Instagram and Facebook
+use local SVG brand icons with accessible labels; empty URLs stay inactive. Mobile hero sizing accounts for
 the tall background crop so the browser does not stretch a tiny image to fill it.
 
 Fonts and assets are self-hosted; there are no social embeds, tracking scripts,

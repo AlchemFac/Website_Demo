@@ -119,7 +119,7 @@ test('pending contacts do not create fabricated links, trackers or browser stora
   await expect(page.locator('.pending-value')).toHaveCount(2);
   await expect(
     page.locator('.social-pending[aria-disabled="true"]'),
-  ).toHaveCount(3);
+  ).toHaveCount(2);
   await expect(
     page.locator('a[href^="mailto:"], a[href^="tel:"], iframe, form'),
   ).toHaveCount(0);
@@ -179,4 +179,65 @@ test('missing page has an accessible return path', async ({ page }) => {
   await expect(page.locator('h1')).toContainText('our way back');
   await page.getByRole('link', { name: 'Back to the homepage' }).click();
   await expect(page.locator('h1')).toContainText('Maria Fernanda');
+});
+
+for (const viewport of [
+  { width: 1366, height: 768 },
+  { width: 1920, height: 1080 },
+  { width: 2560, height: 1440 },
+]) {
+  test(`desktop hero shows the full image at ${viewport.width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.goto('/');
+    const result = await page
+      .locator('.hero-image')
+      .evaluate(async (image: HTMLImageElement) => {
+        await image.decode();
+        const bounds = image.getBoundingClientRect();
+        const hero = image.closest('.hero')!.getBoundingClientRect();
+        return {
+          ratio: bounds.width / bounds.height,
+          originalRatio: image.naturalWidth / image.naturalHeight,
+          top: bounds.top - hero.top,
+          bottom: hero.bottom - bounds.bottom,
+          left: bounds.left - hero.left,
+          right: hero.right - bounds.right,
+        };
+      });
+    expect(result.ratio).toBeCloseTo(result.originalRatio, 2);
+    for (const edge of [result.top, result.bottom, result.left, result.right])
+      expect(edge).toBeGreaterThanOrEqual(-1);
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+  });
+}
+
+test('social icons retain accessible platform names and no WhatsApp', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await expect(
+    page.locator('.social-row [data-social-icon="instagram"]'),
+  ).toHaveCount(1);
+  await expect(
+    page.locator('.social-row [data-social-icon="facebook"]'),
+  ).toHaveCount(1);
+  await expect(page.locator('.social-row')).not.toContainText('WhatsApp');
+  await expect(page.locator('.social-row a[href]')).toHaveCount(0);
+  for (const platform of ['Instagram', 'Facebook']) {
+    const icon = page
+      .locator('.social-pending')
+      .filter({ hasText: `${platform} link to be added` });
+    await expect(icon).toHaveCount(1);
+    await expect(icon).toHaveAttribute(
+      'title',
+      `${platform} — link to be added`,
+    );
+    expect((await icon.boundingBox())!.width).toBeGreaterThanOrEqual(44);
+  }
 });

@@ -14,7 +14,6 @@ export interface InstructorConfig {
     phoneHref: string;
     instagram: string;
     facebook: string;
-    whatsapp: string;
   };
   colors: BrandColors;
 }
@@ -31,7 +30,6 @@ export const instructor: InstructorConfig = {
     phoneHref: '',
     instagram: '',
     facebook: '',
-    whatsapp: '',
   },
   colors: {
     primary: '#793a36',

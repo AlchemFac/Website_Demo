@@ -32,7 +32,7 @@ lessons. Everything below should be confirmed directly before publishing.
 
 ## 4. Booking, payment and policies
 
-- Preferred booking channel: email, telephone, WhatsApp or an existing booking link.
+- Preferred booking channel: email, telephone or an existing booking link.
 - Availability or how students request a time; realistic response timeframe.
 - Rates and whether venue/travel fees or taxes are additional.
 - Payment methods, deposits and when payment is due.
@@ -44,7 +44,7 @@ lessons. Everything below should be confirmed directly before publishing.
 
 - DFW cities/areas served, travel limits and available teaching venues.
 - Who arranges/pays for the venue and when a booked student gets the address.
-- Approved public email and phone; whether the number accepts WhatsApp/texts.
+- Approved public email and phone; whether the number accepts texts.
 - Instagram, Facebook or other exact public profile URLs.
 - Confirm that no private home address should appear on the site.
 

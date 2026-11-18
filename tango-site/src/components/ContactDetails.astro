@@ -1,5 +1,6 @@
 ---
 import ArrowIcon from '../../../src/components/ArrowIcon.astro';
+import SocialIcon from './SocialIcon.astro';
 import {
   instructor,
   emailHref,
@@ -10,10 +11,13 @@ const { contact } = instructor;
 const email = emailHref(contact.email);
 const phone = telephoneHref(contact.phoneHref);
 const socials = [
-  { label: 'Instagram', href: socialHref(contact.instagram) },
-  { label: 'Facebook', href: socialHref(contact.facebook) },
-  { label: 'WhatsApp', href: socialHref(contact.whatsapp) },
-];
+  {
+    label: 'Instagram',
+    icon: 'instagram',
+    href: socialHref(contact.instagram),
+  },
+  { label: 'Facebook', icon: 'facebook', href: socialHref(contact.facebook) },
+] as const;
 ---
 
 <div class="contact-details">
@@ -40,22 +44,26 @@ const socials = [
     )}
   </div>
   <div class="social-row" aria-label="Social channels">
-    {socials.map(({ label, href }) =>
+    {socials.map(({ label, icon, href }) =>
       href ? (
         <a
-          class="text-link"
+          class="social-icon"
           href={href}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${label} (opens in a new tab)`}
+          title={`${label} (opens in a new tab)`}
         >
-          {label}
-          <ArrowIcon />
+          <SocialIcon name={icon} />
         </a>
       ) : (
-        <span class="social-pending" aria-disabled="true">
-          {label}
-          <span class="sr-only"> link to be added</span>
+        <span
+          class="social-icon social-pending"
+          aria-disabled="true"
+          title={`${label} — link to be added`}
+        >
+          <SocialIcon name={icon} />
+          <span class="sr-only">{label} link to be added</span>
         </span>
       ),
     )}

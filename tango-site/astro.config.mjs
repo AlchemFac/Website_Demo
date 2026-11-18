@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import { loadEnv } from 'vite';
 import { writeFile, rm } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { instructor, lessons } from './src/config/instructor.ts';
 import { privacy } from './src/config/privacy.ts';
 import { checkBranding } from '../src/lib/branding-checks.ts';
@@ -14,7 +15,8 @@ import {
 } from '../src/config/seo.mjs';
 
 const root = new URL('.', import.meta.url);
-const env = loadEnv(process.env.NODE_ENV || 'production', root.pathname, [
+// Decode file URLs into native paths, including Windows drive letters and spaces.
+const env = loadEnv(process.env.NODE_ENV || 'production', fileURLToPath(root), [
   'SITE_URL',
   'ALLOW_INDEXING',
 ]);
@@ -37,7 +39,7 @@ const brandingIssues = checkBranding(
     branding: { ...business.branding, colors: instructor.colors },
   },
   homeContent,
-  new URL('..', root).pathname,
+  fileURLToPath(new URL('..', root)),
 );
 if (brandingIssues.some((issue) => issue.severity === 'error'))
   throw new Error(

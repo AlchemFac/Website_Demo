@@ -25,10 +25,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       referrerpolicy="strict-origin-when-cross-origin"
     ></iframe>
     <p class="fallback">Form not loading? <a href="https://tally.so/r/M1E7Dg" target="_blank" rel="noopener noreferrer">Open the questionnaire in a new tab</a>.</p>
+    <script is:inline src="https://tally.so/widgets/embed.js" async></script>
   </section>
 </BaseLayout>
-
-<script is:inline src="https://tally.so/widgets/embed.js" async></script>
 
 <style>
   .questionnaire { max-width: 850px; margin-inline: auto; padding-block: clamp(2rem, 5vw, 4rem); }

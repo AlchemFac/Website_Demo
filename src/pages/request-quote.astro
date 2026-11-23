@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Website Project Questionnaire"
+  description="Tell Juan Navarro Web Services about your business and website project to request a personalized proposal."
+  noIndex
+>
+  <section class="questionnaire" aria-labelledby="questionnaire-title">
+    <div class="intro">
+      <p class="eyebrow">Juan Navarro Web Services</p>
+      <h1 id="questionnaire-title">Request a Website Quote</h1>
+      <p>Tell us about your business, your goals, and what you need from your website. We'll review your answers before preparing a proposal.</p>
+      <p class="note">Submitting this questionnaire does not create a contract or guarantee a price.</p>
+    </div>
+    <iframe
+      data-tally-src="https://tally.so/embed/M1E7Dg?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+      src="https://tally.so/embed/M1E7Dg?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+      title="Website Project Questionnaire"
+      loading="lazy"
+      width="100%"
+      height="800"
+      frameborder="0"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+    <p class="fallback">Form not loading? <a href="https://tally.so/r/M1E7Dg" target="_blank" rel="noopener noreferrer">Open the questionnaire in a new tab</a>.</p>
+  </section>
+</BaseLayout>
+
+<script is:inline src="https://tally.so/widgets/embed.js" async></script>
+
+<style>
+  .questionnaire { max-width: 850px; margin-inline: auto; padding-block: clamp(2rem, 5vw, 4rem); }
+  .intro { text-align: center; max-width: 650px; margin: 0 auto 2rem; }
+  .eyebrow { color: var(--color-primary); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .8rem; }
+  h1 { font: 400 clamp(2.2rem, 5vw, 3.5rem)/1.1 Georgia, serif; margin: .8rem 0 1rem; }
+  .intro p { line-height: 1.65; }
+  .note, .fallback { color: var(--color-muted); font-size: .9rem; }
+  iframe { display: block; width: 100%; border: 0; min-height: 650px; }
+  .fallback { text-align: center; margin-top: 1rem; }
+</style>

@@ -5,6 +5,11 @@ import Button from '../../../src/components/Button.astro';
 import ArrowIcon from '../../../src/components/ArrowIcon.astro';
 import LessonCard from '../components/LessonCard.astro';
 import ContactDetails from '../components/ContactDetails.astro';
+import Portfolio from '../components/Portfolio.astro';
+import EventCalendar from '../components/EventCalendar.astro';
+import ContactForm from '../../../src/components/ContactForm.astro';
+import { contactForm, formContent, formMessages } from '../config/contact';
+import { privacy } from '../config/privacy';
 import hero from '../assets/tango-salon.png';
 import {
   instructor,
@@ -58,7 +63,9 @@ const contactReady = Boolean(
     </div>
     <div class="hero-bottom wrap">
       <p>Connection. Music. Movement.</p>
-      <span>AI-generated dance illustration · not Maria or her students</span>
+      <span>
+        AI-generated dance illustration · not Fernanda or her students
+      </span>
     </div>
   </section>
   <section
@@ -71,7 +78,7 @@ const contactReady = Boolean(
       <figure class="about-figure">
         <Image
           src={hero}
-          alt="Illustrative tango dancers embracing in a warmly lit salon; not Maria or her students."
+          alt="Illustrative tango dancers embracing in a warmly lit salon; not Fernanda or her students."
           width={620}
           height={720}
           fit="cover"
@@ -101,7 +108,7 @@ const contactReady = Boolean(
       ))}
       <p class="signature">{instructor.name}</p>
       <a class="text-link" href="/#lessons">
-        Explore the lessons
+        Explore the services
         <ArrowIcon />
       </a>
       {instructor.isPreview && (
@@ -133,6 +140,8 @@ const contactReady = Boolean(
       )}
     </div>
   </section>
+  <Portfolio />
+  <EventCalendar />
   <section
     class="section wrap questions-section"
     aria-labelledby="questions-title"
@@ -146,7 +155,7 @@ const contactReady = Boolean(
       </h2>
       <p>
         It’s okay to be curious. Here’s a starting point for your conversation
-        with Maria.
+        with Fernanda.
       </p>
     </div>
     <div class="faq-list">
@@ -196,6 +205,15 @@ const contactReady = Boolean(
         </a>
       </div>
     </div>
+    <div class="wrap inquiry-panel">
+      <ContactForm
+        copy={formContent}
+        messages={formMessages}
+        configuration={contactForm}
+        serviceOptions={lessons}
+        privacyConfig={privacy}
+      />
+    </div>
   </section>
 </Layout>
 <script>
@@ -208,8 +226,14 @@ const contactReady = Boolean(
     .forEach((link) => {
       link.addEventListener('click', () => {
         if (!selection) return;
-        selection.textContent = `You’re interested in: ${link.dataset.lesson}. Mention this when you contact Maria.`;
+        selection.textContent = `You’re interested in: ${link.dataset.lesson}. Mention this when you contact Fernanda.`;
         selection.hidden = false;
+        const option =
+          document.querySelector<HTMLSelectElement>('#contact-service');
+        const selected = Array.from(option?.options ?? []).find(
+          (item) => item.textContent === link.dataset.lesson,
+        );
+        if (option && selected) option.value = selected.value;
         contactSection?.focus({ preventScroll: true });
       });
     });

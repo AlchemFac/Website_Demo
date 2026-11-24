@@ -43,6 +43,14 @@ const socials = [
       <p class="pending-value">Phone to be added</p>
     )}
   </div>
+  <div class="contact-method hours-method">
+    <span class="contact-label">Hours supplied</span>
+    <p class="contact-hours">{instructor.hours.display}</p>
+    <p class="hours-note">
+      {instructor.hours.days ||
+        'Days and lesson availability to be confirmed directly.'}
+    </p>
+  </div>
   <div class="social-row" aria-label="Social channels">
     {socials.map(({ label, icon, href }) =>
       href ? (

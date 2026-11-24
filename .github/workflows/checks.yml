@@ -2,7 +2,7 @@ name: Site checks
 
 on:
   push:
-    branches: [main]
+    branches: [main, feat/tango-instructor]
   pull_request:
 
 permissions:
@@ -28,6 +28,9 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run verify
+      - name: Verify tango variation
+        if: ${{ hashFiles('tango-site/astro.config.mjs') != '' }}
+        run: npm run verify:tango
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

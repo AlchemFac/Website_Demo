@@ -1,17 +1,11 @@
 ---
-import { instructor, navigation } from '../config/instructor';
+import { navigation } from '../config/instructor';
+import Brand from './Brand.astro';
 ---
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <a
-      class="wordmark"
-      href="/"
-      aria-label={`${instructor.businessName} homepage`}
-    >
-      <span class="wordmark-name">{instructor.name}</span>
-      <span class="wordmark-description">Tango · {instructor.area}</span>
-    </a>
+    <Brand />
     <button
       class="menu-toggle"
       type="button"
@@ -67,6 +61,6 @@ import { instructor, navigation } from '../config/instructor';
         }
       });
     });
-    matchMedia('(min-width: 761px)').addEventListener('change', () => close());
+    matchMedia('(min-width: 1025px)').addEventListener('change', () => close());
   }
 </script>

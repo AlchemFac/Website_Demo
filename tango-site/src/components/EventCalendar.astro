@@ -1,0 +1,232 @@
+---
+import { events } from '../config/portfolio';
+import {
+  currentDfwMonth,
+  monthTitle,
+  calendarDays,
+  eventsForMonth,
+  validEventDate,
+} from '../config/calendar';
+import { socialHref } from '../config/instructor';
+const { year, month } = currentDfwMonth();
+if (
+  events.some(
+    (event, index) =>
+      !validEventDate(event.date) ||
+      !event.id ||
+      !event.title.trim() ||
+      events.findIndex((other) => other.id === event.id) !== index ||
+      (event.url && !socialHref(event.url)),
+  )
+)
+  throw new Error(
+    'Check public event dates, unique IDs, titles and HTTPS links in tango-site/src/config/portfolio.ts.',
+  );
+const monthEvents = eventsForMonth(events, year, month);
+---
+
+<section
+  id="events"
+  class="events-section section"
+  tabindex="-1"
+  aria-labelledby="events-title"
+>
+  <div class="wrap events-layout">
+    <div class="events-intro">
+      <p class="eyebrow">Meet me on the dance floor</p>
+      <h2 id="events-title">
+        A month
+        <br />
+        of tango.
+      </h2>
+      <p>
+        Find the milongas, classes and performances Fernanda will be taking part
+        in.
+      </p>
+      <p class="small-note">
+        Dates appear only after confirmation. Check the listing or contact
+        Fernanda before making plans. Event times are local to Dallas–Fort
+        Worth.
+      </p>
+    </div>
+    <div
+      class="event-calendar"
+      data-event-calendar
+      data-events={JSON.stringify(events)}
+    >
+      <div class="calendar-toolbar">
+        <button type="button" data-month-prev aria-label="Previous month">
+          ←
+        </button>
+        <h3 data-month-title aria-live="polite" aria-atomic="true">
+          {monthTitle(year, month)}
+        </h3>
+        <button type="button" data-month-next aria-label="Next month">
+          →
+        </button>
+      </div>
+      <div class="calendar-weekdays" aria-hidden="true">
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+          <span>{day}</span>
+        ))}
+      </div>
+      <div
+        class="calendar-days"
+        data-calendar-days
+        aria-label={monthTitle(year, month)}
+      >
+        {calendarDays(year, month).map((day) =>
+          day ? (
+            <div
+              class:list={[
+                'calendar-day',
+                {
+                  'has-event': monthEvents.some(
+                    (event) => event.date === day.date,
+                  ),
+                },
+              ]}
+            >
+              <time datetime={day.date}>
+                {day.day}
+                <span class="sr-only"> {monthTitle(year, month)}</span>
+              </time>
+              {monthEvents.some((event) => event.date === day.date) && (
+                <span class="event-dot" aria-label="Published event"></span>
+              )}
+            </div>
+          ) : (
+            <span class="calendar-blank" aria-hidden="true"></span>
+          ),
+        )}
+      </div>
+      <div
+        class="calendar-list"
+        data-event-list
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {monthEvents.length ? (
+          monthEvents.map((event) => (
+            <article class="event-listing">
+              <p>
+                {event.date}
+                {event.time && ` · ${event.time}`}
+              </p>
+              <h4>{event.title}</h4>
+              {event.role && <p>{event.role}</p>}
+              {event.location && <p>{event.location}</p>}
+              {event.url && (
+                <a href={event.url} target="_blank" rel="noopener noreferrer">
+                  Event details
+                  <span class="sr-only"> (opens in a new tab)</span>
+                </a>
+              )}
+            </article>
+          ))
+        ) : (
+          <p class="calendar-empty">
+            No events have been published for this month. Contact Fernanda for
+            upcoming dates.
+          </p>
+        )}
+      </div>
+      <noscript>
+        <p class="small-note">
+          JavaScript is needed to browse other months. Contact Fernanda for the
+          full schedule.
+        </p>
+      </noscript>
+    </div>
+  </div>
+</section>
+<script>
+  import {
+    currentDfwMonth,
+    monthTitle,
+    calendarDays,
+    eventsForMonth,
+  } from '../config/calendar';
+  import { socialHref } from '../config/instructor';
+  import type { TangoEvent } from '../config/portfolio';
+  const calendar = document.querySelector<HTMLElement>('[data-event-calendar]');
+  if (calendar) {
+    const events: TangoEvent[] = JSON.parse(calendar.dataset.events ?? '[]');
+    let { year, month } = currentDfwMonth();
+    const title = calendar.querySelector<HTMLElement>('[data-month-title]')!;
+    const days = calendar.querySelector<HTMLElement>('[data-calendar-days]')!;
+    const list = calendar.querySelector<HTMLElement>('[data-event-list]')!;
+    const render = () => {
+      const label = monthTitle(year, month);
+      title.textContent = label;
+      days.setAttribute('aria-label', label);
+      days.replaceChildren();
+      const selected = eventsForMonth(events, year, month);
+      for (const day of calendarDays(year, month)) {
+        const cell = document.createElement(day ? 'div' : 'span');
+        cell.className = day ? 'calendar-day' : 'calendar-blank';
+        if (day) {
+          const time = document.createElement('time');
+          time.dateTime = day.date;
+          time.textContent = String(day.day);
+          time.setAttribute('aria-label', `${day.day} ${label}`);
+          cell.append(time);
+          if (selected.some((event) => event.date === day.date)) {
+            cell.classList.add('has-event');
+            const dot = document.createElement('span');
+            dot.className = 'event-dot';
+            dot.setAttribute('aria-label', 'Published event');
+            cell.append(dot);
+          }
+        } else cell.setAttribute('aria-hidden', 'true');
+        days.append(cell);
+      }
+      list.replaceChildren();
+      if (!selected.length) {
+        const empty = document.createElement('p');
+        empty.className = 'calendar-empty';
+        empty.textContent =
+          'No events have been published for this month. Contact Fernanda for upcoming dates.';
+        list.append(empty);
+      }
+      for (const event of selected) {
+        const item = document.createElement('article');
+        item.className = 'event-listing';
+        const heading = document.createElement('h4');
+        heading.textContent = event.title;
+        const date = document.createElement('p');
+        date.textContent = [event.date, event.time].filter(Boolean).join(' · ');
+        item.append(date, heading);
+        for (const value of [event.role, event.location])
+          if (value) {
+            const p = document.createElement('p');
+            p.textContent = value;
+            item.append(p);
+          }
+        if (event.url && socialHref(event.url)) {
+          const a = document.createElement('a');
+          a.href = event.url;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = 'Event details';
+          a.setAttribute('aria-label', 'Event details (opens in a new tab)');
+          item.append(a);
+        }
+        list.append(item);
+      }
+    };
+    const change = (offset: number) => {
+      const next = new Date(Date.UTC(year, month + offset, 1));
+      year = next.getUTCFullYear();
+      month = next.getUTCMonth();
+      render();
+    };
+    calendar
+      .querySelector('[data-month-prev]')
+      ?.addEventListener('click', () => change(-1));
+    calendar
+      .querySelector('[data-month-next]')
+      ?.addEventListener('click', () => change(1));
+    render();
+  }
+</script>

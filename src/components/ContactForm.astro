@@ -1,9 +1,27 @@
 ---
-import { privacy } from '../config/privacy';
-import { formContent } from '../config/contactContent';
+import { privacy as defaultPrivacy } from '../config/privacy';
+import {
+  formContent as defaultContent,
+  formMessages as defaultMessages,
+} from '../config/contactContent';
 import Button from './Button.astro';
-import { contactForm } from '../config/contactForm';
-import { services } from '../config/serviceContent';
+import { contactForm as defaultConfiguration } from '../config/contactForm';
+import { services as defaultServices } from '../config/serviceContent';
+
+interface Props {
+  copy?: { [K in keyof typeof defaultContent]: string };
+  messages?: { [K in keyof typeof defaultMessages]: string };
+  configuration?: typeof defaultConfiguration;
+  serviceOptions?: readonly { id: string; title: string }[];
+  privacyConfig?: Pick<typeof defaultPrivacy, 'enabled' | 'linkLabel'>;
+}
+const {
+  copy: formContent = defaultContent,
+  messages: formMessages = defaultMessages,
+  configuration: contactForm = defaultConfiguration,
+  serviceOptions: services = defaultServices,
+  privacyConfig: privacy = defaultPrivacy,
+} = Astro.props;
 ---
 
 <section class="panel" aria-labelledby="form-title">
@@ -28,6 +46,11 @@ import { services } from '../config/serviceContent';
     data-contact-form
     data-endpoint={contactForm.endpoint}
     data-site-key={contactForm.siteKey}
+    data-required-message={formMessages.requiredMessage}
+    data-offline-success={formMessages.offlineSuccess}
+    data-sending-status={formMessages.sendingStatus}
+    data-accepted-status={formMessages.acceptedStatus}
+    data-accepted-label={formMessages.acceptedLabel}
     aria-labelledby="form-title"
     aria-describedby="form-notice required-note"
   >

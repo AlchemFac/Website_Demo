@@ -24,7 +24,8 @@
     "check:tango": "astro check --root ./tango-site",
     "preview:tango": "astro preview --root ./tango-site --port 4340",
     "test:tango": "npm run build:tango && playwright test --config playwright.tango.config.ts",
-    "verify:tango": "npm run format:check && npm run check:tango && npm run test:tango"
+    "verify:tango": "npm run format:check && npm run check:tango && npm run test:tango:config && npm run test:tango",
+    "test:tango:config": "node --test tests/tango-config.test.mjs"
   },
   "dependencies": {
     "astro": "7.4.4"

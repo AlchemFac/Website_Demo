@@ -1,0 +1,21 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/fernanda-logo.png';
+import { instructor } from '../config/instructor';
+---
+
+<a class="wordmark" href="/" aria-label={`${instructor.businessName} homepage`}>
+  <Image
+    class="brand-logo"
+    src={logo}
+    alt=""
+    width={56}
+    height={56}
+    format="webp"
+    loading="eager"
+  />
+  <span class="brand-text">
+    <span class="wordmark-name">{instructor.displayName}</span>
+    <span class="wordmark-description">Tango · {instructor.area}</span>
+  </span>
+</a>

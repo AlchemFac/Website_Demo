@@ -1,5 +1,7 @@
 ---
 import Header from '../components/Header.astro';
+import { getImage } from 'astro:assets';
+import logo from '../assets/fernanda-logo.png';
 import Footer from '../components/Footer.astro';
 import { instructor } from '../config/instructor';
 import { privacy } from '../config/privacy';
@@ -11,6 +13,12 @@ interface Props {
   noIndex?: boolean;
 }
 const { title, description, noIndex = false } = Astro.props;
+const icon = await getImage({
+  src: logo,
+  width: 64,
+  height: 64,
+  format: 'png',
+});
 const approved =
   !instructor.isPreview && instructor.contentApproved && privacy.clientApproved;
 const indexable =
@@ -32,6 +40,7 @@ const themeStyle = Object.entries(instructor.colors)
 <html lang="en" style={themeStyle}>
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href={icon.src} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta
@@ -53,8 +62,7 @@ const themeStyle = Object.entries(instructor.colors)
     </a>
     {instructor.isPreview && (
       <div class="preview-banner">
-        Working preview · Maria’s copy, contact details and policies need
-        approval
+        Working preview · Fernanda’s copy, media and policies need approval
       </div>
     )}
     <Header />

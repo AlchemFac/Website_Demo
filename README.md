@@ -183,7 +183,7 @@ deploys or sends inquiries.
 
 ## Tango instructor variation
 
-A separate one-page website for Maria Fernanda lives in `tango-site/` on the
+A separate one-page website for Fernanda Delgado Tango lives in `tango-site/` on the
 `feat/tango-instructor` branch. The cleaning template's configuration and pages
 remain unchanged. Run `npm run dev:tango` (port 4340) or `npm run verify:tango`.
 See [tango-site/README.md](tango-site/README.md) for customization and

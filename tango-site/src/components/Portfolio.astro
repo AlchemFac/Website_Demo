@@ -1,0 +1,162 @@
+---
+import { Image } from 'astro:assets';
+import { photos, videos, reviews, videoEmbed } from '../config/portfolio';
+import { socialHref } from '../config/instructor';
+const approvedReviews = reviews.filter(
+  (review) =>
+    review.permissionConfirmed &&
+    review.quote.trim() &&
+    review.attribution.trim(),
+);
+---
+
+<section
+  id="gallery"
+  class="section wrap portfolio-section"
+  tabindex="-1"
+  aria-labelledby="gallery-title"
+>
+  <div class="section-heading-row">
+    <div>
+      <p class="eyebrow">On the dance floor</p>
+      <h2 id="gallery-title">The dance, in motion.</h2>
+    </div>
+    <p>
+      A space for Fernanda’s performances, classes and the moments that bring
+      people together.
+    </p>
+  </div>
+  <div class="portfolio-grid">
+    {photos.map((photo) => (
+      <figure class="portfolio-photo">
+        <Image
+          src={photo.image}
+          alt={photo.alt}
+          widths={[360, 640, 960]}
+          sizes="(max-width: 760px) 90vw, 45vw"
+          format="webp"
+          loading="lazy"
+        />
+        <figcaption>
+          {photo.caption}
+          {photo.credit && <span>{photo.credit}</span>}
+        </figcaption>
+      </figure>
+    ))}
+    {videos.map((video) => {
+      const embed = videoEmbed(video.url);
+      return (
+        <article class="video-card">
+          <div class="video-stage" data-video-stage>
+            {embed ? (
+              <button
+                type="button"
+                data-video-embed={embed}
+                data-video-title={video.title}
+                class="video-play"
+                aria-label={`Play ${video.title}`}
+              >
+                <span aria-hidden="true">▷</span>Play video
+                <span class="video-provider-note">
+                  Loads an external video player. See privacy information.
+                </span>
+              </button>
+            ) : (
+              <p>Video link awaiting a supported source.</p>
+            )}
+          </div>
+          <h3>{video.title}</h3>
+          <p>{video.description}</p>
+          {socialHref(video.url) && (
+            <a
+              class="text-link"
+              href={video.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open original video
+              <span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          )}
+        </article>
+      );
+    })}
+    {!photos.length && (
+      <div class="portfolio-placeholder">
+        <p class="eyebrow">Photography</p>
+        <h3>
+          Real moments.
+          <br />
+          Coming into focus.
+        </h3>
+        <p>
+          Fernanda’s approved photos will be added here. The dance illustration
+          elsewhere on this page is not a portfolio photograph.
+        </p>
+      </div>
+    )}
+    {!videos.length && (
+      <div class="portfolio-placeholder video-placeholder">
+        <span aria-hidden="true" class="video-symbol">
+          ▷
+        </span>
+        <div>
+          <p class="eyebrow">Performances & classes</p>
+          <h3>See the movement.</h3>
+          <p>
+            Performance and teaching videos will appear here once Fernanda
+            supplies the links and permissions.
+          </p>
+        </div>
+      </div>
+    )}
+  </div>
+  {approvedReviews.length > 0 && (
+    <section class="student-reviews" aria-labelledby="reviews-title">
+      <h3 id="reviews-title">Words from the dance floor</h3>
+      {approvedReviews.map((review) => (
+        <figure>
+          <blockquote>
+            <p>{review.quote}</p>
+          </blockquote>
+          <figcaption>{review.attribution}</figcaption>
+        </figure>
+      ))}
+    </section>
+  )}
+</section>
+<script>
+  document
+    .querySelectorAll<HTMLButtonElement>('[data-video-embed]')
+    .forEach((button) => {
+      button.addEventListener('click', () => {
+        const url = button.dataset.videoEmbed;
+        if (
+          !url ||
+          !/^https:\/\/(www\.youtube-nocookie\.com\/embed\/[A-Za-z0-9_-]{11}|player\.vimeo\.com\/video\/\d+\?dnt=1)$/.test(
+            url,
+          )
+        )
+          return;
+        const frame = document.createElement('iframe');
+        frame.src = url;
+        frame.title = button.dataset.videoTitle ?? 'Tango video';
+        frame.allow = 'fullscreen; picture-in-picture';
+        frame.referrerPolicy = 'strict-origin-when-cross-origin';
+        frame.allowFullscreen = true;
+        const stop = document.createElement('button');
+        stop.type = 'button';
+        stop.className = 'video-stop';
+        stop.textContent = 'Close video';
+        stop.addEventListener('click', () => {
+          frame.remove();
+          stop.remove();
+          button.hidden = false;
+          button.focus();
+        });
+        button.hidden = true;
+        button.parentElement?.append(frame, stop);
+        stop.focus();
+      });
+    });
+</script>

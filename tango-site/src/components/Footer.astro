@@ -1,14 +1,12 @@
 ---
 import { instructor, navigation } from '../config/instructor';
+import Brand from './Brand.astro';
 import { privacy } from '../config/privacy';
 ---
 
 <footer class="site-footer">
   <div class="wrap footer-top">
-    <a class="wordmark" href="/">
-      <span class="wordmark-name">{instructor.name}</span>
-      <span class="wordmark-description">Tango · {instructor.area}</span>
-    </a>
+    <Brand />
     <nav aria-label="Footer navigation">
       {navigation.map((item) => (
         <a href={item.href}>{item.label}</a>
@@ -24,7 +22,8 @@ import { privacy } from '../config/privacy';
       © {new Date().getFullYear()} {instructor.businessName}.
     </p>
     <p>
-      Dance imagery is illustrative; it does not depict Maria or her students.
+      Dance imagery is illustrative; it does not depict Fernanda or her
+      students.
     </p>
   </div>
 </footer>

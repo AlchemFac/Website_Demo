@@ -6,26 +6,26 @@ export const privacy: PrivacyConfig = {
   enabled: true,
   clientApproved: false,
   linkLabel: 'Privacy policy',
-  title: 'Privacy policy — draft | Tango with Maria Fernanda',
+  title: 'Privacy policy — draft | Fernanda Delgado Tango',
   description:
-    'Draft privacy information for Tango with Maria Fernanda. Owner review and completion are required before publication.',
+    'Draft privacy information for Fernanda Delgado Tango. Owner review and completion are required before publication.',
   heading: 'A note on your privacy.',
   introduction:
-    'DRAFT FOR OWNER REVIEW — This is a working privacy-policy draft, not a finalized statement of Maria Fernanda’s practices. Complete the marked items and obtain appropriate review before publishing it as an approved policy.',
+    'DRAFT FOR OWNER REVIEW — This is a working privacy-policy draft, not a finalized statement of María Fernanda Delgado García’s practices. Complete the marked items and obtain appropriate review before publishing it as an approved policy.',
   sections: [
     {
       id: 'operator',
       title: 'Who is responsible for your information',
       paragraphs: [
-        'This site introduces Maria Fernanda, an independent tango instructor serving Dallas–Fort Worth. [Confirm the operator’s full legal or trading name and the contact details for privacy questions. A home address should not be published merely to fill a template; confirm any applicable disclosure requirements.]',
+        'Fernanda Delgado Tango is presented by María Fernanda Delgado García, serving Dallas–Fort Worth. Public contact: fernanda.fd93@gmail.com and +1 (214) 899-7168. [Confirm the legal operator and any applicable disclosure requirements. No home or fixed business address has been supplied.]',
       ],
     },
     {
       id: 'information',
       title: 'Information you choose to share',
       paragraphs: [
-        'The current website has no inquiry form, account registration or online payment collection. Its email, phone and social contact details are not yet connected.',
-        '[Before launch, confirm which contact channels will be used.] If you contact Maria through those channels, your message may include your name, contact details, lesson interests and information you choose to provide. Please avoid sending payment-card details or sensitive personal information in an initial inquiry.',
+        'The website publishes Fernanda’s email and phone and includes an inquiry form. Unless a submission service is configured, the form is a clearly labeled browser-only demo that does not send or save entries. There is no account registration, online payment collection or automated booking on this site.',
+        'If you email or call Fernanda, or submit a future connected form, the information may include your name, email, optional phone, chosen service and message. Contact services handle the information according to their own practices. Please avoid sending payment-card details or sensitive personal information in an initial inquiry.',
         '[Confirm whether booking, payments, student records, information about minors or accommodation requests are handled, and describe those practices accurately. Do not add new collection without updating this notice.]',
       ],
     },
@@ -40,9 +40,9 @@ export const privacy: PrivacyConfig = {
       id: 'providers',
       title: 'Hosting, contact services and external links',
       paragraphs: [
-        'This draft loads its images, fonts, styles and scripts from the site itself. It does not embed social feeds, maps, videos or third-party booking widgets. Social links, when configured, open the relevant service; that service has its own privacy practices.',
-        '[Before launch, identify the actual hosting/CDN, email, messaging, booking and payment providers, explain their roles and link their privacy notices. Hosting providers may process technical data such as IP addresses and request details; verify their actual logging and settings.]',
-        '[Confirm any international processing or disclosures and describe them where required. A service used by another template, such as Formspree, is not automatically used by this site.]',
+        'Images, fonts, styles and application scripts load from the site itself. Approved videos may use YouTube or Vimeo players, loaded only after you choose Play; no external player loads merely from opening the page. The current portfolio has no supplied videos. Social links, when configured, open the relevant service under its own privacy practices. There are no embedded maps or booking widgets.',
+        '[Before launch, identify the actual hosting/CDN, email, booking and payment providers, explain their roles and link their privacy notices. Hosting providers may process technical data such as IP addresses and request details; verify their actual logging and settings.]',
+        '[Confirm any international processing or disclosures and describe them where required. Formspree and Cloudflare Turnstile are prepared as optional form/spam-protection providers, but do not receive form entries in demo mode. Connect only Fernanda’s own accounts, disclose them and test delivery before enabling the form. A service configured for the cleaning template is not automatically used by this site.]',
       ],
     },
     {
@@ -63,7 +63,7 @@ export const privacy: PrivacyConfig = {
       id: 'choices',
       title: 'Questions and privacy requests',
       paragraphs: [
-        '[Add an approved public privacy email or another suitable contact method.] Explain the process for questions, access/correction/deletion requests and any choices or rights that apply to the actual audience and jurisdiction. Do not guarantee universal rights or outcomes without review.',
+        'Privacy questions can be sent to fernanda.fd93@gmail.com. [Owner approval required] Confirm this as the privacy contact and explain the process for access/correction/deletion requests and any choices or rights that apply to the actual audience and jurisdiction. Do not guarantee universal rights or outcomes without review.',
       ],
     },
     {

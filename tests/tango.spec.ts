@@ -5,13 +5,13 @@ for (const width of [320, 375, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     expect((await page.goto('/'))?.status()).toBe(200);
     await expect(page.locator('h1')).toHaveCount(1);
-    await expect(page.locator('h1')).toContainText('Maria Fernanda');
-    await expect(page).toHaveTitle(/Tango lessons with Maria Fernanda/);
+    await expect(page.locator('h1')).toContainText('Fernanda Delgado');
+    await expect(page).toHaveTitle(/Fernanda Delgado Tango/);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute(
       'content',
       /Dallas–Fort Worth/,
     );
-    await expect(page.locator('.lesson-card')).toHaveCount(4);
+    await expect(page.locator('.lesson-card')).toHaveCount(8);
     const order = await page
       .locator('#about, #lessons, #contact')
       .evaluateAll((sections) => sections.map((s) => s.id));
@@ -44,6 +44,7 @@ for (const width of [320, 375, 768, 1440]) {
         links.map((link) => link.getAttribute('href')!),
       )) {
       const target = new URL(href, page.url());
+      if (target.protocol === 'mailto:' || target.protocol === 'tel:') continue;
       expect(target.origin).toBe(new URL(page.url()).origin);
       expect(['/', '/privacy/']).toContain(target.pathname);
       if (target.hash)
@@ -92,19 +93,20 @@ test('lesson choices and native FAQs work without creating a booking', async ({
   expect(new URL(page.url()).hash).toBe('#contact');
   await page.locator('[data-lesson]').last().click();
   await expect(page.locator('[data-selected-lesson]')).toContainText(
-    'Find your community',
+    'Social dance partnering',
   );
   const faq = page.locator('details').first();
   await faq.locator('summary').focus();
   await page.keyboard.press('Enter');
   await expect(faq.locator('p')).toBeVisible();
   await expect(page.locator('.lesson-note')).toContainText(
-    'Prices, lesson lengths and booking details are being finalized',
+    'Contact Fernanda for pricing',
   );
-  await expect(page.locator('form')).toHaveCount(0);
+  await expect(page.locator('form')).toHaveCount(1);
+  await expect(page.locator('#contact-service')).toHaveValue('partnering');
 });
 
-test('pending contacts do not create fabricated links, trackers or browser storage', async ({
+test('public contacts work while form demo and pending socials make no external requests', async ({
   page,
 }) => {
   const external: string[] = [];
@@ -113,16 +115,14 @@ test('pending contacts do not create fabricated links, trackers or browser stora
       external.push(request.url());
   });
   await page.goto('/');
-  await expect(page.locator('.contact-status')).toContainText(
-    'Online inquiries are not available yet',
+  await expect(page.locator('#form-notice')).toContainText(
+    'nothing is sent or saved',
   );
-  await expect(page.locator('.pending-value')).toHaveCount(2);
+  await expect(page.locator('.pending-value')).toHaveCount(0);
   await expect(
     page.locator('.social-pending[aria-disabled="true"]'),
   ).toHaveCount(2);
-  await expect(
-    page.locator('a[href^="mailto:"], a[href^="tel:"], iframe, form'),
-  ).toHaveCount(0);
+  await expect(page.locator('iframe')).toHaveCount(0);
   await expect(page.locator('address')).toHaveCount(0);
   expect(
     await page.evaluate(() => [localStorage.length, sessionStorage.length]),
@@ -167,7 +167,7 @@ test('privacy draft is reachable, clear about review, and protected from indexin
   );
   expect((await page.request.get('/sitemap.xml')).status()).toBe(404);
   await page.getByRole('link', { name: 'Back to the website' }).click();
-  await expect(page.locator('h1')).toContainText('Maria Fernanda');
+  await expect(page.locator('h1')).toContainText('Fernanda Delgado');
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     'content',
     'noindex, nofollow',
@@ -178,7 +178,7 @@ test('missing page has an accessible return path', async ({ page }) => {
   expect((await page.goto('/missing/'))?.status()).toBe(404);
   await expect(page.locator('h1')).toContainText('our way back');
   await page.getByRole('link', { name: 'Back to the homepage' }).click();
-  await expect(page.locator('h1')).toContainText('Maria Fernanda');
+  await expect(page.locator('h1')).toContainText('Fernanda Delgado');
 });
 
 for (const viewport of [
@@ -240,4 +240,136 @@ test('social icons retain accessible platform names and no WhatsApp', async ({
     );
     expect((await icon.boundingBox())!.width).toBeGreaterThanOrEqual(44);
   }
+});
+
+test('questionnaire identity, public contacts, services and approved palette are applied', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await expect(page.locator('.brand-logo')).toHaveCount(2);
+  await expect(page.locator('.wordmark').first()).toHaveAccessibleName(
+    'Fernanda Delgado Tango homepage',
+  );
+  await expect(page.locator('#about')).toContainText(
+    'María Fernanda Delgado García',
+  );
+  await expect(page.locator('.contact-value[href^="mailto:"]')).toHaveAttribute(
+    'href',
+    'mailto:fernanda.fd93@gmail.com',
+  );
+  await expect(page.locator('.contact-value[href^="tel:"]')).toHaveAttribute(
+    'href',
+    'tel:+12148997168',
+  );
+  await expect(page.locator('.contact-hours')).toContainText('9 AM–8 PM');
+  await expect(page.locator('.hours-note')).toContainText(
+    'Days and lesson availability to be confirmed',
+  );
+  for (const title of [
+    'Milonga organization',
+    'Tango DJ',
+    'Salon tango performances',
+    'Stage tango performances',
+    'Class assistance',
+    'Social dance partnering',
+  ])
+    await expect(page.locator('#lessons')).toContainText(title);
+  expect(
+    await page.evaluate(() =>
+      getComputedStyle(document.documentElement)
+        .getPropertyValue('--color-primary')
+        .trim(),
+    ),
+  ).toBe('#584334');
+  await expect(page.locator('#gallery')).toContainText('approved photos');
+  await expect(page.locator('#gallery')).toContainText(
+    'supplies the links and permissions',
+  );
+  await expect(page.locator('.student-reviews')).toHaveCount(0);
+});
+
+test('tango demo form validates its own services and never sends or stores an inquiry', async ({
+  page,
+}) => {
+  const sent: string[] = [];
+  page.on('request', (request) => {
+    if (['fetch', 'xhr'].includes(request.resourceType()))
+      sent.push(request.url());
+  });
+  await page.goto('/');
+  await expect(page.locator('form')).toHaveAttribute('data-endpoint', '');
+  const submit = page.getByRole('button', {
+    name: 'Check demo form',
+    exact: true,
+  });
+  await submit.click();
+  await expect(page.locator('#contact-name')).toBeFocused();
+  await expect(page.locator('[data-error-summary]')).toContainText('4 fields');
+  await expect(page.locator('#message-error')).toContainText(
+    'lesson or event inquiry',
+  );
+  await page.locator('#contact-name').fill('Synthetic Test');
+  await page.locator('#contact-email').fill('test@example.com');
+  await page.locator('#contact-service').selectOption('dj');
+  await page.locator('#contact-message').fill('Synthetic automated check.');
+  await submit.click();
+  await expect(page.locator('[data-form-status]')).toContainText(
+    'Nothing has been sent or saved',
+  );
+  expect(sent).toEqual([]);
+  expect(
+    await page.evaluate(() => [localStorage.length, sessionStorage.length]),
+  ).toEqual([0, 0]);
+});
+
+test('monthly events navigate across years without inventing availability', async ({
+  page,
+}) => {
+  await page.clock.install({ time: new Date('2026-12-15T18:00:00Z') });
+  await page.goto('/');
+  await expect(page.locator('[data-month-title]')).toHaveText('December 2026');
+  await expect(page.locator('.calendar-day')).toHaveCount(31);
+  await page.getByRole('button', { name: 'Next month' }).click();
+  await expect(page.locator('[data-month-title]')).toHaveText('January 2027');
+  await expect(page.locator('.calendar-empty')).toContainText(
+    'No events have been published',
+  );
+  await page.getByRole('button', { name: 'Previous month' }).click();
+  await expect(page.locator('[data-month-title]')).toHaveText('December 2026');
+  await expect(page.locator('.event-listing, .event-dot')).toHaveCount(0);
+});
+
+test('video players load only after an explicit choice and close cleanly', async ({
+  page,
+}) => {
+  let external = 0;
+  await page.route('https://www.youtube-nocookie.com/**', (route) => {
+    external++;
+    return route.fulfill({
+      contentType: 'text/html',
+      body: '<p>Synthetic video player</p>',
+    });
+  });
+  await page.route('http://127.0.0.1:4340/', async (route) => {
+    const response = await route.fetch();
+    const html = (await response.text()).replace(
+      '</main>',
+      '<div data-video-stage><button type="button" data-video-embed="https://www.youtube-nocookie.com/embed/abcdefghijk" data-video-title="Synthetic video">Play synthetic video</button></div></main>',
+    );
+    await route.fulfill({ response, body: html });
+  });
+  await page.goto('/');
+  await expect(page.locator('iframe')).toHaveCount(0);
+  expect(external).toBe(0);
+  await page.getByRole('button', { name: 'Play synthetic video' }).click();
+  await expect(page.locator('iframe')).toHaveAttribute(
+    'title',
+    'Synthetic video',
+  );
+  await expect.poll(() => external).toBe(1);
+  await page.getByRole('button', { name: 'Close video' }).click();
+  await expect(page.locator('iframe')).toHaveCount(0);
+  await expect(
+    page.getByRole('button', { name: 'Play synthetic video' }),
+  ).toBeFocused();
 });

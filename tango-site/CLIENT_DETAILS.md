@@ -1,75 +1,60 @@
-# Maria Fernanda — website meeting checklist
+# Fernanda Delgado Tango — remaining owner checklist
 
-Confirmed so far: Maria Fernanda; DFW; private, beginner, couples and group tango
-lessons. Everything below should be confirmed directly before publishing.
+## Already supplied in the completed questionnaire
 
-## 1. Public identity and teaching story
+- Business: Fernanda Delgado Tango.
+- Operator/instructor: María Fernanda Delgado García.
+- Public email and phone: now configured in `src/config/instructor.ts`.
+- Area: DFW; no fixed studio address supplied.
+- Hours: 9 AM–8 PM; days and whether these mean contact/teaching hours are unclear.
+- Services: private classes, group classes, milonga organization, tango DJ,
+  salon tango shows, class assistance, stage tango shows, and taxi dancer.
+- Style: elegant/professional; black, brown and beige; image-led inspiration.
+- Requested additions: contact form, videos and monthly participation calendar.
+- Logo reference: expressive dancer silhouettes; a new original concept is prepared.
 
-- Preferred public name: “Tango with Maria Fernanda” or another business name?
-- Short first-person introduction: who she is, why she teaches and what a lesson
-  feels like. Approve the proposed website copy or provide her own.
-- Style of tango taught and teaching approach; do not assume Argentine/ballroom.
-- Languages spoken and age groups taught.
-- Any training, experience or credentials she wants included, with accurate facts.
-- No logo is necessary; the site uses her name as a wordmark.
+## Needed to finish the public content
 
-## 2. Photos and optional video
+1. Approve the new logo, public name styling and proposed English copy; confirm
+   whether Spanish or a bilingual version is desired (not assumed or added).
+2. Supply the expanded teaching story/biography and a portrait, with publication
+   permissions. Confirm what “Assisting Classes” means for her actual service.
+3. Confirm which days the stated hours apply to and whether they describe contact
+   hours, class times or general availability. Do not assume seven days a week.
+4. Supply service prices/durations or approve contact-for-pricing. Confirm partner
+   requirements, group size/level, location/travel fees and booking/cancellation
+   rules. No rates, refund rules or availability slots are invented.
+5. Supply exact Instagram and Facebook profile URLs. WhatsApp remains removed.
+6. Supply actual YouTube/Vimeo video links, titles, context and permissions,
+   including rights to publish identifiable dancers and any relevant music rights.
+7. Supply approved photos with captions, useful alt descriptions and source/
+   photographer credits. The logo reference is not an instructor portrait.
+8. Supply real public event dates, times, venues, Fernanda's role and links for
+   each month. Confirm who will keep this static calendar current.
+9. Supply any real student reviews with explicit permission and approved public
+   attribution; reviews are hidden until supplied. No ratings are fabricated.
 
-- One clear instructor portrait; several genuine teaching/dancing photographs.
-- Permission to publish from the photographer and identifiable people, including
-  students. Do not use an image merely because it is on Instagram.
-- Short introduction/dance video if available, with publication and music rights.
-- Decide whether to replace the clearly labeled AI-generated illustration.
+## Contact form and privacy
 
-## 3. Each lesson type
+- Create/own the actual Formspree and Cloudflare Turnstile accounts. Verify the
+  recipient email and configure the actual site hostnames.
+- Share only public form ID/site key for configuration; the Turnstile secret stays
+  in Formspree. Never put private keys or genuine student records in Git.
+- The current form is a demo and sends/saves nothing. Approve its final copy and
+  privacy disclosures before connecting it. Authorize the test inquiry separately.
+- Confirm the real hosting, email/provider practices, retention/deletion process,
+  handling of minors/accommodations if applicable, and effective policy date.
+- Review and approve the completed privacy policy; it is still a draft, not a
+  legal-compliance certification.
+- After deployment verify both provider acceptance and actual recipient delivery,
+  plus validation, error states and spam protection. No real inquiry was sent here.
 
-- Who it suits; beginner prerequisites; individual/couple/group format.
-- Duration, price, packages, group capacity and minimum enrollment if any.
-- Whether a partner is required and how dance roles are handled.
-- What a first lesson includes and what students should bring/wear.
-- Suitable footwear; accessibility/accommodation arrangements.
-- Do not collect sensitive health details through a public website form.
+## Final review and launch
 
-## 4. Booking, payment and policies
-
-- Preferred booking channel: email, telephone or an existing booking link.
-- Availability or how students request a time; realistic response timeframe.
-- Rates and whether venue/travel fees or taxes are additional.
-- Payment methods, deposits and when payment is due.
-- Cancellation, rescheduling, lateness, no-show, refunds and package expiry rules.
-- Any requirements for minors, guardian involvement or venue policies.
-- Do not publish a rule she has not approved.
-
-## 5. Location and public contact
-
-- DFW cities/areas served, travel limits and available teaching venues.
-- Who arranges/pays for the venue and when a booked student gets the address.
-- Approved public email and phone; whether the number accepts texts.
-- Instagram, Facebook or other exact public profile URLs.
-- Confirm that no private home address should appear on the site.
-
-## 6. Privacy and operations
-
-- Operator/legal identity as needed, public privacy contact and final domain.
-- Actual hosting, email/messaging, scheduling and payment providers.
-- Information collected through those channels, purposes and who can access it.
-- Actual retention/deletion process and relevant provider settings.
-- Any information about minors, marketing messages, tracking or third-party embeds.
-- Owner-approved policy text reflecting those facts; obtain appropriate review.
-- Never share passwords or private provider keys in a content document or Git.
-
-## 7. Final sign-off
-
-- Approve public name, introduction, lesson descriptions, photos and usage rights.
-- Check mobile layouts, keyboard links, contact/social destinations and privacy.
-- Confirm booking instructions, prices, location arrangements and policies.
-- Choose domain and approve publishing separately. Remove preview/noindex status
-  only after content, contacts and privacy information are complete.
-
-## Useful additions after the essentials
-
-1. Clear prices and first-lesson expectations reduce repetitive inquiries.
-2. A short authentic introduction video helps students get to know their teacher.
-3. Real testimonials may be added with permission; never invent them.
-4. A small upcoming-class list is helpful only if someone will keep it current.
-5. A booking link can be added later, after confirming terms and privacy handling.
+- Review the design/content on desktop and phone, logo legibility, links, image
+  loading, calendar dates and video privacy behavior.
+- Choose a client-owned domain and confirm account ownership/access.
+- Approve publication separately. A connected Cloudflare Pages project may deploy
+  automatically on a push to its configured branch, so review before pushing.
+- Remove preview/indexing restrictions only after content/privacy approval and
+  real contact/form checks are complete.

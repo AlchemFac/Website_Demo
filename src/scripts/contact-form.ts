@@ -1,4 +1,7 @@
-import { formContent, formMessages } from '../config/contactContent';
+import {
+  formContent,
+  formMessages as defaultMessages,
+} from '../config/contactContent';
 
 interface TurnstileAPI {
   render(
@@ -21,6 +24,18 @@ declare global {
 
 const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
 if (form) {
+  // Instance-specific public copy lets template variations reuse validation and
+  // submission handling without inheriting another business's messages.
+  const formMessages = {
+    requiredMessage:
+      form.dataset.requiredMessage ?? defaultMessages.requiredMessage,
+    offlineSuccess:
+      form.dataset.offlineSuccess ?? defaultMessages.offlineSuccess,
+    sendingStatus: form.dataset.sendingStatus ?? defaultMessages.sendingStatus,
+    acceptedStatus:
+      form.dataset.acceptedStatus ?? defaultMessages.acceptedStatus,
+    acceptedLabel: form.dataset.acceptedLabel ?? defaultMessages.acceptedLabel,
+  };
   const endpoint = form.dataset.endpoint ?? '';
   const siteKey = form.dataset.siteKey ?? '';
   const configured = Boolean(endpoint && siteKey);

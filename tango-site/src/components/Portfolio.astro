@@ -22,9 +22,6 @@ const approvedReviews = reviews.filter(
       <p class="eyebrow">On the dance floor</p>
       <h2 id="gallery-title">The dance, in motion.</h2>
     </div>
-    <p>
-      Portraits, dance-floor moments and the community around Fernanda’s tango.
-    </p>
   </div>
   <div class="portfolio-grid photo-grid">
     {photos.map((photo) => (
@@ -40,16 +37,12 @@ const approvedReviews = reviews.filter(
           widths={[360, 640, 960, 1440]}
           sizes={
             photo.image.width > photo.image.height
-              ? '(max-width: 760px) 90vw, 85vw'
-              : '(max-width: 760px) 90vw, 45vw'
+              ? '(max-width: 1000px) 90vw, 60vw'
+              : '(max-width: 600px) 90vw, (max-width: 1000px) 45vw, 30vw'
           }
           format="webp"
           loading="lazy"
         />
-        <figcaption>
-          {photo.caption}
-          {photo.credit && <span>{photo.credit}</span>}
-        </figcaption>
       </figure>
     ))}
     {!photos.length && (
@@ -66,6 +59,11 @@ const approvedReviews = reviews.filter(
       </div>
     )}
   </div>
+  {Array.from(new Set(photos.map((photo) => photo.credit).filter(Boolean))).map(
+    (credit) => (
+      <p class="gallery-credit">{credit}</p>
+    ),
+  )}
   <section class="portfolio-videos" aria-labelledby="videos-title">
     <div class="portfolio-video-heading">
       <p class="eyebrow">A closer look</p>
@@ -132,7 +130,6 @@ const approvedReviews = reviews.filter(
               )}
             </div>
             <h4 id={`video-${video.id}`}>{video.title}</h4>
-            <p>{video.description}</p>
             {video.kind !== 'file' && socialHref(video.url) && (
               <a
                 class="text-link"

@@ -71,7 +71,10 @@ shows the full hero image; mobile keeps its existing crop.
 ## Portfolio, videos and reviews
 
 Import permission-cleared photo assets in `portfolio.ts` and add `image`, `alt`,
-`caption` and `credit`. Add videos with a unique `id`, `title`, `description` and
+`caption` and `credit`. The gallery displays photos side by side (three columns
+on desktop, two on tablets and one on phones), without visible descriptions.
+Captions stay in configuration for future reuse; credits appear once below the
+gallery, and image alt text remains available to screen readers. Add videos with a unique `id`, `title`, `description` and
 HTTPS YouTube or Vimeo `url`. Unknown URLs are never embedded as arbitrary HTML.
 For a self-hosted clip use `kind: 'file'`, a `/media/name.mp4` `src`, imported
 poster image, `width`, `height` and a readable duration. Encoded files live under

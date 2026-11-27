@@ -282,13 +282,8 @@ test('questionnaire identity, public contacts, services and approved palette are
     ),
   ).toBe('#584334');
   await expect(page.locator('.portfolio-photo')).toHaveCount(5);
-  await expect(page.locator('.portfolio-photo figcaption')).toContainText([
-    'Fernanda Delgado.',
-    'A portrait in magenta.',
-    'Louis Parks',
-    'Louis Parks',
-    'Louis Parks',
-  ]);
+  await expect(page.locator('.portfolio-photo figcaption')).toHaveCount(0);
+  await expect(page.locator('.gallery-credit')).toContainText('Louis Parks');
   await expect(page.locator('[data-video-file]')).toHaveCount(1);
   await expect(page.locator('.student-reviews')).toHaveCount(0);
 });
@@ -393,11 +388,14 @@ test('original photos and credits remain visible without gallery crops', async (
   );
   await expect(page.locator('.portfolio-photo')).toHaveCount(5);
   await expect(page.locator('.portfolio-photo--wide')).toHaveCount(1);
-  await expect(
-    page
-      .locator('.portfolio-photo figcaption')
-      .filter({ hasText: 'Louis Parks' }),
-  ).toHaveCount(3);
+  await expect(page.locator('.gallery-credit')).toContainText('Louis Parks');
+  const firstPhotos = await page
+    .locator('.portfolio-photo')
+    .evaluateAll((figures) =>
+      figures.slice(0, 3).map((figure) => figure.getBoundingClientRect().x),
+    );
+  expect(firstPhotos[1]).toBeGreaterThan(firstPhotos[0]);
+  expect(firstPhotos[2]).toBeGreaterThan(firstPhotos[1]);
   for (const image of await page.locator('.portfolio-photo img').all()) {
     await image.scrollIntoViewIfNeeded();
     const dimensions = await image.evaluate(async (img: HTMLImageElement) => {

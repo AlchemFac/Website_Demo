@@ -40,7 +40,7 @@ export const privacy: PrivacyConfig = {
       id: 'providers',
       title: 'Hosting, contact services and external links',
       paragraphs: [
-        'Images, fonts, styles and application scripts load from the site itself. Approved videos may use YouTube or Vimeo players, loaded only after you choose Play; no external player loads merely from opening the page. The current portfolio has no supplied videos. Social links, when configured, open the relevant service under its own privacy practices. There are no embedded maps or booking widgets.',
+        'Images, fonts, styles and application scripts load from the site itself. The current short practice video is served from the same site and its media source is loaded only after you choose Play. Additional videos may use YouTube or Vimeo players, also loaded only after you choose Play; no external player loads merely from opening the page. Social links, when configured, open the relevant service under its own privacy practices. There are no embedded maps or booking widgets.',
         '[Before launch, identify the actual hosting/CDN, email, booking and payment providers, explain their roles and link their privacy notices. Hosting providers may process technical data such as IP addresses and request details; verify their actual logging and settings.]',
         '[Confirm any international processing or disclosures and describe them where required. Formspree and Cloudflare Turnstile are prepared as optional form/spam-protection providers, but do not receive form entries in demo mode. Connect only Fernanda’s own accounts, disclose them and test delivery before enabling the form. A service configured for the cleaning template is not automatically used by this site.]',
       ],

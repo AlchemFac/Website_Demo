@@ -11,6 +11,7 @@ import ContactForm from '../../../src/components/ContactForm.astro';
 import { contactForm, formContent, formMessages } from '../config/contact';
 import { privacy } from '../config/privacy';
 import hero from '../assets/tango-salon.png';
+import { instructorPortrait } from '../config/portfolio';
 import {
   instructor,
   content,
@@ -77,12 +78,12 @@ const contactReady = Boolean(
     <div class="about-image-wrap">
       <figure class="about-figure">
         <Image
-          src={hero}
-          alt="Illustrative tango dancers embracing in a warmly lit salon; not Fernanda or her students."
+          src={instructorPortrait}
+          alt="Portrait of Fernanda Delgado in a black dress against a dark studio background."
           width={620}
           height={720}
           fit="cover"
-          position="right"
+          position="top"
           widths={[320, 480, 620, 900]}
           sizes="(min-width: 900px) 42vw, 90vw"
           format="webp"
@@ -90,9 +91,7 @@ const contactReady = Boolean(
           loading="lazy"
           decoding="async"
         />
-        <figcaption>
-          Illustrative dance image · instructor portrait to come
-        </figcaption>
+        <figcaption>Fernanda Delgado</figcaption>
       </figure>
       <div class="image-label" aria-hidden="true">
         <span>The music begins.</span>
@@ -106,7 +105,7 @@ const contactReady = Boolean(
       {content.about.paragraphs.map((text) => (
         <p>{text}</p>
       ))}
-      <p class="signature">{instructor.name}</p>
+      <p class="signature">{instructor.displayName}</p>
       <a class="text-link" href="/#lessons">
         Explore the services
         <ArrowIcon />

@@ -281,10 +281,15 @@ test('questionnaire identity, public contacts, services and approved palette are
         .trim(),
     ),
   ).toBe('#584334');
-  await expect(page.locator('#gallery')).toContainText('approved photos');
-  await expect(page.locator('#gallery')).toContainText(
-    'supplies the links and permissions',
-  );
+  await expect(page.locator('.portfolio-photo')).toHaveCount(5);
+  await expect(page.locator('.portfolio-photo figcaption')).toContainText([
+    'Fernanda Delgado.',
+    'A portrait in magenta.',
+    'Louis Parks',
+    'Louis Parks',
+    'Louis Parks',
+  ]);
+  await expect(page.locator('[data-video-file]')).toHaveCount(1);
   await expect(page.locator('.student-reviews')).toHaveCount(0);
 });
 
@@ -372,4 +377,79 @@ test('video players load only after an explicit choice and close cleanly', async
   await expect(
     page.getByRole('button', { name: 'Play synthetic video' }),
   ).toBeFocused();
+});
+
+test('original photos and credits remain visible without gallery crops', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/');
+  await expect(page.locator('.about-figure img')).toHaveAttribute(
+    'alt',
+    /Portrait of Fernanda Delgado/,
+  );
+  await expect(page.locator('.about-figure figcaption')).toHaveText(
+    'Fernanda Delgado',
+  );
+  await expect(page.locator('.portfolio-photo')).toHaveCount(5);
+  await expect(page.locator('.portfolio-photo--wide')).toHaveCount(1);
+  await expect(
+    page
+      .locator('.portfolio-photo figcaption')
+      .filter({ hasText: 'Louis Parks' }),
+  ).toHaveCount(3);
+  for (const image of await page.locator('.portfolio-photo img').all()) {
+    await image.scrollIntoViewIfNeeded();
+    const dimensions = await image.evaluate(async (img: HTMLImageElement) => {
+      await img.decode();
+      const box = img.getBoundingClientRect();
+      return {
+        displayed: box.width / box.height,
+        original: img.naturalWidth / img.naturalHeight,
+      };
+    });
+    expect(dimensions.displayed).toBeCloseTo(dimensions.original, 2);
+  }
+});
+
+test('local clip loads only on Play, preserves its frame and closes cleanly', async ({
+  page,
+}) => {
+  const requests: string[] = [];
+  page.on('request', (request) => {
+    if (request.url().includes('/media/')) requests.push(request.url());
+  });
+  await page.goto('/');
+  const play = page.getByRole('button', {
+    name: 'Play A moment of tango practice',
+    exact: true,
+  });
+  await play.scrollIntoViewIfNeeded();
+  await expect(play.locator('img')).toHaveAttribute('loading', 'lazy');
+  await expect(page.locator('video')).toHaveCount(0);
+  expect(requests).toEqual([]);
+  await play.click();
+  const video = page.locator('video.local-video');
+  await expect(video).toHaveAttribute('src', '/media/tango-practice.mp4');
+  await expect(video).toHaveJSProperty('controls', true);
+  await expect(video).toHaveJSProperty('playsInline', true);
+  await expect(video).not.toHaveAttribute('autoplay', /.*/);
+  await expect
+    .poll(() => video.evaluate((el: HTMLVideoElement) => el.readyState))
+    .toBeGreaterThanOrEqual(2);
+  await expect
+    .poll(() => video.evaluate((el: HTMLVideoElement) => el.currentTime))
+    .toBeGreaterThan(0);
+  expect(
+    await video.evaluate((el: HTMLVideoElement) => el.duration),
+  ).toBeCloseTo(8.93, 1);
+  expect(
+    await video.evaluate(
+      (el: HTMLVideoElement) => el.videoWidth / el.videoHeight,
+    ),
+  ).toBeCloseTo(720 / 1280, 2);
+  expect(requests.length).toBeGreaterThan(0);
+  await page.getByRole('button', { name: 'Close video' }).click();
+  await expect(page.locator('video')).toHaveCount(0);
+  await expect(play).toBeFocused();
 });

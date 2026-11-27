@@ -12,23 +12,26 @@
 - Style: elegant/professional; black, brown and beige; image-led inspiration.
 - Requested additions: contact form, videos and monthly participation calendar.
 - Logo reference: expressive dancer silhouettes; a new original concept is prepared.
+- Media: five unique original portraits/event photos and one short practice clip
+  added from the later upload; the duplicate close-embrace photo is used once.
 
 ## Needed to finish the public content
 
 1. Approve the new logo, public name styling and proposed English copy; confirm
    whether Spanish or a bilingual version is desired (not assumed or added).
-2. Supply the expanded teaching story/biography and a portrait, with publication
-   permissions. Confirm what “Assisting Classes” means for her actual service.
+2. Supply the expanded teaching story/biography and review the supplied portrait
+   and its publication permissions. Confirm what “Assisting Classes” means for her actual service.
 3. Confirm which days the stated hours apply to and whether they describe contact
    hours, class times or general availability. Do not assume seven days a week.
 4. Supply service prices/durations or approve contact-for-pricing. Confirm partner
    requirements, group size/level, location/travel fees and booking/cancellation
    rules. No rates, refund rules or availability slots are invented.
 5. Supply exact Instagram and Facebook profile URLs. WhatsApp remains removed.
-6. Supply actual YouTube/Vimeo video links, titles, context and permissions,
+6. Review the included short practice clip and supply additional YouTube/Vimeo
+   links when available, plus titles, context and permissions,
    including rights to publish identifiable dancers and any relevant music rights.
-7. Supply approved photos with captions, useful alt descriptions and source/
-   photographer credits. The logo reference is not an instructor portrait.
+7. Review the five supplied photos, captions and publication permissions. Visible
+   Louis Parks / @louistangophoto and Holiday Tango Weekend credits are retained. The logo reference is not an instructor portrait.
 8. Supply real public event dates, times, venues, Fernanda's role and links for
    each month. Confirm who will keep this static calendar current.
 9. Supply any real student reviews with explicit permission and approved public

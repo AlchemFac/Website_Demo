@@ -31,9 +31,10 @@ confirmed lesson slots. Descriptive copy is an editorial draft based on her
 answers, not a verified training history or biography.
 
 She requests video viewing, a monthly participation calendar, and a contact form.
-No actual photos of her, video URLs, event dates, approved review text, social
-URLs, prices or booking/cancellation terms were included. Empty portfolio and
-calendar states are intentional. Reviews remain hidden until permission-cleared
+A later media upload supplies five unique portraits/event photos and one short
+practice video; they are now included. No event dates, approved review text,
+social URLs, prices or booking/cancellation terms have been supplied. The empty
+calendar remains intentional. Reviews remain hidden until permission-cleared
 entries are provided. A logo reference is not a portfolio photo.
 
 ## Where to customize
@@ -59,8 +60,9 @@ real business-name text beside it on the website. Owner approval is still needed
 See `src/assets/PROVENANCE.md`. The uploaded questionnaire and original reference
 are not committed to the repository.
 
-The hero is still a clearly labeled generated dance illustration, not Fernanda or
-her students. Replace it with approved photography when available. Suggested
+The hero remains a clearly labeled generated dance illustration. The About
+section now uses Fernanda’s supplied black-dress portrait, and the gallery uses
+the supplied photographs with visible event/photographer marks intact. Suggested
 hero: landscape 1800–2400px wide; suggested portrait: 900–1200px tall. JPG, PNG or
 WebP originals are suitable. Keep the Astro Image calls for responsive WebP
 output, sizes, dimensions, eager hero loading and lazy lower imagery. Desktop
@@ -71,6 +73,14 @@ shows the full hero image; mobile keeps its existing crop.
 Import permission-cleared photo assets in `portfolio.ts` and add `image`, `alt`,
 `caption` and `credit`. Add videos with a unique `id`, `title`, `description` and
 HTTPS YouTube or Vimeo `url`. Unknown URLs are never embedded as arbitrary HTML.
+For a self-hosted clip use `kind: 'file'`, a `/media/name.mp4` `src`, imported
+poster image, `width`, `height` and a readable duration. Encoded files live under
+`tango-site/public/media/`; originals remain outside Git. Keep each file below
+Cloudflare Pages’ 25 MiB file limit. MOVs should be converted to H.264/AAC MP4
+with fast-start metadata before adding them. The included 8.93-second clip is
+720×1280 and about 2.7 MB, down from a 7.45 MB MOV, with its audio preserved.
+Review any needed captions/transcript and publication permissions before launch.
+
 Players load **only after Play is selected** and can be closed; no external
 player is requested on initial page load. There is no autoplay, social feed or
 analytics integration. Update privacy information before adding any provider.
@@ -121,7 +131,7 @@ update. Contact entries are not logged or stored in browser storage.
 ## Privacy and launch
 
 The policy is a marked draft. It now reflects direct contacts, demo form behavior,
-optional form/spam providers and user-initiated video embeds. Actual hosting,
+optional form/spam providers, same-site video and user-initiated video embeds. Actual hosting,
 retention/deletion practices, policy effective date and other bracketed items
 still require owner approval and appropriate review. No legal-compliance claim
 is made. No residential or fabricated studio address is published.

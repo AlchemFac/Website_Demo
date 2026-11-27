@@ -161,7 +161,7 @@ export const content = {
       'My work brings together private and group classes, salon and stage performances, tango DJ work and milonga organization. At the heart of it is something simple: I love to dance.',
     ],
     approvalNote:
-      'Based on Fernanda’s questionnaire. Her expanded biography, teaching approach and portrait are still awaiting review.',
+      'Based on Fernanda’s questionnaire. Her expanded biography and teaching approach are still awaiting review.',
   },
   lessonIntro: {
     eyebrow: 'Make room for the dance',

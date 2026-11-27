@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
-import { photos, videos, reviews, videoEmbed } from '../config/portfolio';
+import { photos, videos, reviews } from '../config/portfolio';
+import { videoEmbed, localVideoPath } from '../config/media';
 import { socialHref } from '../config/instructor';
 const approvedReviews = reviews.filter(
   (review) =>
@@ -22,18 +23,26 @@ const approvedReviews = reviews.filter(
       <h2 id="gallery-title">The dance, in motion.</h2>
     </div>
     <p>
-      A space for Fernanda’s performances, classes and the moments that bring
-      people together.
+      Portraits, dance-floor moments and the community around Fernanda’s tango.
     </p>
   </div>
-  <div class="portfolio-grid">
+  <div class="portfolio-grid photo-grid">
     {photos.map((photo) => (
-      <figure class="portfolio-photo">
+      <figure
+        class:list={[
+          'portfolio-photo',
+          { 'portfolio-photo--wide': photo.image.width > photo.image.height },
+        ]}
+      >
         <Image
           src={photo.image}
           alt={photo.alt}
-          widths={[360, 640, 960]}
-          sizes="(max-width: 760px) 90vw, 45vw"
+          widths={[360, 640, 960, 1440]}
+          sizes={
+            photo.image.width > photo.image.height
+              ? '(max-width: 760px) 90vw, 85vw'
+              : '(max-width: 760px) 90vw, 45vw'
+          }
           format="webp"
           loading="lazy"
         />
@@ -43,44 +52,6 @@ const approvedReviews = reviews.filter(
         </figcaption>
       </figure>
     ))}
-    {videos.map((video) => {
-      const embed = videoEmbed(video.url);
-      return (
-        <article class="video-card">
-          <div class="video-stage" data-video-stage>
-            {embed ? (
-              <button
-                type="button"
-                data-video-embed={embed}
-                data-video-title={video.title}
-                class="video-play"
-                aria-label={`Play ${video.title}`}
-              >
-                <span aria-hidden="true">▷</span>Play video
-                <span class="video-provider-note">
-                  Loads an external video player. See privacy information.
-                </span>
-              </button>
-            ) : (
-              <p>Video link awaiting a supported source.</p>
-            )}
-          </div>
-          <h3>{video.title}</h3>
-          <p>{video.description}</p>
-          {socialHref(video.url) && (
-            <a
-              class="text-link"
-              href={video.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Open original video
-              <span class="sr-only"> (opens in a new tab)</span>
-            </a>
-          )}
-        </article>
-      );
-    })}
     {!photos.length && (
       <div class="portfolio-placeholder">
         <p class="eyebrow">Photography</p>
@@ -90,27 +61,103 @@ const approvedReviews = reviews.filter(
           Coming into focus.
         </h3>
         <p>
-          Fernanda’s approved photos will be added here. The dance illustration
-          elsewhere on this page is not a portfolio photograph.
+          Portraits and photographs from the dance floor will be added here.
         </p>
       </div>
     )}
-    {!videos.length && (
-      <div class="portfolio-placeholder video-placeholder">
-        <span aria-hidden="true" class="video-symbol">
-          ▷
-        </span>
-        <div>
+  </div>
+  <section class="portfolio-videos" aria-labelledby="videos-title">
+    <div class="portfolio-video-heading">
+      <p class="eyebrow">A closer look</p>
+      <h3 id="videos-title">Watch the dance.</h3>
+      <p>Select a video to play it. Nothing starts automatically.</p>
+    </div>
+    <div class="portfolio-video-grid">
+      {videos.map((video) => {
+        const file =
+          video.kind === 'file' ? localVideoPath(video.src) : undefined;
+        const embed = video.kind !== 'file' ? videoEmbed(video.url) : undefined;
+        return (
+          <article
+            class:list={['video-card', { 'video-card--file': Boolean(file) }]}
+            aria-labelledby={`video-${video.id}`}
+          >
+            <div
+              class:list={[
+                'video-stage',
+                {
+                  'video-stage--portrait':
+                    video.kind === 'file' && video.height > video.width,
+                },
+              ]}
+              data-video-stage
+            >
+              {file && video.kind === 'file' ? (
+                <button
+                  type="button"
+                  data-video-file={file}
+                  data-video-title={video.title}
+                  class="video-play video-play--file"
+                  aria-label={`Play ${video.title}`}
+                >
+                  <Image
+                    class="video-poster"
+                    src={video.poster}
+                    alt=""
+                    widths={[360, 540, 720]}
+                    sizes="(max-width: 760px) 90vw, 400px"
+                    format="webp"
+                    loading="lazy"
+                  />
+                  <span class="video-play-label">
+                    <span aria-hidden="true">▷</span>Play video
+                    <span>{video.duration} · Audio controls available</span>
+                  </span>
+                </button>
+              ) : embed ? (
+                <button
+                  type="button"
+                  data-video-embed={embed}
+                  data-video-title={video.title}
+                  class="video-play"
+                  aria-label={`Play ${video.title}`}
+                >
+                  <span aria-hidden="true">▷</span>Play video
+                  <span class="video-provider-note">
+                    Loads an external video player. See privacy information.
+                  </span>
+                </button>
+              ) : (
+                <p>Video link awaiting a supported source.</p>
+              )}
+            </div>
+            <h4 id={`video-${video.id}`}>{video.title}</h4>
+            <p>{video.description}</p>
+            {video.kind !== 'file' && socialHref(video.url) && (
+              <a
+                class="text-link"
+                href={video.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open original video
+                <span class="sr-only"> (opens in a new tab)</span>
+              </a>
+            )}
+          </article>
+        );
+      })}
+      {!videos.length && (
+        <div class="portfolio-placeholder video-placeholder">
           <p class="eyebrow">Performances & classes</p>
-          <h3>See the movement.</h3>
+          <h4>See the movement.</h4>
           <p>
-            Performance and teaching videos will appear here once Fernanda
-            supplies the links and permissions.
+            Performance and teaching videos will appear here when available.
           </p>
         </div>
-      </div>
-    )}
-  </div>
+      )}
+    </div>
+  </section>
   {approvedReviews.length > 0 && (
     <section class="student-reviews" aria-labelledby="reviews-title">
       <h3 id="reviews-title">Words from the dance floor</h3>
@@ -126,36 +173,67 @@ const approvedReviews = reviews.filter(
   )}
 </section>
 <script>
+  import { localVideoPath } from '../config/media';
   document
-    .querySelectorAll<HTMLButtonElement>('[data-video-embed]')
+    .querySelectorAll<HTMLButtonElement>(
+      '[data-video-embed], [data-video-file]',
+    )
     .forEach((button) => {
       button.addEventListener('click', () => {
+        const file = localVideoPath(button.dataset.videoFile ?? '');
         const url = button.dataset.videoEmbed;
-        if (
-          !url ||
-          !/^https:\/\/(www\.youtube-nocookie\.com\/embed\/[A-Za-z0-9_-]{11}|player\.vimeo\.com\/video\/\d+\?dnt=1)$/.test(
-            url,
+        let player: HTMLVideoElement | HTMLIFrameElement;
+        if (file) {
+          const video = document.createElement('video');
+          video.className = 'local-video';
+          video.controls = true;
+          video.playsInline = true;
+          video.preload = 'metadata';
+          video.setAttribute(
+            'aria-label',
+            button.dataset.videoTitle ?? 'Tango video',
+          );
+          const poster = button.querySelector<HTMLImageElement>('img');
+          if (poster?.currentSrc) video.poster = poster.currentSrc;
+          video.src = file;
+          player = video;
+        } else {
+          if (
+            !url ||
+            !/^https:\/\/(www\.youtube-nocookie\.com\/embed\/[A-Za-z0-9_-]{11}|player\.vimeo\.com\/video\/\d+\?dnt=1)$/.test(
+              url,
+            )
           )
-        )
-          return;
-        const frame = document.createElement('iframe');
-        frame.src = url;
-        frame.title = button.dataset.videoTitle ?? 'Tango video';
-        frame.allow = 'fullscreen; picture-in-picture';
-        frame.referrerPolicy = 'strict-origin-when-cross-origin';
-        frame.allowFullscreen = true;
+            return;
+          const frame = document.createElement('iframe');
+          frame.src = url;
+          frame.title = button.dataset.videoTitle ?? 'Tango video';
+          frame.allow = 'fullscreen; picture-in-picture';
+          frame.referrerPolicy = 'strict-origin-when-cross-origin';
+          frame.allowFullscreen = true;
+          player = frame;
+        }
         const stop = document.createElement('button');
         stop.type = 'button';
         stop.className = 'video-stop';
         stop.textContent = 'Close video';
         stop.addEventListener('click', () => {
-          frame.remove();
+          if (player instanceof HTMLVideoElement) {
+            player.pause();
+            player.removeAttribute('src');
+            player.load();
+          }
+          player.remove();
           stop.remove();
           button.hidden = false;
           button.focus();
         });
         button.hidden = true;
-        button.parentElement?.append(frame, stop);
+        button.parentElement?.append(player, stop);
+        if (player instanceof HTMLVideoElement)
+          void player.play().catch(() => {
+            /* Native controls allow retry without claiming playback succeeded. */
+          });
         stop.focus();
       });
     });

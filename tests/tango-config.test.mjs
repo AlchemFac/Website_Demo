@@ -6,7 +6,7 @@ import {
   eventsForMonth,
   validEventDate,
 } from '../tango-site/src/config/calendar.ts';
-import { videoEmbed } from '../tango-site/src/config/portfolio.ts';
+import { videoEmbed, localVideoPath } from '../tango-site/src/config/media.ts';
 
 test('calendar handles leap years and fills complete weeks', () => {
   assert.equal(calendarDays(2028, 1).filter(Boolean).length, 29);
@@ -61,4 +61,33 @@ test('video embeds reject arbitrary origins, credentials and script URLs', () =>
     'https://example.com/video',
   ])
     assert.equal(videoEmbed(value), undefined);
+});
+
+test('local video paths cannot escape the media directory or use another origin', () => {
+  assert.equal(
+    localVideoPath('/media/tango-practice.mp4'),
+    '/media/tango-practice.mp4',
+  );
+  for (const value of [
+    'https://example.com/clip.mp4',
+    '//example.com/clip.mp4',
+    '/media/../clip.mp4',
+    '/media/%2e%2e/clip.mp4',
+    '/media/clip.MOV',
+    '/media/clip.mp4?token=anything',
+    '/private/clip.mp4',
+  ])
+    assert.equal(localVideoPath(value), undefined);
+});
+
+test('committed video assets stay inside the free Pages per-file size limit', async () => {
+  const { stat, readdir } = await import('node:fs/promises');
+  const directory = new URL('../tango-site/public/media/', import.meta.url);
+  for (const name of await readdir(directory)) {
+    const file = await stat(new URL(name, directory));
+    assert.ok(
+      file.size > 0 && file.size < 25 * 1024 * 1024,
+      `Keep ${name} below 25 MiB for Cloudflare Pages.`,
+    );
+  }
 });

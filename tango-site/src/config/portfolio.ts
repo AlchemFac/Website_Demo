@@ -1,4 +1,12 @@
 import type { ImageMetadata } from 'astro';
+import portraitBlack from '../assets/media/fernanda-portrait-black.png';
+import portraitMagenta from '../assets/media/fernanda-portrait-magenta.png';
+import closeEmbrace from '../assets/media/tango-close-embrace.jpg';
+import community from '../assets/media/holiday-tango-community.jpg';
+import performance from '../assets/media/tango-performance.jpg';
+import practicePoster from '../assets/media/tango-practice-poster.jpg';
+
+export const instructorPortrait = portraitBlack;
 
 export interface PortfolioPhoto {
   image: ImageMetadata;
@@ -6,12 +14,23 @@ export interface PortfolioPhoto {
   caption: string;
   credit: string;
 }
-export interface PortfolioVideo {
+interface VideoDescription {
   id: string;
   title: string;
   description: string;
-  url: string;
 }
+export type PortfolioVideo = VideoDescription &
+  (
+    | {
+        kind: 'file';
+        src: string;
+        poster: ImageMetadata;
+        width: number;
+        height: number;
+        duration: string;
+      }
+    | { kind?: 'embed'; url: string }
+  );
 export interface TangoEvent {
   id: string;
   title: string;
@@ -27,38 +46,55 @@ export interface StudentReview {
   permissionConfirmed: boolean;
 }
 
-/** Add only owner-approved media, public event details and permission-cleared
- * reviews. The questionnaire contains no actual videos, event dates or reviews.
- * A reference image for a logo is not an instructor portrait or portfolio image.
+/** User-supplied portfolio media. The repeated close-embrace image is included
+ * once. Existing photographer/event marks stay visible in the full photographs.
+ * No names, dates, teaching roles or recording credits are guessed.
  */
-export const photos: readonly PortfolioPhoto[] = [];
-export const videos: readonly PortfolioVideo[] = [];
+export const photos: readonly PortfolioPhoto[] = [
+  {
+    image: portraitBlack,
+    alt: 'Fernanda Delgado smiling in a black dress against a dark studio background.',
+    caption: 'Fernanda Delgado.',
+    credit: '',
+  },
+  {
+    image: portraitMagenta,
+    alt: 'Fernanda Delgado in a magenta dress, pearl necklace and pink headpiece.',
+    caption: 'A portrait in magenta.',
+    credit: '',
+  },
+  {
+    image: closeEmbrace,
+    alt: 'Two tango dancers in close embrace, photographed under blue and warm event lighting.',
+    caption: 'A moment of connection on the dance floor.',
+    credit: 'Photo: Louis Parks · @louistangophoto · Holiday Tango Weekend',
+  },
+  {
+    image: performance,
+    alt: 'Tango dancers in magenta and tan costumes holding a dance pose with raised hands.',
+    caption: 'On the dance floor at Holiday Tango Weekend.',
+    credit: 'Photo: Louis Parks · @louistangophoto · Holiday Tango Weekend',
+  },
+  {
+    image: community,
+    alt: 'A group of dancers posing together in front of a Holiday Tango Weekend backdrop.',
+    caption: 'The tango community at Holiday Tango Weekend.',
+    credit: 'Photo: Louis Parks · @louistangophoto · Holiday Tango Weekend',
+  },
+];
+export const videos: readonly PortfolioVideo[] = [
+  {
+    kind: 'file',
+    id: 'tango-practice',
+    title: 'A moment of tango practice',
+    description:
+      'Close-embrace tango practice, with walking steps and a shared turn across a wooden studio floor.',
+    src: '/media/tango-practice.mp4',
+    poster: practicePoster,
+    width: 720,
+    height: 1280,
+    duration: '9-second clip',
+  },
+];
 export const events: readonly TangoEvent[] = [];
 export const reviews: readonly StudentReview[] = [];
-
-/** Privacy-first embeds: no external player loads until a visitor chooses Play. */
-export function videoEmbed(url: string): string | undefined {
-  try {
-    const value = new URL(url);
-    if (value.protocol !== 'https:' || value.username || value.password) return;
-    const host = value.hostname.replace(/^www\./, '');
-    if (
-      host === 'youtu.be' ||
-      host === 'youtube.com' ||
-      host === 'm.youtube.com'
-    ) {
-      const id =
-        host === 'youtu.be'
-          ? value.pathname.slice(1)
-          : (value.searchParams.get('v') ??
-            value.pathname.split('/').filter(Boolean).at(-1));
-      if (id && /^[A-Za-z0-9_-]{11}$/.test(id))
-        return `https://www.youtube-nocookie.com/embed/${id}`;
-    }
-    if (host === 'vimeo.com' && /^\/\d+$/.test(value.pathname))
-      return `https://player.vimeo.com/video/${value.pathname.slice(1)}?dnt=1`;
-  } catch {
-    /* Unknown providers remain plain text, not arbitrary embeds. */
-  }
-  return undefined;
-}
